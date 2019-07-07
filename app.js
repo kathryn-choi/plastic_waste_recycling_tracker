@@ -9,9 +9,6 @@ var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var request = require('request');
-var passport = require('passport');
-var session = require('express-session');
-const Sequelize = require('sequelize');
 const SequelizeAuto = require('sequelize-auto');
 var async = require('async');
 
@@ -30,12 +27,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/admin', admin);
+app.use('/conveyancer', conveyancer);
+app.use('/emitter', emitter);
+app.use('/handler', handler);
+app.use('/recycler', recycler);
 
 connection = mysql.createConnection({
   host     : 'localhost',
@@ -60,5 +62,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+console.log("app");
+var server = app.listen(4000);
 module.exports = app;
