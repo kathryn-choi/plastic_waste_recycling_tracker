@@ -4,24 +4,112 @@
     <title>Signup</title>
     <meta charset="UTF-8">
 </head>
-
 <body>
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Could be more or less, depending on screen size */
+    }
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+</style>
+
 <form action="/signup" method="post" >
     <h3>Login</h3>
     <label>ID</label>
-    <input type="text" name="id">
+    <input type="text" name="id"> <br>
     <label>Password</label>
-    <td><input type="password" name="pw"></td>
+    <td><input type="password" name="pw"></td> <br>
     <label>User Type</label>
-    <!--dropdown으로 user type들 중에 choose하기 -->
-    <td><input type="text" name="user_type"></td>
+    <select name="user_type">
+        <option value="">직업 선택</option>
+        <option value="emitter">배출자</option>
+        <option value="conveyancer">운송자</option>
+        <option value="handler">처리자</option>
+        <option value="recycler">재활용자</option>
+        <option value="admin">환경부</option>
+    </select> <br>
     <label>Companies ID</label>
     <!--search button pop up 해서 company 이름으로 id 조회하기-->
-    <td><input type="number" name="companies_id"></td>
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">조회하기</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/search" method="post">
+                기업 이름:
+            <input type="text" name="companies_name">
+                <button type="submit">조회</button>
+            </form>
+        </div>
+    </div>
+
+    <td><input type="number" name="companies_id"></td> <br>
     <label>Phone</label>
-    <td><input type="number" name="phone"></td>
+    <td><input type="number" name="phone"></td> <br>
     <button  type="submit" value="회원가입">Sign Up</button>
 </form>
 
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electronic Form</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<form action="/emitter/electronic_form" method="post">
+    <h3>인계서 작성(배출자)</h3>
+    <li>인계서 내용 입력</li>
+    <li>처리자인수후 2일이내 확정등록(위탁량 입력)을 하지 않을 경우 폐관법및 건폐법 제 66조에 따라 행정처분을 받을 수 있습니다</li>
+    <label>*1.폐기물 종류</label>
+    <input type="text" name="material_type"> <br>
+    <!--search-->
+    <label>2. 위탁량</label>
+    <td><input type="number" name="weigh"></td>
+    <select name="unit">
+        <option value="kg">kg</option>
+        <option value="ton">ton</option>
+        <option value="g">g</option>
+    </select> <br>
+    <label>운반자</label>
+    <input type="text" name="conveyancer">
+    <label>*3.차량번호</label> <br>
+    <input type="text" name="conveyancer_car_num">
+    <!--조회하기-->
+    <br>
+    <label>처리자</label>
+    <input type="text" name="handler">
+    <br>
+    <label>처리장소</label>
+    <input type="text" name="handle_address">
+    <br>
+    <label>*4.인계일자</label>
+    <input type="date" name="transfer_date">
+    <!--달력-->
+    <br>
+    <label>*5.인계자명</label>
+    <input type="text" name="emitter_name">
+    <br>
+    <button  type="submit" >저장</button>
+</form>
+
+</body>
+</html>

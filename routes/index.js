@@ -20,20 +20,20 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  var id=req.body.id;
-  var pw=req.body.pw;
+  var user_id=req.body.user_id;
+  var user_pw=req.body.user_pw;
   var user_type=req.body.user_type;
-  var name=req.body.name;
-  var phone=req.body.phone;
+  var user_name=req.body.user_name;
+  var user_contact=req.body.user_contact;
   var companies_id=req.body.companies_id;
 
-  var sqlquery = "SELECT  * FROM users WHERE id = ?";
-  connection.query(sqlquery, id, function (err, rows) {
+  var sqlquery = "SELECT  * FROM users WHERE user_id = ?";
+  connection.query(sqlquery, user_id, function (err, rows) {
     if (rows.length == 0) {
       pw=cryptoM.encrypt(pw);
       console.log(pw);
-      var sql = 'INSERT INTO `users` (`id`, `pw`,  `user_type`,`companies_id`, `name`, `phone`) VALUES ?;';
-      var values = [[id, pw, user_type, companies_id, name, phone]];
+      var sql = 'INSERT INTO `users` (`user_id`, `user_pw`,  `user_type`,`companies_id`, `user_name`, `user_contact`) VALUES ?;';
+      var values = [[user_id, user_pw, user_type, companies_id, user_name, user_contact]];
       connection.query(sql, [values], function (err) {
         if (err) {
           console.log("inserting user failed");
@@ -56,18 +56,18 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  var id=req.body.id;
-  var pw=req.body.pw;
-  var sqlquery = "SELECT  * FROM users WHERE id = ?";
-  connection.query(sqlquery, id,function (err, rows) {
+  var user_id=req.body.user_id;
+  var user_pw=req.body.user_pw;
+  var sqlquery = "SELECT  * FROM users WHERE user_id = ?";
+  connection.query(sqlquery, user_id,function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');
     } else {
-      var bytes =cryptoM.decrypt(rows[0].pw);
-      if(bytes===pw) {
+      var bytes =cryptoM.decrypt(rows[0].user_pw);
+      if(bytes===user_pw) {
         console.log("user login successfully");
-        req.session.user_id=rows[0].id;
+        req.session.user_id=rows[0].user_id;
         res.redirect('/');
       }else{
         console.log("wrong password!");
@@ -82,5 +82,22 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+//search company_id by name
+router.post('/search', function(req, res, next) {
+  var company_name=req.body.company_name;
+  var sqlquery = "SELECT  * FROM companies WHERE company_name LIKE ?";
+  connection.query(sqlquery, company_name,function (err, rows) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+        console.log("found comapny id");
+        //수정할 예정
+        res.send({result : rows});
+      }
+  });
+});
+
 
 module.exports = router;
