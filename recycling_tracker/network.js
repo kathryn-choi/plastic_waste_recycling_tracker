@@ -481,6 +481,96 @@ module.exports = {
       error.error = err.message;
       return error;
     }
+  },
+  get_ticket_info_by_id : async function (ticket_id) {
 
+    try {
+      //connect to network with user_id
+      var businessNetworkConnection = new BusinessNetworkConnection();
+      await businessNetworkConnection.connect('admin@recycling_tracker');
+
+      //query ticket from the network
+      const ticket = await businessNetworkConnection.query('select_ticket', {ticket_id: ticket_id});
+
+      //disconnect
+      await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+      //return ticket object
+      return ticket;
+    }
+    catch(err) {
+      //print and return error
+      console.log(err);
+      var error = {};
+      error.error = err.message;
+      return error
+    }
+  },
+  get_compasset_info_by_id : async function (asset_id) {
+
+    try {
+      //connect to network with user_id
+      var businessNetworkConnection = new BusinessNetworkConnection();
+      await businessNetworkConnection.connect('admin@recycling_tracker');
+
+      //query ticket from the network
+      const compasset = await businessNetworkConnection.query('select_compasset', {asset_id: asset_id});
+
+      //disconnect
+      await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+      //return ticket object
+      return compasset;
+    }
+    catch(err) {
+      //print and return error
+      console.log(err);
+      var error = {};
+      error.error = err.message;
+      return error
+    }
+  },
+  get_compasset_by_user : async function (_user_id,type) {
+
+    try {
+      //connect to network with user_id
+      console.log("Before Buyer connection")
+      var businessNetworkConnection = new BusinessNetworkConnection();
+      await businessNetworkConnection.connect('admin@ticketing-system');
+      console.log("Buyer connection Success")
+      //get buyer from the network
+      // const buyerRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.Buyer');
+      // const buyer = await buyerRegistry.get(user_id);
+
+      //query all tickets from the network
+      console.log("user_id:",_user_id)
+      var query_select = " "
+      if(type == "Emitter"){
+        query_select = "resource:"+namespace+".Emitter#"+_user_id
+      }
+      else if (type == "Conveyancer"){
+        query_select = "resource:"+namespace+".Conveyancer#"+_user_id
+      }
+      else if (type == "Handler"){
+        query_select = "resource:"+namespace+".Handler#"+_user_id
+      }
+      else if (type == "Recycler"){
+        query_select = "resource:"+namespace+".Recycler#"+_user_id
+      }
+      //console.log(query_select)
+      allTickets = await businessNetworkConnection.query('select_ticket_by_user', {owner_id: query_select});
+      //console.log(allTickets)
+      //disconnect
+      await businessNetworkConnection.disconnect('admin@ticketing-system');
+      //return all tickets object
+      return allTickets;
+    }
+    catch(err) {
+      //print and return error
+      console.log(err);
+      var error = {};
+      error.error = err.message;
+      return error
+    }
   }
 }

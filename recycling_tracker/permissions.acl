@@ -15,38 +15,6 @@
 /**
  * Sample access control list.
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.recycling.tracker.SampleParticipant"
-    operation: READ
-    resource: "org.recycling.tracker.*"
-    action: ALLOW
-}
-
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.recycling.tracker.SampleParticipant"
-    operation: CREATE
-    resource: "org.recycling.tracker.SampleTransaction"
-    action: ALLOW
-}
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.recycling.tracker.SampleParticipant"
-    operation: ALL
-    resource(r): "org.recycling.tracker.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
-  operation: ALL
-  resource: "org.hyperledger.composer.system.**"
-  action: ALLOW
-}
 
 rule NetworkAdminUser {
     description: "Grant business network administrators full access to user resources"

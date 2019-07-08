@@ -1,0 +1,20 @@
+query select_ticket {
+  description: "Select ticket that matches ticket_id"
+  statement:
+      SELECT org.recycling.tracker.Ticket
+        WHERE (ticket_id == _$ticket_id)
+}
+
+query select_compasset {
+  description: "Select company asset that matches asset_id"
+  statement:
+      SELECT org.recycling.tracker.Compasset
+        WHERE (asset_id == _$asset_id)
+}
+
+query select_compasset_by_user{
+  description: "Select company asset that matches owner"
+  statement:
+      SELECT org.recycling.tracker.Compasset
+        WHERE (owner == _$owner_id)
+}

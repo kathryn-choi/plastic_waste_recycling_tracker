@@ -30,6 +30,7 @@ async function CreateTicket(createTicket) {
     ticket.previousdes = createTicket.previousdes
     ticket.weight = createTicket.weight
     ticket.giver = createTicket.giver
+    ticket.reciever = createTicket.reciever
     ticket.conveyancer = createTicket.conveyancer
     await ticketRegistry.add(ticket)
 
