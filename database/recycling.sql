@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `alarms`
+--
+
+DROP TABLE IF EXISTS `alarms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alarms` (
+  `alarms_index` int(11) NOT NULL,
+  `ticket_id` varchar(100) DEFAULT NULL,
+  `is_complete` tinyint(4) DEFAULT '0',
+  `last_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`alarms_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alarms`
+--
+
+LOCK TABLES `alarms` WRITE;
+/*!40000 ALTER TABLE `alarms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alarms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `companies`
 --
 
@@ -23,14 +48,14 @@ DROP TABLE IF EXISTS `companies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `companies` (
-  `companies_id` int(11) NOT NULL,
-  `companies_name` varchar(45) NOT NULL,
-  `companies_addr` varchar(45) NOT NULL,
-  `companies_contact` varchar(45) NOT NULL,
-  `companies_type` varchar(45) NOT NULL,
-  `companies_material_type` varchar(45) NOT NULL,
-  PRIMARY KEY (`companies_id`),
-  UNIQUE KEY `companies_contact_UNIQUE` (`companies_contact`)
+  `company_id` int(11) NOT NULL,
+  `company_name` varchar(100) NOT NULL,
+  `company_addr` varchar(400) NOT NULL,
+  `company_contact` int(11) NOT NULL,
+  `company_type` varchar(300) NOT NULL,
+  `company_material_type` varchar(300) NOT NULL,
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY `companies_contact_UNIQUE` (`company_contact`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,14 +76,15 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` varchar(100) NOT NULL,
-  `pw` varchar(300) NOT NULL,
+  `user_id` varchar(100) NOT NULL,
+  `user_pw` varchar(300) NOT NULL,
   `user_type` varchar(100) NOT NULL,
   `companies_id` int(11) NOT NULL,
-  `phone` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  `user_contact` int(11) NOT NULL,
+  `user_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_id`),
   KEY `companies_id_idx` (`companies_id`),
-  CONSTRAINT `companies_id` FOREIGN KEY (`companies_id`) REFERENCES `companies` (`companies_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `companies_id` FOREIGN KEY (`companies_id`) REFERENCES `companies` (`company_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -80,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-07 13:26:06
+-- Dump completed on 2019-07-08 10:40:08
