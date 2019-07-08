@@ -278,7 +278,7 @@ module.exports = {
   },
 
 
-  create_ticket: async function (ticket_id,currentdes,previousdes,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
+  create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
     try {
       //connect to network with user_id
       var businessNetworkConnection = new BusinessNetworkConnection();
@@ -292,6 +292,7 @@ module.exports = {
       createTicket.ticket_id = ticket_id;
       createTicket.currentdes = currentdes;
       createTicket.previousdes = previousdes
+      createTicket.transfer_date = transfer_date
       createTicket.weight = weight
       if(giver_type == "Emitter"){
         createTicket.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
@@ -329,7 +330,7 @@ module.exports = {
 
   },
 
-  change_ticket_info: async function (ticket_id,currentdes,previousdes,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
+  change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
     try {
 
       //connect to network with user_id
@@ -348,6 +349,7 @@ module.exports = {
 
       update_info.currentdes = currentdes
       update_info.previousdes = previousdes
+      update_info.transfer_date = transfer_date
       update_info.weight = weight
     
       if(giver_type == "Emitter"){
@@ -536,7 +538,7 @@ module.exports = {
       //connect to network with user_id
       console.log("Before Buyer connection")
       var businessNetworkConnection = new BusinessNetworkConnection();
-      await businessNetworkConnection.connect('admin@ticketing-system');
+      await businessNetworkConnection.connect('admin@recycling_tracker');
       console.log("Buyer connection Success")
       //get buyer from the network
       // const buyerRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.Buyer');
@@ -561,7 +563,7 @@ module.exports = {
       allTickets = await businessNetworkConnection.query('select_ticket_by_user', {owner_id: query_select});
       //console.log(allTickets)
       //disconnect
-      await businessNetworkConnection.disconnect('admin@ticketing-system');
+      await businessNetworkConnection.disconnect('admin@recycling_tracker');
       //return all tickets object
       return allTickets;
     }

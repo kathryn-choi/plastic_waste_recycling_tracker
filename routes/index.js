@@ -27,20 +27,23 @@ router.post('/signup', function(req, res, next) {
   var user_contact=req.body.user_contact;
   var companies_id=req.body.companies_id;
 
-  var sqlquery = "SELECT  * FROM users WHERE user_id = ?";
+  var sqlquery = "SELECT * FROM users WHERE user_id = ?";
   connection.query(sqlquery, user_id, function (err, rows) {
+    console.log(rows)
     if (rows.length == 0) {
-      pw=cryptoM.encrypt(pw);
-      console.log(pw);
-      var sql = 'INSERT INTO `users` (`user_id`, `user_pw`,  `user_type`,`companies_id`, `user_name`, `user_contact`) VALUES ?;';
-      var values = [[user_id, user_pw, user_type, companies_id, user_name, user_contact]];
-      connection.query(sql, [values], function (err) {
+      user_pw=cryptoM.encrypt(user_pw);
+      // console.log(user_pw);
+      var sql = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact) VALUES (?,?,?,?,?,?)";
+      var values = [user_id, user_pw, user_type, companies_id, user_name, user_contact];
+      console.log(values)
+      connection.query(sql, [user_id, user_pw, user_type, companies_id, user_name, user_contact], function (err) {
         if (err) {
           console.log("inserting user failed");
           throw err;
         } else {
               console.log("user inserted successfully");
-              res.redirect('/login');
+              res.jsonp({success : true, redirect_url : "http://127.0.0.1:4000/login"})
+              // res.redirect('/login');
         }
       });
     } else {

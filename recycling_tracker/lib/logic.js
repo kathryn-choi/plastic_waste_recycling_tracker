@@ -29,6 +29,7 @@ async function CreateTicket(createTicket) {
   	ticket.currentdes = createTicket.currentdes
     ticket.previousdes = createTicket.previousdes
     ticket.weight = createTicket.weight
+    ticket.transfer_date = createTicket.transfer_date
     ticket.giver = createTicket.giver
     ticket.reciever = createTicket.reciever
     ticket.conveyancer = createTicket.conveyancer
@@ -57,6 +58,7 @@ async function ChangeTicketInfo(changeticketinfo) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket')
     changeticketinfo.ticket.currentdes = changeticketinfo.currentdes
     changeticketinfo.ticket.previousdes = changeticketinfo.previousdes
+    changeticketinfo.ticket.transfer_date = changeticketinfo.transfer_date
     changeticketinfo.ticket.giver = changeticketinfo.giver
     changeticketinfo.ticket.reciever = changeticketinfo.reciever
     changeticketinfo.ticket.conveyancer = changeticketinfo.conveyancer

@@ -42,7 +42,7 @@ app.use('/recycler', recycler);
 connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'pw',
+  password : '',
   port     : 3306,
   database : 'recycling',
 });

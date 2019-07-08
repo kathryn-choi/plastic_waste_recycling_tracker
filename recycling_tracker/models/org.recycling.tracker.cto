@@ -50,7 +50,8 @@ participant SysAdmin extends User {
 asset Ticket identified by ticket_id {
   o String ticket_id  
   o String currentdes 
-  o String previousdes 
+  o String previousdes
+  o String transfer_date 
   o Integer weight 
   --> User giver
   --> User reciever
