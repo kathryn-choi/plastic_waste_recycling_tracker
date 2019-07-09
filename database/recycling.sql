@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `companies`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `companies` (
   `company_id` int(11) NOT NULL,
-  `company_name` varchar(100) NOT NULL,
+  `company_name` varchar(400) NOT NULL,
   `company_addr` varchar(400) NOT NULL,
   `company_contact` int(11) NOT NULL,
   `company_type` varchar(300) NOT NULL,
@@ -65,6 +65,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
+INSERT INTO `companies` VALUES (1,'allbaro','seoul',10,'emitter','plastic');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,39 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('user','2d6aa48bb2c481c28357ffdb48166424','emitter',1,10123,'user');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wastes`
+--
+
+DROP TABLE IF EXISTS `wastes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wastes` (
+  `waste_code` varchar(100) NOT NULL,
+  `waste_type` varchar(300) NOT NULL,
+  `waste_state` varchar(45) NOT NULL,
+  `waste_classify` varchar(45) DEFAULT NULL,
+  `waste_handler` varchar(400) NOT NULL,
+  `waste_handler_condition` varchar(45) NOT NULL,
+  `waste_handle_method` varchar(400) NOT NULL,
+  `waste_conveyancer` varchar(400) NOT NULL,
+  `waste_conveyancer_condition` varchar(45) NOT NULL,
+  `eform_type` varchar(100) NOT NULL,
+  PRIMARY KEY (`waste_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wastes`
+--
+
+LOCK TABLES `wastes` WRITE;
+/*!40000 ALTER TABLE `wastes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wastes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -106,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-08 10:40:08
+-- Dump completed on 2019-07-09 17:19:52

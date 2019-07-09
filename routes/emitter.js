@@ -59,14 +59,18 @@ router.get('/', function(req, res, next) {
 //전자 인계서 작성 페이지 불러오기
 router.get('/form', function(req, res, next) {
   res.render('emitter/electronic_form',{
-    title: "Electronic Form"
+    waste_code: '',
+    handler:'',
+    handle_method: '',
+    handle_address: '',
+    conveyancer: '',
   });
 });
 
 //전자 인계서 저장하기
 router.post('/form', function(req, res, next) {
-  var material_type=req.body.material_type;
-  var weigh=req.body.weigh;
+  var waste_code=req.body.waste_code;
+  var weight=req.body.weight;
   var conveyancer=req.body.conveyancer;
   var conveyancer_car_num=req.body.conveyancer_car_num;
   var handler=req.body.handler;
@@ -79,4 +83,67 @@ router.post('/form', function(req, res, next) {
   res.redirect('/emitter/myform');
 });
 
+//search material info by name
+router.post('/search', function(req, res, next) {
+  console.log("search!");
+  var material_type=req.body.material_type;
+  var results=new Array();
+  console.log(material_type);
+  var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
+  connection.query(sqlquery, material_type,function (err, rows) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+      console.log("found company");
+      results=rows;
+      console.log(results);
+      res.render('emitter/search_result',{result : results});
+    }
+  });
+});
+//get handler's address by handler name
+function get_handler_address(company_name, cb){
+  var handler_addr = '';
+  var sqlquery = "SELECT company_addr FROM companies WHERE company_name = ?";
+  connection.query(sqlquery, company_name,function (err, row) {
+    if (err) {
+      console.log("no match");
+      cb(false, null);
+    } else {
+      console.log("user login successfully");
+      handler_addr=row;
+      cb(true,handler_addr);
+    }
+  });
+}
+
+//choose material from search result
+router.post('/search_result', function(req, res, next) {
+  var waste_code=req.body.waste_code;
+  var handler=req.body.handler;
+  var handle_method=req.body.handle_method;
+  var conveyancer=req.body.conveyancer;
+  console.log(handler);
+  console.log(handle_method);
+  get_handler_address(handler, function(result, handler_addr){
+    if(result==true){
+      res.render('emitter/electronic_form',{
+        waste_code: waste_code,
+        handler:handler,
+        handle_method: handle_method,
+        handle_address: handler_addr,
+        conveyancer: conveyancer,
+      });
+    }else{
+      res.render('emitter/electronic_form',{
+        waste_code: waste_code,
+        handler:handler,
+        handle_method: handle_method,
+        handle_address: '',
+        conveyancer: conveyancer,
+      });
+    }
+  })
+});
 module.exports = router;
