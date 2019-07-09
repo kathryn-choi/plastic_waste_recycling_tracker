@@ -19,6 +19,7 @@ var conveyancer = require('./routes/conveyancer');
 var emitter = require('./routes/emitter');
 var handler = require('./routes/handler');
 var recycler = require('./routes/recycler');
+//var network = require('./recycling_tracker/network.js');
 
 var app = express();
 
@@ -30,6 +31,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  key: 'sid', // 세션키
+  secret: 'secret', // 비밀키
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 쿠키 유효기간 1시간
+  }
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -46,6 +55,8 @@ connection = mysql.createConnection({
   port     : 3306,
   database : 'recycling',
 });
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

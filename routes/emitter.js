@@ -3,8 +3,20 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('emitter/mypage',{
-    title: "Electronic Form"
+  var user_id=req.session.user_id;
+  var myinfo = new Array();
+  var sqlquery = "SELECT  * FROM users WHERE user_id = ?";
+  connection.query(sqlquery, user_id,function (err, rows) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+        console.log("user login successfully");
+        myinfo=rows;
+      res.render('emitter/mypage',{
+        myinfo: myinfo
+      });
+    }
   });
 });
 

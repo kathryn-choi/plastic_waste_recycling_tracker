@@ -49,7 +49,7 @@
     <label>ID</label>
     <input type="text" name="id"> <br>
     <label>Password</label>
-    <td><input type="password" name="pw"></td> <br>
+    <td><input type="text" name="pw"></td> <br>
     <label>이름</label>
     <td><input type="text" name="name"></td> <br>
     <label>User Type</label>
@@ -61,7 +61,7 @@
         <option value="recycler">재활용자</option>
         <option value="admin">환경부</option>
     </select> <br>
-    <label>Companies ID</label>
+    <label>Company ID</label>
     <%if(company_id==-1){%>
     <!--search button pop up 해서 company 이름으로 id 조회하기-->
     <!-- Trigger/Open The Modal -->
@@ -79,11 +79,12 @@
             </form>
         </div>
     </div>
+    <td><input type="number" name="companies_id"></td> <br>
     <%}else{%>
-    <td><input type="number" name="company_id" value="<%=company_id%>"></td> <br>
+    <td><input type="number" name="companies_id" value="<%=company_id%>"></td> <br>
     <%}%>
     <label>Phone</label>
-    <td><input type="number" name="company_contact"></td> <br>
+    <td><input type="number" name="phone"></td> <br>
     <input type="submit" value="회원가입" onclick="sign_up()">Sign Up</button>
 <!-- </form> -->
 <!-- jQuery library -->
@@ -130,7 +131,7 @@
             user_type : document.getElementsByName("user_type")[0].value,
             user_name : document.getElementsByName("name")[0].value,
             user_contact : document.getElementsByName("phone")[0].value,
-            company_id : document.getElementsByName("company_id")[0].value
+            companies_id : document.getElementsByName("companies_id")[0].value
         },
         success : function (data) {
           if(data.success == true){

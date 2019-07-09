@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-const key = "cloud_computing";
+const key = "waste_recylcling_management";
 
 exports.cryptoHash = function(pw){
     var hash_num = crypto.createHash('sha1');

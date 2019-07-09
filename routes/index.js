@@ -32,10 +32,10 @@ router.post('/signup', function(req, res, next) {
     console.log(rows)
     if (rows.length == 0) {
       user_pw=cryptoM.encrypt(user_pw);
-      // console.log(user_pw);
+      console.log("userpw : ", user_pw);
       var sql = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact) VALUES (?,?,?,?,?,?)";
       var values = [user_id, user_pw, user_type, companies_id, user_name, user_contact];
-      console.log(values)
+      console.log(values);
       connection.query(sql, [user_id, user_pw, user_type, companies_id, user_name, user_contact], function (err) {
         if (err) {
           console.log("inserting user failed");
@@ -61,17 +61,35 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   var user_id=req.body.user_id;
   var user_pw=req.body.user_pw;
+  console.log(user_id);
   var sqlquery = "SELECT  * FROM users WHERE user_id = ?";
-  connection.query(sqlquery, user_id,function (err, rows) {
+  connection.query(sqlquery, user_id,function (err, row) {
     if (err) {
       console.log("no match");
       res.redirect('back');
     } else {
-      var bytes =cryptoM.decrypt(rows[0].user_pw);
+      console.log(row);
+      var bytes =cryptoM.decrypt(row[0].user_pw);
       if(bytes===user_pw) {
         console.log("user login successfully");
-        req.session.user_id=rows[0].user_id;
-        res.redirect('/');
+        console.log(row[0].user_id);
+        req.session.user_id=row[0].user_id;
+        var user_type=row[0].user_type;
+        //redirect path according to user_type
+        if(user_type=="emitter") {
+          res.redirect('/emitter');
+        }else if (user_type=="conveyancer"){
+          res.redirect('/conveyancer');
+        }else if (user_type=="handler"){
+          res.redirect('/handler');
+        }else if (user_type=="recycler"){
+          res.redirect('/recycler');
+        }else if (user_type=="admin"){
+          res.redirect('/admin');
+        }else{
+          console.log("No User Type");
+          res.redirect('/login');
+        }
       }else{
         console.log("wrong password!");
         res.render('login',{
@@ -83,7 +101,9 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  req.session.destory();  // 세션 삭제
+  res.clearCookie('sid'); // 세션 쿠키 삭제
+  res.redirect('/');
 });
 
 //search companyinfo by name
