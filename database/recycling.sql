@@ -65,7 +65,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'allbaro','seoul',10,'emitter','plastic');
+INSERT INTO `companies` VALUES (1,'allbaro','seoul',10,'emitter','plastic'),(2,'fds','seoul',12312,'handler','plastic'),(3,'q','seoul',123124,'conveyancer','');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,6 +127,7 @@ CREATE TABLE `wastes` (
 
 LOCK TABLES `wastes` WRITE;
 /*!40000 ALTER TABLE `wastes` DISABLE KEYS */;
+INSERT INTO `wastes` VALUES ('1','plastic','solid',NULL,'fds','fine','melting','q','fine','electronic');
 /*!40000 ALTER TABLE `wastes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -139,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-09 17:19:52
+-- Dump completed on 2019-07-09 18:26:42
