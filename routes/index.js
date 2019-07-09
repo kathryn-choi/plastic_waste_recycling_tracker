@@ -101,7 +101,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-  req.session.destory();  // 세션 삭제
+  req.session.destroy();  // 세션 삭제
   res.clearCookie('sid'); // 세션 쿠키 삭제
   res.redirect('/');
 });
