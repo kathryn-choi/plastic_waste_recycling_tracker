@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/signup', function(req, res, next) {
-  res.render('signup', { title: 'Express' });
+  res.render('signup', { title: 'Express' , company_id: -1});
 });
 
 router.post('/signup', function(req, res, next) {
@@ -86,21 +86,27 @@ router.get('/logout', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-//search company_id by name
+//search companyinfo by name
 router.post('/search', function(req, res, next) {
   var company_name=req.body.company_name;
-  var sqlquery = "SELECT  * FROM companies WHERE company_name LIKE ?";
+  var results=new Array();
+  var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ?";
   connection.query(sqlquery, company_name,function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');
     } else {
-        console.log("found comapny id");
-        //수정할 예정
-        res.send({result : rows});
+        console.log("found company");
+        results=rows;
+        console.log(results);
+        res.render('search_result',{result : results});
       }
   });
 });
-
+//choose company from search result
+router.post('/search_result', function(req, res, next) {
+  var company_id=req.body.company_id;
+  res.render('signup',{company_id: company_id});
+});
 
 module.exports = router;
