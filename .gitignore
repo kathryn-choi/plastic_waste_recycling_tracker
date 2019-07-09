@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 .idea
 recycling_tracker/networkadmin.card
+recycling_tracker/node_modules

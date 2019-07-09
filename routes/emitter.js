@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// var network = require('../recycling_tracker/network.js');
+var network = require('../recycling_tracker/network.js');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb){

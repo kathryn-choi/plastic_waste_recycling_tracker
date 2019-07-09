@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 var mysql = require('mysql');
 var async = require('async');
-// var network = require('../recycling_tracker/network.js');
+var network = require('../recycling_tracker/network.js');
 var cryptoM = require('./../public/modules/cryptoM.js');
 var router = express.Router();
 
@@ -48,7 +48,7 @@ router.post('/signup', function(req, res, next) {
                 console.log("finding company_name error");
                 throw err;
               } else {
-                  company_name = row
+                  company_name = row[0].company_name
                   network.register_emitter(user_id,user_name,company_name)
                   .then((response) => {
                       //return error if error in response
@@ -70,7 +70,7 @@ router.post('/signup', function(req, res, next) {
                 console.log("finding company_name error");
                 throw err;
               } else {
-                  company_name = row
+                  company_name = row[0].company_name
                   network.register_handler(user_id,user_name,company_name)
                   .then((response) => {
                       //return error if error in response
@@ -92,7 +92,7 @@ router.post('/signup', function(req, res, next) {
                 console.log("finding company_name error");
                 throw err;
               } else {
-                  company_name = row
+                  company_name = row[0].company_name
                   network.register_recycler(user_id,user_name,company_name)
                   .then((response) => {
                       //return error if error in response

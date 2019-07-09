@@ -1,5 +1,7 @@
 #!/bin/bash
 
+composer card delete -c admin@recycling_tracker
+composer card delete -c PeerAdmin@hlfv1
 cd fabric-dev-servers
 
 sudo ./downloadFabric.sh
