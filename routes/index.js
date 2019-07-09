@@ -2,7 +2,7 @@ var express = require('express');
 var request = require('request');
 var mysql = require('mysql');
 var async = require('async');
-
+// var network = require('../recycling_tracker/network.js');
 var cryptoM = require('./../public/modules/cryptoM.js');
 var router = express.Router();
 
@@ -27,24 +27,113 @@ router.post('/signup', function(req, res, next) {
   var user_contact=req.body.user_contact;
   var companies_id=req.body.companies_id;
   var car_number = req.body.car_number;
-
+  var company_name = "";
   var sqlquery = "SELECT * FROM users WHERE user_id = ?";
   connection.query(sqlquery, user_id, function (err, rows) {
     console.log(rows)
     if (rows.length == 0) {
       user_pw=cryptoM.encrypt(user_pw);
-      console.log("userpw : ", user_pw);
-      var sql = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact,carnum) VALUES (?,?,?,?,?,?,?)";
-      connection.query(sql, [user_id, user_pw, user_type, companies_id, user_name, user_contact,car_number], function (err) {
+      console.log("userpw : ", user_pw);      
+      var sql2 = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact,carnum) VALUES (?,?,?,?,?,?,?)";
+      connection.query(sql2, [user_id, user_pw, user_type, companies_id, user_name, user_contact,car_number], function (err) {
         if (err) {
           console.log("inserting user failed");
           throw err;
         } else {
           console.log("user inserted successfully");
-          
-          res.jsonp({success : true, redirect_url : "/login"})
-        }
-      });
+          if(user_type == 'emitter'){
+            var sql = "select company_name from companies where company_id = ?";
+            connection.query(sql, companies_id, function (err,row) {
+              if (err) {
+                console.log("finding company_name error");
+                throw err;
+              } else {
+                  company_name = row
+                  network.register_emitter(user_id,user_name,company_name)
+                  .then((response) => {
+                      //return error if error in response
+                      if (response.error != null) {
+                        console.log("emitter register error")
+                      } else {
+                          //else return success
+                          console.log("emitter register success")
+                          res.jsonp({success : true, redirect_url : "/login"})
+                      }
+                  })
+              }
+            })
+          }
+          else if(user_type == 'handler'){
+            var sql = "select company_name from companies where company_id = ?";
+            connection.query(sql, companies_id, function (err,row) {
+              if (err) {
+                console.log("finding company_name error");
+                throw err;
+              } else {
+                  company_name = row
+                  network.register_handler(user_id,user_name,company_name)
+                  .then((response) => {
+                      //return error if error in response
+                      if (response.error != null) {
+                        console.log("handler register error")
+                      } else {
+                          //else return success
+                          console.log("handler register success")
+                          res.jsonp({success : true, redirect_url : "/login"})
+                      }
+                  })
+              }
+            })
+          }
+          else if(user_type == 'recycler'){
+            var sql = "select company_name from companies where company_id = ?";
+            connection.query(sql, companies_id, function (err,row) {
+              if (err) {
+                console.log("finding company_name error");
+                throw err;
+              } else {
+                  company_name = row
+                  network.register_recycler(user_id,user_name,company_name)
+                  .then((response) => {
+                      //return error if error in response
+                      if (response.error != null) {
+                        console.log("recycler register error")
+                      } else {
+                          //else return success
+                          console.log("recycler register success")
+                          res.jsonp({success : true, redirect_url : "/login"})
+                      }
+                  })
+              }
+            })
+          }
+          else if (user_type == 'conveyancer'){
+            network.register_conveyancer(user_id,user_name,car_number)
+            .then((response) => {
+                //return error if error in response
+                if (response.error != null) {
+                  console.log("conveyancer register error")
+                } else {
+                    //else return success
+                    console.log("conveyancer register success")
+                    res.jsonp({success : true, redirect_url : "/login"})
+                }
+            })
+          }
+          else{
+            network.register_admin(user_id,user_name)
+            .then((response) => {
+                //return error if error in response
+                if (response.error != null) {
+                  console.log("admin register error")
+                } else {
+                    //else return success
+                    console.log("admin register success")
+                    res.jsonp({success : true, redirect_url : "/login"})
+                }
+            })
+          } 
+        }})
     } else {
       console.log("이미 있는 ID, ID를 다시 입력해주세요!");
       res.redirect("/login");

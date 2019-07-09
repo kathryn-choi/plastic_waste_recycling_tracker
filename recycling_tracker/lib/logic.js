@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,23 +18,23 @@
  * Write your transction processor functions here
  */
 
- /**
+/**
  * CreateTicket transaction
  * @param {org.recycling.tracker.CreateTicket} createTicket
  * @transaction
  */
 async function CreateTicket(createTicket) {
-    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket')
-    const factory = getFactory()
-    const ticket = factory.newResource('org.recycling.tracker', 'Ticket', createTicket.ticket_id)
-  	ticket.currentdes = createTicket.currentdes
-    ticket.previousdes = createTicket.previousdes
-    ticket.weight = createTicket.weight
-    ticket.transfer_date = createTicket.transfer_date
-    ticket.giver = createTicket.giver
-    ticket.reciever = createTicket.reciever
-    ticket.conveyancer = createTicket.conveyancer
-    await ticketRegistry.add(ticket)
+    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket');
+    const factory = getFactory();
+    const ticket = factory.newResource('org.recycling.tracker', 'Ticket', createTicket.ticket_id);
+    ticket.currentdes = createTicket.currentdes;
+    ticket.previousdes = createTicket.previousdes;
+    ticket.weight = createTicket.weight;
+    ticket.transfer_date = createTicket.transfer_date;
+    ticket.giver = createTicket.giver;
+    ticket.reciever = createTicket.reciever;
+    ticket.conveyancer = createTicket.conveyancer;
+    await ticketRegistry.add(ticket);
 
 }
 
@@ -45,7 +46,7 @@ async function CreateTicket(createTicket) {
 async function DeleteTicket(deleteTicket) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket')
 
-    await ticketRegistry.remove(deleteTicket.ticket)
+    await ticketRegistry.remove(deleteTicket.ticket);
 
 }
 
@@ -55,14 +56,14 @@ async function DeleteTicket(deleteTicket) {
  * @transaction
  */
 async function ChangeTicketInfo(changeticketinfo) {
-    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket')
-    changeticketinfo.ticket.currentdes = changeticketinfo.currentdes
-    changeticketinfo.ticket.previousdes = changeticketinfo.previousdes
-    changeticketinfo.ticket.transfer_date = changeticketinfo.transfer_date
-    changeticketinfo.ticket.giver = changeticketinfo.giver
-    changeticketinfo.ticket.reciever = changeticketinfo.reciever
-    changeticketinfo.ticket.conveyancer = changeticketinfo.conveyancer
-    await ticketRegistry.update(changeticketinfo.ticket)
+    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket');
+    changeticketinfo.ticket.currentdes = changeticketinfo.currentdes;
+    changeticketinfo.ticket.previousdes = changeticketinfo.previousdes;
+    changeticketinfo.ticket.transfer_date = changeticketinfo.transfer_date;
+    changeticketinfo.ticket.giver = changeticketinfo.giver;
+    changeticketinfo.ticket.reciever = changeticketinfo.reciever;
+    changeticketinfo.ticket.conveyancer = changeticketinfo.conveyancer;
+    await ticketRegistry.update(changeticketinfo.ticket);
 
 }
 
@@ -72,9 +73,9 @@ async function ChangeTicketInfo(changeticketinfo) {
  * @transaction
  */
 async function UpdateCompanyAsset(updatecompanyasset) {
-    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Compasset')
-    updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight
-    updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight
-    updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight
-    await ticketRegistry.update(updatecompanyasset.compasset)
+    const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Compasset');
+    updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight;
+    updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight;
+    updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight;
+    await ticketRegistry.update(updatecompanyasset.compasset);
 }
