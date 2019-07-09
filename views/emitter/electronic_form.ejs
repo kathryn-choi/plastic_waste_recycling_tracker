@@ -71,9 +71,9 @@
         <option value="g">g</option>
     </select> <br>
     <label>운반자</label>
-    <input type="text" name="conveyancer" value="conveyancer"> <br>
+    <input type="text" name="conveyancer" value="<%=conveyancer%>"> <br>
     <label>*3.차량번호</label>
-    <input type="text" name="conveyancer_car_num">
+    <input type="text" name="conveyancer_car_num" value="<%=carnum%>">
     <!--조회하기-->
     <br>
     <label>처리자</label>
@@ -150,10 +150,11 @@
                 }}
         });
     }
+
     var dateControl = document.querySelector('input[type="date"]');
     var d = new Date();
     var n = d.toISOString();
-    var current_date=n.slice(0, 9);
+    var current_date=n.slice(0,10);
     dateControl.value = current_date;
 
 </script>

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18, for macos10.12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: recycling
 -- ------------------------------------------------------
--- Server version	5.6.44
+-- Server version	5.7.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -83,6 +83,7 @@ CREATE TABLE `users` (
   `companies_id` int(11) NOT NULL,
   `user_contact` int(11) NOT NULL,
   `user_name` varchar(45) NOT NULL,
+  `carnum` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `companies_id_idx` (`companies_id`),
   CONSTRAINT `companies_id` FOREIGN KEY (`companies_id`) REFERENCES `companies` (`company_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -95,7 +96,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('user','2d6aa48bb2c481c28357ffdb48166424','emitter',1,10123,'user');
+INSERT INTO `users` VALUES ('1','9a42c67161b4d82c2bb2fa034ccc89f3','emitter',1,1,'1',NULL),('2','ca42f3a18511ac9e83cb2c816735444a','handler',2,2,'fds',''),('3','67edc6cf89bd73186749814e773002cc','conveyancer',3,1,'q','123'),('user','2d6aa48bb2c481c28357ffdb48166424','emitter',1,10123,'user',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,4 +141,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-09 18:26:42
+-- Dump completed on 2019-07-09 22:20:28

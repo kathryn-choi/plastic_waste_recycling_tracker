@@ -1,6 +1,6 @@
 var express = require('express');
 var request = require('request');
-var mysql      = require('mysql');
+var mysql = require('mysql');
 var async = require('async');
 
 var cryptoM = require('./../public/modules/cryptoM.js');
@@ -26,6 +26,7 @@ router.post('/signup', function(req, res, next) {
   var user_name=req.body.user_name;
   var user_contact=req.body.user_contact;
   var companies_id=req.body.companies_id;
+  var car_number = req.body.car_number;
 
   var sqlquery = "SELECT * FROM users WHERE user_id = ?";
   connection.query(sqlquery, user_id, function (err, rows) {
@@ -33,17 +34,15 @@ router.post('/signup', function(req, res, next) {
     if (rows.length == 0) {
       user_pw=cryptoM.encrypt(user_pw);
       console.log("userpw : ", user_pw);
-      var sql = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact) VALUES (?,?,?,?,?,?)";
-      var values = [user_id, user_pw, user_type, companies_id, user_name, user_contact];
-      console.log(values);
-      connection.query(sql, [user_id, user_pw, user_type, companies_id, user_name, user_contact], function (err) {
+      var sql = "INSERT INTO users(user_id, user_pw,  user_type,companies_id, user_name, user_contact,carnum) VALUES (?,?,?,?,?,?,?)";
+      connection.query(sql, [user_id, user_pw, user_type, companies_id, user_name, user_contact,car_number], function (err) {
         if (err) {
           console.log("inserting user failed");
           throw err;
         } else {
-              console.log("user inserted successfully");
-              res.jsonp({success : true, redirect_url : "http://127.0.0.1:4000/login"})
-              // res.redirect('/login');
+          console.log("user inserted successfully");
+          
+          res.jsonp({success : true, redirect_url : "/login"})
         }
       });
     } else {

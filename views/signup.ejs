@@ -49,7 +49,7 @@
     <label>ID</label>
     <input type="text" name="id"> <br>
     <label>Password</label>
-    <td><input type="text" name="pw"></td> <br>
+    <td><input type="password" name="pw"></td> <br>
     <label>이름</label>
     <td><input type="text" name="name"></td> <br>
     <label>User Type</label>
@@ -85,6 +85,8 @@
     <%}%>
     <label>Phone</label>
     <td><input type="number" name="phone"></td> <br>
+    <label>차량 번호(운반자일 경우 필수 입력)</label>
+    <td><input type="number" name="carnum"></td> <br>
     <input type="submit" value="회원가입" onclick="sign_up()">Sign Up</button>
 <!-- </form> -->
 <!-- jQuery library -->
@@ -131,7 +133,8 @@
             user_type : document.getElementsByName("user_type")[0].value,
             user_name : document.getElementsByName("name")[0].value,
             user_contact : document.getElementsByName("phone")[0].value,
-            companies_id : document.getElementsByName("companies_id")[0].value
+            companies_id : document.getElementsByName("companies_id")[0].value,
+            car_number : document.getElementsByName("carnum")[0].value
         },
         success : function (data) {
           if(data.success == true){

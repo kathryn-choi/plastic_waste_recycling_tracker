@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+// var network = require('../recycling_tracker/network.js');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb){
@@ -77,10 +78,50 @@ router.post('/form', function(req, res, next) {
   var handle_address=req.body.handle_address;
   var transfer_date=req.body.transfer_date;
   var emitter_name=req.body.emitter_name;
+  var user_id = req.session.user_id
+  var ticket_id = user_id + "-" + waste_code + "-" + transfer_date
 
+  var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
+  connection.query(sqlquery, conveyancer,function (err, rows) {
+    if (err) {
+      console.log("no match");
+    } else {
+      console.log("found user_id");
+      var con_id = rows[0].user_id
+      var sqlquery2 = "SELECT * FROM users WHERE user_id = ?"
+      connection.query(sqlquery2, user_id,function (err, rows) {
+        if (err) {
+          console.log("no match");
+        } else {
+          console.log("found company_id");
+          var company_id = rows[0].companies_id
+          var sqlquery3= "SELECT * FROM companies WHERE company_id = ?"
+          connection.query(sqlquery3, company_id,function (err, rows) {
+            if (err) {
+              console.log("no match");
+            } else {
+              console.log("found company_loc");
+              var company_loc = rows[0].company_addr
+              var sqlquery4= "SELECT * FROM users WHERE user_name = ? and user_type = 'handler'"
+              connection.query(sqlquery4, handler,function (err, rows) {
+                if (err) {
+                  console.log("no match");
+                } else {
+                  console.log("found handler_id");
+                  var hanlder_id = rows[0].user_id
+                  console.log(hanlder_id)
+                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Emitter",hanlder_id,"Handler",con_id)
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
   //block에 insert
-
-  res.redirect('/emitter/myform');
+  // network.create_ticket(ticket_id,currentdes,"",weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
+  res.jsonp({success : true, redirect_url : "/emitter"})
 });
 
 //search material info by name
@@ -113,7 +154,8 @@ function get_handler_address(company_name, cb){
     } else {
       console.log("user login successfully");
       handler_addr=row;
-      cb(true,handler_addr);
+      console.log(handler_addr[0].company_addr)
+      cb(true,handler_addr[0].company_addr);
     }
   });
 }
@@ -124,26 +166,37 @@ router.post('/search_result', function(req, res, next) {
   var handler=req.body.handler;
   var handle_method=req.body.handle_method;
   var conveyancer=req.body.conveyancer;
-  console.log(handler);
-  console.log(handle_method);
-  get_handler_address(handler, function(result, handler_addr){
-    if(result==true){
-      res.render('emitter/electronic_form',{
-        waste_code: waste_code,
-        handler:handler,
-        handle_method: handle_method,
-        handle_address: handler_addr,
-        conveyancer: conveyancer,
-      });
-    }else{
-      res.render('emitter/electronic_form',{
-        waste_code: waste_code,
-        handler:handler,
-        handle_method: handle_method,
-        handle_address: '',
-        conveyancer: conveyancer,
-      });
+  var sqlquery = "SELECT carnum FROM users WHERE user_name = ?";
+  connection.query(sqlquery, conveyancer,function (err, row) {
+    if (err) {
+      console.log("no match");
+      cb(false, null);
+    } else {
+      console.log("get convey carnum success");
+      var convey_carnum = row;
+      get_handler_address(handler, function(result, handler_addr){
+        if(result==true){
+          res.render('emitter/electronic_form',{
+            waste_code: waste_code,
+            handler:handler,
+            handle_method: handle_method,
+            handle_address: handler_addr,
+            conveyancer: conveyancer,
+            carnum : convey_carnum
+          });
+        }else{
+          res.render('emitter/electronic_form',{
+            waste_code: waste_code,
+            handler:handler,
+            handle_method: handle_method,
+            handle_address: '',
+            conveyancer: conveyancer,
+            carnum : convey_carnum
+          });
+        }
+      })
     }
-  })
+  });
+  
 });
 module.exports = router;
