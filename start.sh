@@ -21,3 +21,6 @@ composer card import --file networkadmin.card
 composer network ping --card admin@recycling_tracker
 
 cd ..
+
+
+#composer archive create -t dir -n .
