@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: recycling
+-- Host: localhost    Database: recycling
 -- ------------------------------------------------------
--- Server version	5.7.26
+-- Server version	5.7.26-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `alarms` (
   `is_complete` tinyint(4) DEFAULT '0',
   `last_date` datetime DEFAULT NULL,
   PRIMARY KEY (`alarms_index`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,10 +53,10 @@ CREATE TABLE `companies` (
   `company_addr` varchar(400) NOT NULL,
   `company_contact` int(11) NOT NULL,
   `company_type` varchar(300) NOT NULL,
-  `company_material_type` varchar(300) NOT NULL,
+  `company_material_type` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`company_id`),
   UNIQUE KEY `companies_contact_UNIQUE` (`company_contact`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'allbaro','seoul',10,'emitter','plastic'),(2,'fds','seoul',12312,'handler','plastic'),(3,'q','seoul',123124,'conveyancer','');
+INSERT INTO `companies` VALUES (0,'환경부','seoul',234,'admin',NULL),(1,'allbaro','seoul',10,'emitter','plastic'),(2,'fds','seoul',12312,'handler','plastic'),(3,'q','seoul',123124,'conveyancer','');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   KEY `companies_id_idx` (`companies_id`),
   CONSTRAINT `companies_id` FOREIGN KEY (`companies_id`) REFERENCES `companies` (`company_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('1','9a42c67161b4d82c2bb2fa034ccc89f3','emitter',1,1,'1',NULL),('2','ca42f3a18511ac9e83cb2c816735444a','handler',2,2,'fds',''),('3','67edc6cf89bd73186749814e773002cc','conveyancer',3,1,'q','123'),('user','2d6aa48bb2c481c28357ffdb48166424','emitter',1,10123,'user',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +118,7 @@ CREATE TABLE `wastes` (
   `waste_conveyancer_condition` varchar(45) NOT NULL,
   `eform_type` varchar(100) NOT NULL,
   PRIMARY KEY (`waste_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-09 22:20:28
+-- Dump completed on 2019-07-10 14:59:10

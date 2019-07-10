@@ -5,6 +5,13 @@ query select_ticket {
         WHERE (ticket_id == _$ticket_id)
 }
 
+query select_ticket_by_user{
+  description: "Select ticket that matches owner"
+  statement:
+      SELECT org.recycling.tracker.Ticket
+        WHERE (giver == _$user_id OR conveyancer == _$user_id)
+}
+
 query select_compasset {
   description: "Select company asset that matches asset_id"
   statement:

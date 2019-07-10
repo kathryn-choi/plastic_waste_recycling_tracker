@@ -29,7 +29,7 @@ participant Emitter extends User {
 }
 //Conveyancer identified by user_id
 participant Conveyancer extends User {
-  o Integer carnumber
+  o String carnumber
 }
 
 //Handler identified by user_id
@@ -52,7 +52,7 @@ asset Ticket identified by ticket_id {
   o String currentdes 
   o String previousdes
   o String transfer_date 
-  o Integer weight 
+  o String weight 
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -73,7 +73,7 @@ transaction CreateTicket {
   o String currentdes 
   o String previousdes 
   o String transfer_date 
-  o Integer weight 
+  o String weight 
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -84,7 +84,7 @@ event ticket_created {
   o String currentdes 
   o String previousdes 
   o String transfer_date
-  o Integer weight 
+  o String weight 
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -100,7 +100,7 @@ event ticket_deleted {
   o String currentdes 
   o String previousdes 
   o String transfer_date 
-  o Integer weight 
+  o String weight 
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -110,7 +110,7 @@ event ticket_deleted {
 transaction ChangeTicketInfo {
   o String currentdes 
   o String previousdes 
-  o Integer weight 
+  o String weight 
   o String transfer_date 
   --> User giver
   --> User reciever
@@ -123,7 +123,7 @@ event ticket_updated {
   o String currentdes 
   o String previousdes 
   o String transfer_date 
-  o Integer weight 
+  o String weight 
   --> User giver
   --> User reciever
   --> User conveyancer

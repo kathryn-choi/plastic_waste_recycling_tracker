@@ -510,6 +510,30 @@ module.exports = {
             return error;
         }
     },
+    get_ticket_info_by_userid : async function (user_id) {
+
+        try {
+            //connect to network with user_id
+            var businessNetworkConnection = new BusinessNetworkConnection();
+            await businessNetworkConnection.connect('admin@recycling_tracker');
+
+            //query ticket from the network
+            const ticket = await businessNetworkConnection.query('select_ticket_by_user', {user_id: user_id});
+
+            //disconnect
+            await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+            //return ticket object
+            return ticket;
+        }
+        catch(err) {
+            //print and return error
+            console.log(err);
+            var error = {};
+            error.error = err.message;
+            return error;
+        }
+    },
     get_compasset_info_by_id : async function (asset_id) {
 
         try {
@@ -538,10 +562,8 @@ module.exports = {
 
         try {
             //connect to network with user_id
-            console.log('Before Buyer connection');
             var businessNetworkConnection = new BusinessNetworkConnection();
             await businessNetworkConnection.connect('admin@recycling_tracker');
-            console.log('Buyer connection Success');
             //get buyer from the network
             // const buyerRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.Buyer');
             // const buyer = await buyerRegistry.get(user_id);
@@ -562,7 +584,7 @@ module.exports = {
                 query_select = 'resource:'+namespace+'.Recycler#'+_user_id;
             }
             //console.log(query_select)
-            var allTickets = await businessNetworkConnection.query('select_ticket_by_user', {owner_id: query_select});
+            var allTickets = await businessNetworkConnection.query('select_compasset_by_user', {owner_id: query_select});
             //console.log(allTickets)
             //disconnect
             await businessNetworkConnection.disconnect('admin@recycling_tracker');

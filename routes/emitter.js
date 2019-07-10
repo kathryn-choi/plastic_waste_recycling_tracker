@@ -47,7 +47,7 @@ function get_user_info(user_id, cb){
 }
 //get user's ticketinfo by id
 function get_user_ticketinfo(user_id, cb){
-  network.get_compasset_by_user(user_id, "Emitter").then((response) => { 
+  network.get_compasset_by_user(user_id).then((response) => { 
     //return error if error in response
 if (response.error != null) {
     console.log("network get ticket info failed");
