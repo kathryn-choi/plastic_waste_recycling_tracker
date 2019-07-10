@@ -18,10 +18,3 @@ query select_compasset_by_user{
       SELECT org.recycling.tracker.Compasset
         WHERE (owner == _$owner_id)
 }
-
-query ticket_history_by_id{
-  description: "Query ticket history by id"
-  statement:
-      SELECT org.hyperledger.composer.system.HistorianRecord
-        WHERE (transactionType)
-}

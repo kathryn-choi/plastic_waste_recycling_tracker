@@ -39,6 +39,7 @@ async function CreateTicket(createTicket) {
 	event.ticket_id = ticket.ticket_id
   	event.currentdes = ticket.currentdes
     event.previousdes = ticket.previousdes
+    event.transfer_date = ticket.transfer_date
     event.weight = ticket.weight
     event.giver = ticket.giver
   	event.reciever = ticket.reciever
@@ -62,6 +63,7 @@ async function DeleteTicket(deleteTicket) {
   	event.currentdes = deleteTicket.ticket.currentdes
     event.previousdes = deleteTicket.ticket.previousdes
     event.weight = deleteTicket.ticket.weight
+    event.transfer_date = deleteTicket.ticket.transfer_date
     event.giver = deleteTicket.ticket.giver
   	event.reciever = deleteTicket.ticket.reciever
     event.conveyancer = deleteTicket.ticket.conveyancer
@@ -73,38 +75,39 @@ async function DeleteTicket(deleteTicket) {
  * @param {org.recycling.tracker.ChangeTicketInfo} changeTicketinfo
  * @transaction
  */
-async function ChangeTicketInfo(changeticketinfo) {
+async function ChangeTicketInfo(changeTicketinfo) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket');
-    changeticketinfo.ticket.currentdes = changeTicketinfo.currentdes;
-    changeticketinfo.ticket.previousdes = changeTicketinfo.previousdes;
-    changeticketinfo.ticket.transfer_date = changeTicketinfo.transfer_date;
-    changeticketinfo.ticket.giver = changeTicketinfo.giver;
-    changeticketinfo.ticket.reciever = changeTicketinfo.reciever;
-    changeticketinfo.ticket.conveyancer = changeTicketinfo.conveyancer;
-    await ticketRegistry.update(changeticketinfo.ticket);
+    changeTicketinfo.ticket.currentdes = changeTicketinfo.currentdes;
+    changeTicketinfo.ticket.previousdes = changeTicketinfo.previousdes;
+    changeTicketinfo.ticket.transfer_date = changeTicketinfo.transfer_date;
+    changeTicketinfo.ticket.giver = changeTicketinfo.giver;
+    changeTicketinfo.ticket.reciever = changeTicketinfo.reciever;
+    changeTicketinfo.ticket.conveyancer = changeTicketinfo.conveyancer;
+    await ticketRegistry.update(changeTicketinfo.ticket);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'ticket_updated');
-	event.ticket_id = changeticketinfo.ticket.ticket_id
-  	event.currentdes = changeticketinfo.ticket.currentdes
-    event.previousdes = changeticketinfo.ticket.previousdes
-    event.weight = changeticketinfo.ticket.weight
-    event.giver = changeticketinfo.ticket.giver
-  	event.reciever = changeticketinfo.ticket.reciever
-    event.conveyancer = changeticketinfo.ticket.conveyancer
+	event.ticket_id = changeTicketinfo.ticket.ticket_id
+  	event.currentdes = changeTicketinfo.ticket.currentdes
+    event.previousdes = changeTicketinfo.ticket.previousdes
+    event.weight = changeTicketinfo.ticket.weight
+    event.transfer_date = changeTicketinfo.ticket.transfer_date
+    event.giver = changeTicketinfo.ticket.giver
+  	event.reciever = changeTicketinfo.ticket.reciever
+    event.conveyancer = changeTicketinfo.ticket.conveyancer
     emit(event)
 
 }
 
 /**
  * UpdateCompanyAsset transaction
- * @param {org.recycling.tracker.UpdateCompanyAsset} updateCompanyasset
+ * @param {org.recycling.tracker.UpdateCompanyAsset} updatecompanyasset
  * @transaction
  */
 async function UpdateCompanyAsset(updatecompanyasset) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Compasset');
-    updatecompanyasset.compasset.gen_weight = updateCompanyasset.gen_weight;
-    updatecompanyasset.compasset.handle_weight = updateCompanyasset.handle_weight;
-    updatecompanyasset.compasset.save_weight = updateCompanyasset.save_weight;
+    updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight;
+    updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight;
+    updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight;
     await ticketRegistry.update(updatecompanyasset.compasset);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'compasset_update');
