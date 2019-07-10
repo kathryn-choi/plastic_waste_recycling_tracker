@@ -21,5 +21,29 @@
     Contact : <%=mycompany[0].company_contact%><br>
     Type : <%=mycompany[0].company_type%><br>
     Material Type : <%=mycompany[0].company_material_type%><br>
+
+    <h5>My Tickets</h5>
+    <%for (var i=0; i<mytickets.length; i++){%>
+        <!--before transfer date-->
+        <%if(mytickets[i].transfer_date<d){%>
+            <form action="/emitter/change_ticketinfo" method="POST">
+                Ticket ID: <input type="text" name="ticket_id" value="<%=mytickets[i].ticket_id%>">
+                Current Destination: <input type="text" name="currentdes" value="<%=mytickets[i].currentdes%>">
+                Previous Destination:<input type="text" name="previousdes" value="<%=mytickets[i].previousdes%>">
+                Weight :<input type="text" name="weight" value="<%=mytickets[i].weight%>">
+                Transfer Date :<input type="date" name="transfer_date" value="<%=mytickets[i].transfer_date%>">
+                Giver ID:<input type="text" name="giver_id" value="<%=mytickets[i].giver_id%>">
+                Giver Type :<input type="text" name="giver_type" value="<%=mytickets[i].giver_type%>">
+                Receiver ID:<input type="text" name="reciever_id" value="<%=mytickets[i].reciever_id%>">
+                Receiver Type :<input type="text" name="reciever_type" value="<%=mytickets[i].reciever_type%>">
+                Conveyer ID : <input type="text" name="conveyer_id" value="<%=mytickets[i].conveyer_id%>">
+            </form>
+        <%}%>
+    <%}%>
+
 </body>
+<script>
+var d = new Date();
+</script>
+
 </html>

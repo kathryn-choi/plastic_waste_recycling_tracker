@@ -30,28 +30,100 @@ function get_user_info(user_id, cb){
       myinfo=rows;
       get_user_company_info(rows[0].companies_id, function (result, arr){
         if(result==true){
-          cb(true, myinfo, arr);
+          get_user_ticketinfo(user_id, function(r,mytickets){
+            if(r==true){
+              cb(true, myinfo, arr, mytickets);
+            }else{
+              cb(true, myinfo, arr, []);
+            }
+          })
+          //cb(true,myinfo, arr,[]);
         }else{
-          cb(true, myinfo, []);
+          cb(true, myinfo, [], []);
         }
       });
     }
   });
 }
-
+//get user's ticketinfo by id
+function get_user_ticketinfo(user_id, cb){
+  network.get_compasset_by_user(user_id, "Emitter").then((response) => { 
+    //return error if error in response
+if (response.error != null) {
+    console.log("network get ticket info failed");
+    cb(false, []);
+} else {
+    var get_my_tickets = response;
+    var my_tickets=new Array(); 
+    for(i=0; i<get_my_tickets.length; i++) {
+        var ticket={          
+            ticket_id: '',
+            currentdes: '',
+            previousdes: '',
+            weight: '',
+            transfer_date: '',
+            giver_id: '', 
+            giver_type: '',
+            reciever_id: '',
+            reciever_type: '',
+            conveyer_id: ''
+        }
+        my_tickets.push(ticket);
+    }
+    for(i=0; i<get_my_tickets.length; i++) {
+        console.log(get_my_tickets[i])
+        var stringfy_tickets=JSON.stringify(get_my_tickets[i]);
+        var obj =  JSON.parse(stringfy_tickets);
+       for( var key in obj ) {
+           console.log(i + " " + key + '=>' + obj[key] );
+           if(key == 'ticket_id'){
+        my_tickets[i].ticket_id=obj[key].toString();
+           }
+           else if(key == 'currentdes'){
+            my_tickets[i].currentdes=obj[key].toString();
+               }
+           else if(key == 'previousdes'){
+        my_tickets[i].previousdes=obj[key].toString();
+           }
+            else if(key == 'weight'){
+        my_tickets[i].weight=obj[key].toString();
+           }
+         else if (key== 'transfer_date'){
+            my_tickets[i].transfer_date=obj[key].toString();
+        }else if (key== 'giver_id'){
+            my_tickets[i].giver_id=obj[key].toString();
+        }else if (key== 'giver_type'){
+            my_tickets[i].giver_type=obj[key].toString();
+        }else if (key== 'reciever_id'){
+            my_tickets[i].reciever_id=obj[key].toString();
+        }else if (key== 'reciever_type'){
+            my_tickets[i].reciever_type=obj[key].toString();
+        }else if (key== 'conveyer_id'){
+          my_tickets[i].conveyer_id=obj[key].toString();
+      }
+      }
+    }
+    cb(true,my_tickets);
+    console.log(my_tickets);
+}
+})
+  
+}
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
-  get_user_info(user_id, function(result, myinfo, mycompany) {
+  get_user_info(user_id, function(result, myinfo, mycompany, mytickets) {
     if(result==true){
       res.render('emitter/mypage',{
         myinfo: myinfo,
-        mycompany: mycompany
+        mycompany: mycompany,
+        mytickets: mytickets
       });
     }else{
       res.render('emitter/mypage',{
-        myinfo: myinfo,
-        mycompany: []
+        myinfo: [],
+        mycompany: [],
+        mytickets: []
       });
     }
   })
@@ -65,6 +137,7 @@ router.get('/form', function(req, res, next) {
     handle_method: '',
     handle_address: '',
     conveyancer: '',
+    conveyancer_car_num: '',
   });
 });
 
@@ -152,10 +225,11 @@ function get_handler_address(company_name, cb){
       console.log("no match");
       cb(false, null);
     } else {
-      console.log("user login successfully");
-      handler_addr=row;
-      console.log(handler_addr[0].company_addr)
-      cb(true,handler_addr[0].company_addr);
+      console.log("found company addr");
+      console.log(row);
+      handler_addr=row[0].company_addr;
+      console.log(handler_addr)
+      cb(true,handler_addr);
     }
   });
 }
@@ -173,7 +247,8 @@ router.post('/search_result', function(req, res, next) {
       cb(false, null);
     } else {
       console.log("get convey carnum success");
-      var convey_carnum = row;
+      var convey_carnum = row[0].carnum;
+      console.log(row[0].carnum);
       get_handler_address(handler, function(result, handler_addr){
         if(result==true){
           res.render('emitter/electronic_form',{
@@ -199,4 +274,31 @@ router.post('/search_result', function(req, res, next) {
   });
   
 });
+
+//choose material from search result
+router.post('/change_ticketinfo', function(req, res, next) {
+  var ticket_id =req.body.ticket_id;
+  var currentdes =req.body.currentdes;
+  var previousdes =req.body.previousdes;
+  var transfer_date =req.body.transfer_date;
+  var weight =req.body.weight;
+  var giver_id =req.body.giver_id;
+  var giver_type =req.body.giver_type;
+  var reciever_id =req.body.reciever_id;
+  var reciever_type =req.body.reciever_type;
+  var conveyer_id =req.body.conveyer_id;
+
+  //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
+  network.change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id).then((response) => { 
+    //return error if error in response
+    if (response.error != null) {
+      console.log("network change ticket info failed");
+      res.redirect('/emitter');
+    } else {
+      console.log("network change ticket info succeed");
+      res.redirect('/emitter'); 
+    }
+  });
+});
+
 module.exports = router;
