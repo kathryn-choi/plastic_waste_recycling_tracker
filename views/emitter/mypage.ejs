@@ -6,11 +6,11 @@
 </head>
 
 <body>
-<h1>My Page</h1>
-<a href="/">Home</a>
-<a href="/logout">Logout</a>
-<a href="/emitter/form">전자 인계서 작성하기</a>
-<h3>My Info</h3>
+    <h1>My Page</h1>
+    <a href="/">Home</a>
+    <a href="/logout">Logout</a>
+    <a href="/emitter/form">전자 인계서 작성하기</a>
+    <h3>My Info</h3>
     Name : <%=myinfo[0].user_name%> <br>
     ID : <%=myinfo[0].user_id%> <br>
     Job : <%=myinfo[0].user_type%> <br>
@@ -23,22 +23,47 @@
     Material Type : <%=mycompany[0].company_material_type%><br>
 
     <h5>My Tickets</h5>
-    <%for (var i=0; i<mytickets.length; i++){%>
-        <%if(mytickets[i].transfer_date<=d){%>
-            <form action="/emitter/change_ticketinfo" method="POST">
-                Ticket ID: <input type="text" name="ticket_id" value="<%=mytickets[i].ticket_id%>">
-                Current Destination: <input type="text" name="currentdes" value="<%=mytickets[i].currentdes%>">
-                Previous Destination:<input type="text" name="previousdes" value="<%=mytickets[i].previousdes%>">
-                Weight :<input type="text" name="weight" value="<%=mytickets[i].weight%>">
-                Transfer Date :<input type="date" name="transfer_date" value="<%=mytickets[i].transfer_date%>">
-               <!-- Giver ID:<input type="text" name="giver_id" value="<%=mytickets[i].giver_id%>">
-                Giver Type :<input type="text" name="giver_type" value="<%=mytickets[i].giver_type%>">
-                Receiver ID:<input type="text" name="reciever_id" value="<%=mytickets[i].reciever_id%>">
-                Receiver Type :<input type="text" name="reciever_type" value="<%=mytickets[i].reciever_type%>">
-                Conveyer ID : <input type="text" name="conveyer_id" value="<%=mytickets[i].conveyer_id%>">-->
-            </form>
+    <% if(mytickets.length != 0) {%>
+    <table>
+        <tr>
+            <th>Ticket ID</th>
+            <th>폐기물</th>
+            <th>위탁량</th>
+            <th>운반자</th>
+            <th>차량 번호</th>
+            <th>처리자</th>
+            <th>처리방법</th>
+            <th>처리장소</th>
+            <th>인계 일자</th>
+            <th>인계자명</th>
+            <th>수정하기</th>
+        </tr>
+        <% for(var i=0; i<(mytickets).length; i++){%>
+        <tr>
+            <td><%=mytickets[i].ticket_id%></td>
+            <td><%=mytickets[i].waste_type%></td>
+            <td><%=mytickets[i].weight%></td>
+            <td><%=mytickets[i].conveyancer%></td>
+            <td><%=mytickets[i].carnum%></td>
+            <td><%=mytickets[i].waste_handler%></td>
+            <td><%=mytickets[i].method%></td>
+            <td><%=mytickets[i].comp_loc%></td>
+            <td><%=mytickets[i].transfer_date%></td>
+            <td><%=mytickets[i].user_name%></td>
+            <td><%=mytickets[i].user_name%></td>
+            <!--<form action="/emitter/search_result" method="post">
+                <input type="hidden" name="waste_code" value="<%=result[i].waste_code%>">
+                <input type="hidden" name="handler" value="<%=result[i].waste_handler%>">
+                <input type="hidden" name="handle_method" value="<%=result[i].waste_handle_method%>">
+                <input type="hidden" name="conveyancer" value="<%=result[i].waste_conveyancer%>">
+                <td><button  type="submit">Submit</button></td>
+            </form>-->
+        </tr>
         <%}%>
-    <%}%>
+    </table>  
+    <%} else{%>
+        No Ticket
+    <%}%>   
 
 </body>
 <script>

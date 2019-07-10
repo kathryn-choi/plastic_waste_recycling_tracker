@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var network = require('../recycling_tracker/network.js');
+const util = require('util');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb){
@@ -53,84 +54,79 @@ function get_user_ticketinfo(user_id, cb){
     url : 'http://localhost:3000/api/queries/select_ticket_by_user?user_id=resource%3Aorg.recycling.tracker.Emitter%23' + user_id
     },function(error,res,body){
       if(!error){
-        my_tickets = JSON.parse(body)
-        console.log(my_tickets)
-        cb(true,my_tickets);
+        var tickets = JSON.parse(body);
+        console.log(tickets)
+        var my_tickets = []
+        var count = 0;
+        if(tickets.length == 0){
+          cb(true,[]);
+        }
+        for(var i = 0; i< tickets.length; i++){
+          var temp = tickets[i].ticket_id.split('.')
+          var user_id = temp[0]
+          var waste_code = temp[1]
+          var transfer_date = tickets[i].transfer_date
+          var weight = tickets[i].weight
+          var sqlquery = 'select user_name from users where user_id = ?'
+          var selectt = tickets[i]
+          connection.query(sqlquery, user_id,function (err, rows) {
+            var user_name  =  rows[0].user_name
+            console.log(user_name)
+            var sqlquery2 = 'select * from wastes where waste_code = ?'
+            connection.query(sqlquery2, waste_code,function (err, rows1) {
+              var waste_type = rows1[0].waste_type
+              var waste_handler = rows1[0].waste_handler
+              var method = rows1[0].waste_handle_method
+              var eform_type = rows1[0].eform_type
+              var conveyancer = rows1[0].waste_conveyancer
+              var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
+              connection.query(sqlquery3, (selectt.conveyancer).split('#')[1],function (err, rows2) {
+                var carnum = rows2[0].carnum
+                var sqlquery4 = "select companies_id from users where user_id = ?"
+                connection.query(sqlquery4, selectt.reciever.split('#')[1],function (err, rows3) {
+                  var comp_id = rows3[0].companies_id
+                  var sqlquery4 = "select company_addr from companies where company_id = ?"
+                  connection.query(sqlquery4, comp_id,function (err, rows4) {
+                    var comp_loc = rows4[0].company_addr
+                    var ticket = {
+                      ticket_id: selectt.ticket_id,
+                      waste_type : waste_type,
+                      weight : weight,
+                      conveyancer : conveyancer,
+                      carnum : carnum,
+                      waste_handler : waste_handler,
+                      method : method,
+                      comp_loc : comp_loc,
+                      transfer_date : transfer_date,
+                      user_name : user_name,
+                      eform_type : eform_type
+                    }
+                    my_tickets.push(ticket)
+                    count++;
+                    if(count == tickets.length){
+                      console.log(my_tickets)
+                      cb(true,my_tickets);
+                    }
+                  })
+                })
+              })
+            })
+          })
+        }
       }
       else{
         cb(false, []);
       }
   })
-
-  /*network.get_ticket_info_by_userid(user_id,'Emitter').then((response) => { 
-    //return error if error in response
-    if (response.error != null) {
-        console.log("network get ticket info failed");
-        cb(false, []);
-    } else {
-        var get_my_tickets = response;
-        var my_tickets=new Array(); 
-        console.log(get_my_tickets)
-        for(i=0; i<get_my_tickets.length; i++) {
-            var ticket={          
-                ticket_id: '',
-                currentdes: '',
-                previousdes: '',
-                weight: '',
-                transfer_date: '',
-                giver_id: '', 
-                giver_type: '',
-                reciever_id: '',
-                reciever_type: '',
-                conveyer_id: ''
-            }
-            my_tickets.push(ticket);
-        }
-        for(i=0; i<get_my_tickets.length; i++) {
-            console.log(get_my_tickets[i])
-            var stringfy_tickets=JSON.stringify(get_my_tickets[i]);
-            var obj =  JSON.parse(stringfy_tickets);
-          for( var key in obj ) {
-              console.log(i + " " + key + '=>' + obj[key] );
-              if(key == 'ticket_id'){
-            my_tickets[i].ticket_id=obj[key].toString();
-              }
-              else if(key == 'currentdes'){
-                my_tickets[i].currentdes=obj[key].toString();
-                  }
-              else if(key == 'previousdes'){
-            my_tickets[i].previousdes=obj[key].toString();
-              }
-                else if(key == 'weight'){
-            my_tickets[i].weight=obj[key].toString();
-              }
-            else if (key== 'transfer_date'){
-                my_tickets[i].transfer_date=obj[key].toString();
-            }else if (key== 'giver_id'){
-                my_tickets[i].giver_id=obj[key].toString();
-            }else if (key== 'giver_type'){
-                my_tickets[i].giver_type=obj[key].toString();
-            }else if (key== 'reciever_id'){
-                my_tickets[i].reciever_id=obj[key].toString();
-            }else if (key== 'reciever_type'){
-                my_tickets[i].reciever_type=obj[key].toString();
-            }else if (key== 'conveyer_id'){
-              my_tickets[i].conveyer_id=obj[key].toString();
-          }
-          }
-        }
-        cb(true,my_tickets);
-        console.log(my_tickets);
-    }
-    }) */
-  
 }
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
   get_user_info(user_id, function(result, myinfo, mycompany, mytickets) {
     if(result==true){
-      console.log(2)
+      console.log(mytickets)
+      console.log(myinfo)
+      console.log(mycompany)
       res.render('emitter/mypage',{
         myinfo: myinfo,
         mycompany: mycompany,
@@ -169,7 +165,7 @@ router.post('/form', function(req, res, next) {
   var transfer_date=req.body.transfer_date;
   var emitter_name=req.body.emitter_name;
   var user_id = req.session.user_id
-  var ticket_id = user_id + "-" + waste_code + "-" + transfer_date
+  var ticket_id = user_id + "." + waste_code + "." + transfer_date
 
   var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
   connection.query(sqlquery, conveyancer,function (err, rows) {
