@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Result</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<h3>폐기물 조회</h3>
+<table>
+    <tr>
+        <th>폐기물코드</th>
+        <th>폐기물종류</th>
+        <th>성상</th>
+        <th>폐기물구분</th>
+        <th>처리자</th>
+        <th>업체상태</th>
+        <th>처리방법</th>
+        <th>운반자</th>
+        <th>업체상태</th>
+        <th>인계서 종류</th>
+        <th>submit</th>
+    </tr>
+    <%for (var i=0; i<result.length; i++) { %>
+    <tr>
+        <td><%=result[i].waste_code%></td>
+        <td><%=result[i].waste_type%></td>
+        <td><%=result[i].waste_state%></td>
+        <td><%=result[i].waste_classify%></td>
+        <td><%=result[i].waste_handler%></td>
+        <td><%=result[i].waste_handler_condition%></td>
+        <td><%=result[i].waste_handle_method%></td>
+        <td><%=result[i].waste_conveyancer%></td>
+        <td><%=result[i].waste_conveyancer_condition%></td>
+        <td><%=result[i].eform_type%></td>
+
+        <form action="/handler/search_result" method="post">
+            <input type="hidden" name="waste_code" value="<%=result[i].waste_code%>">
+            <input type="hidden" name="handler" value="<%=result[i].waste_handler%>">
+            <input type="hidden" name="handle_method" value="<%=result[i].waste_handle_method%>">
+            <input type="hidden" name="conveyancer" value="<%=result[i].waste_conveyancer%>">
+            <td><button  type="submit">Submit</button></td>
+        </form>
+    </tr>
+    <%}%>
+</table>
+</body>
+</html>

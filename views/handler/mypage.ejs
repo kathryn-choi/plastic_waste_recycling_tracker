@@ -21,6 +21,47 @@ Address : <%=mycompany[0].company_addr%><br>
 Contact : <%=mycompany[0].company_contact%><br>
 Type : <%=mycompany[0].company_type%><br>
 Material Type : <%=mycompany[0].company_material_type%><br>
-
+<h5>My Tickets</h5>
+<% if(mytickets.length != 0) {%>
+<table>
+    <tr>
+        <th>Ticket ID</th>
+        <th>폐기물</th>
+        <th>위탁량</th>
+        <th>운반자</th>
+        <th>차량 번호</th>
+        <th>처리자</th>
+        <th>처리방법</th>
+        <th>처리장소</th>
+        <th>인계 일자</th>
+        <th>인계자명</th>
+        <th>수정하기</th>
+    </tr>
+    <% for(var i=0; i<(mytickets).length; i++){%>
+    <tr>
+        <td><%=mytickets[i].ticket_id%></td>
+        <td><%=mytickets[i].waste_type%></td>
+        <td><%=mytickets[i].weight%></td>
+        <td><%=mytickets[i].conveyancer%></td>
+        <td><%=mytickets[i].carnum%></td>
+        <td><%=mytickets[i].waste_handler%></td>
+        <td><%=mytickets[i].method%></td>
+        <td><%=mytickets[i].comp_loc%></td>
+        <td><%=mytickets[i].transfer_date%></td>
+        <td><%=mytickets[i].user_name%></td>
+        <td><%=mytickets[i].user_name%></td>
+        <!--<form action="/emitter/search_result" method="post">
+            <input type="hidden" name="waste_code" value="<=result[i].waste_code%>">
+            <input type="hidden" name="handler" value="<result[i].waste_handler%>">
+            <input type="hidden" name="handle_method" value="<=result[i].waste_handle_method%>">
+            <input type="hidden" name="conveyancer" value="<=result[i].waste_conveyancer%>">
+            <td><button  type="submit">Submit</button></td>
+        </form>-->
+    </tr>
+    <%}%>
+</table>  
+<%} else{%>
+    No Ticket
+<%}%>   
 </body>
 </html>
