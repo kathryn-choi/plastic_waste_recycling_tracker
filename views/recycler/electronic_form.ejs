@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electronic Form</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h3>인계서 작성(배출자)</h3>
+    <li>인계서 내용 입력</li>
+    <li>처리자인수후 2일이내 확정등록(위탁량 입력)을 하지 않을 경우 폐관법및 건폐법 제 66조에 따라 행정처분을 받을 수 있습니다</li>
+    <label>*1.폐기물 종류</label>
+    <%if (waste_code==''){%>
+        <!--search button pop up 해서 폐기물종류 조회하기-->
+        <!-- Trigger/Open The Modal -->
+    <button id="myBtn" onclick="material_search()">조회하기</button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/emitter/search" method="post">
+               폐기물:
+                <input type="text" name="material_type">
+                <button type="submit">조회</button>
+            </form>
+        </div>
+    </div>
+
+        <td><input type="number" name="waste_code"></td> <br>
+    <label>2. 위탁량</label>
+    <td><input type="number" name="weigh"></td>
+    <select name="unit">
+        <option value="kg">kg</option>
+        <option value="ton">ton</option>
+        <option value="g">g</option>
+    </select> <br>
+    <label>운반자</label>
+    <input type="text" name="conveyancer"> <br>
+    <label>*3.차량번호</label>
+    <input type="text" name="conveyancer_car_num">
+    <!--조회하기-->
+    <br>
+    <label>처리자</label>
+    <input type="text" name="handler">
+    <br>
+    <label>처리방법</label>
+    <input type="text" name="handle_method">
+    <br>
+    <label>처리장소</label>
+    <input type="text" name="handle_address">
+    <br>
+    <label>*4.인계일자</label>
+    <!--달력-->
+    <input id="date" type="date" name="transfer_date">
+    <br>
+    <label>*5.인계자명</label>
+    <input type="text" name="emitter_name">
+    <br>
+    <button  type="submit" onclick="save()">저장</button>
+
+    <%} else{%>
+    <td><input type="number" name="waste_code" value="<%=waste_code%>"></td> <br>
+
+    <label>2. 위탁량</label>
+    <td><input type="number" name="weight"></td>
+    <select name="unit">
+        <option value="kg">kg</option>
+        <option value="ton">ton</option>
+        <option value="g">g</option>
+    </select> <br>
+    <label>운반자</label>
+    <input type="text" name="conveyancer" value="<%=conveyancer%>"> <br>
+    <label>*3.차량번호</label>
+    <input type="text" name="conveyancer_car_num" value="<%=carnum%>">
+    <!--조회하기-->
+    <br>
+    <label>처리자/Recycler</label>
+    <input type="text" name="handler" value="<%=handler%>">
+    <br>
+    <label>처리방법</label>
+    <input type="text" name="handle_method" value="<%=handle_method%>">
+    <br>
+    <label>처리장소</label>
+    <input type="text" name="handle_address" value="<%=handle_address%>">
+    <br>
+    <label>*4.인계일자</label>
+    <!--달력-->
+    <input id="date" type="date" name="transfer_date">
+    <br>
+    <label>*5.인계자명</label>
+    <input type="text" name="emitter_name">
+    <br>
+    <button  type="submit" onclick="save()">저장</button>
+    <%}%>
+<!--</form>-->
+
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+    // Get the modal
+
+    function material_search(){
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    function save(){
+        $.ajax({
+            url:"/recycler/form",
+            method: "POST",
+            data : {
+                waste_code : document.getElementsByName("waste_code")[0].value,
+                weight : document.getElementsByName("weight")[0].value + document.getElementsByName("unit")[0].value ,
+                conveyancer : document.getElementsByName("conveyancer")[0].value,
+                conveyancer_car_num : document.getElementsByName("conveyancer_car_num")[0].value,
+                handler : document.getElementsByName("handler")[0].value,
+                handle_method : document.getElementsByName("handle_method")[0].value,
+                handle_address : document.getElementsByName("handle_address")[0].value,
+                transfer_date : document.getElementsByName("transfer_date")[0].value,
+                emitter_name : document.getElementsByName("emitter_name")[0].value
+            },
+            success : function (data) {
+                if(data.success == true){
+                    window.location.href = data.redirect_url;
+                }}
+        });
+    }
+
+    var dateControl = document.querySelector('input[type="date"]');
+    var d = new Date();
+    var n = d.toISOString();
+    var current_date=n.slice(0,10);
+    dateControl.value = current_date;
+
+</script>
+</body>
+</html>
