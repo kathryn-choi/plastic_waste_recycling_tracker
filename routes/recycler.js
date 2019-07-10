@@ -215,7 +215,7 @@ router.post('/form', function(req, res, next) {
 //search material info by name
 router.post('/search', function(req, res, next) {
   console.log("search!");
-  var material_type=req.body.material_type;
+  var material_type="%" +req.body.material_type+ "%";
   var results=new Array();
   console.log(material_type);
   var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";

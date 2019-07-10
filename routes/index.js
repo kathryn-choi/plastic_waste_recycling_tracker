@@ -196,7 +196,7 @@ router.get('/logout', function(req, res, next) {
 
 //search companyinfo by name
 router.post('/search', function(req, res, next) {
-  var company_name=req.body.company_name;
+  var company_name="%"+req.body.company_name+ "%";
   var results=new Array();
   var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ?";
   connection.query(sqlquery, company_name,function (err, rows) {
