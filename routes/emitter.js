@@ -50,15 +50,17 @@ function get_user_info(user_id, cb){
 }
 //get user's ticketinfo by id
 function get_user_ticketinfo(user_id, cb){
+  console.log("getuserticketinfo");
   request.get({
     url : 'http://localhost:3000/api/queries/select_ticket_by_user?user_id=resource%3Aorg.recycling.tracker.Emitter%23' + user_id
     },function(error,res,body){
       if(!error){
         var tickets = JSON.parse(body);
-        console.log(tickets)
+        console.log("tickets : ",tickets);
         var my_tickets = []
         var count = 0;
         if(tickets.length == 0){
+          console.log("none!")
           cb(true,[]);
         }
         for(var i = 0; i< tickets.length; i++){
@@ -104,7 +106,7 @@ function get_user_ticketinfo(user_id, cb){
                     my_tickets.push(ticket)
                     count++;
                     if(count == tickets.length){
-                      console.log(my_tickets)
+                      console.log("my tickets : ",my_tickets);
                       cb(true,my_tickets);
                     }
                   })
@@ -124,9 +126,9 @@ router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
   get_user_info(user_id, function(result, myinfo, mycompany, mytickets) {
     if(result==true){
-      console.log(mytickets)
-      console.log(myinfo)
-      console.log(mycompany)
+      console.log("mytickets: ",mytickets);
+      console.log("myinfo: ", myinfo);
+      console.log("mycompany : ",mycompany);
       res.render('emitter/mypage',{
         myinfo: myinfo,
         mycompany: mycompany,

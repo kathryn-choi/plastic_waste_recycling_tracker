@@ -20,5 +20,22 @@ Address : <%=mycompany[0].company_addr%><br>
 Contact : <%=mycompany[0].company_contact%><br>
 Type : <%=mycompany[0].company_type%><br>
 Material Type : <%=mycompany[0].company_material_type%><br>
+<h5>My Tickets</h5>
+<%for (var i=0; i<mytickets.length; i++){%>
+    <form action="/conveyancer/complete_ticket" method="POST">
+        Ticket ID: <%=mytickets[i].ticket_id%>
+        Current Destination: <%=mytickets[i].currentdes%>
+        Previous Destination: <%=mytickets[i].previousdes%>
+        Weight :<%=mytickets[i].weight%>
+        Transfer Date :<%=mytickets[i].transfer_date%>
+        Giver ID:<%=mytickets[i].giver_id%>
+        Giver Type :<%=mytickets[i].giver_type%>
+        Receiver ID:<%=mytickets[i].reciever_id%>
+        Receiver Type :<%=mytickets[i].reciever_type%>
+        Conveyer ID : <%=mytickets[i].conveyer_id%>
+        <input type="submit" value="Transfer Complete">
+    </form>
+<%}%>
+
 </body>
 </html>
