@@ -78,9 +78,29 @@ transaction CreateTicket {
   --> User conveyancer
 }
 
+event ticket_created {
+  o String ticket_id  
+  o String currentdes 
+  o String previousdes 
+  o Integer weight 
+  --> User giver
+  --> User reciever
+  --> User conveyancer
+}
+
 //delete ticket
 transaction DeleteTicket {
    --> Ticket ticket
+}
+
+event ticket_deleted {
+  o String ticket_id  
+  o String currentdes 
+  o String previousdes 
+  o Integer weight 
+  --> User giver
+  --> User reciever
+  --> User conveyancer
 }
 
 //change ticket info
@@ -94,10 +114,28 @@ transaction ChangeTicketInfo {
   --> Ticket ticket
 }
 
+event ticket_updated {
+  o String ticket_id  
+  o String currentdes 
+  o String previousdes 
+  o Integer weight 
+  --> User giver
+  --> User reciever
+  --> User conveyancer
+}
+
 //update company asset
 transaction UpdateCompanyAsset {
   o Integer gen_weight 
   o Integer handle_weight 
   o Integer save_weight 
-   --> Compasset compasset
+  --> Compasset compasset
+}
+
+event compasset_update {
+  o String asset_id  
+  o Integer gen_weight 
+  o Integer handle_weight 
+  o Integer save_weight 
+  --> User owner
 }
