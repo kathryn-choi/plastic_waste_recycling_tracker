@@ -131,16 +131,16 @@ event ticket_updated {
 
 //update company asset
 transaction UpdateCompanyAsset {
-  o Integer gen_weight 
-  o Integer handle_weight 
-  o Integer save_weight 
+  o String gen_weight 
+  o String handle_weight 
+  o String save_weight 
   --> Compasset compasset
 }
 
 event compasset_update {
   o String asset_id  
-  o Integer gen_weight 
-  o Integer handle_weight 
-  o Integer save_weight 
+  o String gen_weight 
+  o String handle_weight 
+  o String save_weight 
   --> User owner
 }

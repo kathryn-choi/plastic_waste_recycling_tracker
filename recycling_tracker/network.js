@@ -510,15 +510,27 @@ module.exports = {
             return error;
         }
     },
-    get_ticket_info_by_userid : async function (user_id) {
+    get_ticket_info_by_userid : async function (_user_id,type) {
 
         try {
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
             await businessNetworkConnection.connect('admin@recycling_tracker');
-
+            var query_select = ' ';
+            if(type == 'Emitter'){
+                query_select = 'resource:'+namespace+'.Emitter#'+_user_id;
+            }
+            else if (type == 'Conveyancer'){
+                query_select = 'resource:'+namespace+'.Conveyancer#'+_user_id;
+            }
+            else if (type == 'Handler'){
+                query_select = 'resource:'+namespace+'.Handler#'+_user_id;
+            }
+            else if (type == 'Recycler'){
+                query_select = 'resource:'+namespace+'.Recycler#'+_user_id;
+            }
             //query ticket from the network
-            const ticket = await businessNetworkConnection.query('select_ticket_by_user', {user_id: user_id});
+            const ticket = await businessNetworkConnection.query('select_ticket_by_user', {user_id: query_select});
 
             //disconnect
             await businessNetworkConnection.disconnect('admin@recycling_tracker');

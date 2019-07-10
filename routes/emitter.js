@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 var network = require('../recycling_tracker/network.js');
 
 //get user's company_info by company_id
@@ -24,7 +25,7 @@ function get_user_info(user_id, cb){
   connection.query(sqlquery, user_id,function (err, rows) {
     if (err) {
       console.log("no match");
-      res.redirect('back');
+      cb(false, [], [], []);
     } else {
       console.log("user login successfully");
       myinfo=rows;
@@ -32,6 +33,7 @@ function get_user_info(user_id, cb){
         if(result==true){
           get_user_ticketinfo(user_id, function(r,mytickets){
             if(r==true){
+              console.log("HI")
               cb(true, myinfo, arr, mytickets);
             }else{
               cb(true, myinfo, arr, []);
@@ -47,66 +49,80 @@ function get_user_info(user_id, cb){
 }
 //get user's ticketinfo by id
 function get_user_ticketinfo(user_id, cb){
-  network.get_compasset_by_user(user_id).then((response) => { 
+  request.get({
+    url : 'http://localhost:3000/api/queries/select_ticket_by_user?user_id=resource%3Aorg.recycling.tracker.Emitter%23' + user_id
+    },function(error,res,body){
+      if(!error){
+        my_tickets = JSON.parse(body)
+        console.log(my_tickets)
+        cb(true,my_tickets);
+      }
+      else{
+        cb(false, []);
+      }
+  })
+
+  /*network.get_ticket_info_by_userid(user_id,'Emitter').then((response) => { 
     //return error if error in response
-if (response.error != null) {
-    console.log("network get ticket info failed");
-    cb(false, []);
-} else {
-    var get_my_tickets = response;
-    var my_tickets=new Array(); 
-    for(i=0; i<get_my_tickets.length; i++) {
-        var ticket={          
-            ticket_id: '',
-            currentdes: '',
-            previousdes: '',
-            weight: '',
-            transfer_date: '',
-            giver_id: '', 
-            giver_type: '',
-            reciever_id: '',
-            reciever_type: '',
-            conveyer_id: ''
+    if (response.error != null) {
+        console.log("network get ticket info failed");
+        cb(false, []);
+    } else {
+        var get_my_tickets = response;
+        var my_tickets=new Array(); 
+        console.log(get_my_tickets)
+        for(i=0; i<get_my_tickets.length; i++) {
+            var ticket={          
+                ticket_id: '',
+                currentdes: '',
+                previousdes: '',
+                weight: '',
+                transfer_date: '',
+                giver_id: '', 
+                giver_type: '',
+                reciever_id: '',
+                reciever_type: '',
+                conveyer_id: ''
+            }
+            my_tickets.push(ticket);
         }
-        my_tickets.push(ticket);
+        for(i=0; i<get_my_tickets.length; i++) {
+            console.log(get_my_tickets[i])
+            var stringfy_tickets=JSON.stringify(get_my_tickets[i]);
+            var obj =  JSON.parse(stringfy_tickets);
+          for( var key in obj ) {
+              console.log(i + " " + key + '=>' + obj[key] );
+              if(key == 'ticket_id'){
+            my_tickets[i].ticket_id=obj[key].toString();
+              }
+              else if(key == 'currentdes'){
+                my_tickets[i].currentdes=obj[key].toString();
+                  }
+              else if(key == 'previousdes'){
+            my_tickets[i].previousdes=obj[key].toString();
+              }
+                else if(key == 'weight'){
+            my_tickets[i].weight=obj[key].toString();
+              }
+            else if (key== 'transfer_date'){
+                my_tickets[i].transfer_date=obj[key].toString();
+            }else if (key== 'giver_id'){
+                my_tickets[i].giver_id=obj[key].toString();
+            }else if (key== 'giver_type'){
+                my_tickets[i].giver_type=obj[key].toString();
+            }else if (key== 'reciever_id'){
+                my_tickets[i].reciever_id=obj[key].toString();
+            }else if (key== 'reciever_type'){
+                my_tickets[i].reciever_type=obj[key].toString();
+            }else if (key== 'conveyer_id'){
+              my_tickets[i].conveyer_id=obj[key].toString();
+          }
+          }
+        }
+        cb(true,my_tickets);
+        console.log(my_tickets);
     }
-    for(i=0; i<get_my_tickets.length; i++) {
-        console.log(get_my_tickets[i])
-        var stringfy_tickets=JSON.stringify(get_my_tickets[i]);
-        var obj =  JSON.parse(stringfy_tickets);
-       for( var key in obj ) {
-           console.log(i + " " + key + '=>' + obj[key] );
-           if(key == 'ticket_id'){
-        my_tickets[i].ticket_id=obj[key].toString();
-           }
-           else if(key == 'currentdes'){
-            my_tickets[i].currentdes=obj[key].toString();
-               }
-           else if(key == 'previousdes'){
-        my_tickets[i].previousdes=obj[key].toString();
-           }
-            else if(key == 'weight'){
-        my_tickets[i].weight=obj[key].toString();
-           }
-         else if (key== 'transfer_date'){
-            my_tickets[i].transfer_date=obj[key].toString();
-        }else if (key== 'giver_id'){
-            my_tickets[i].giver_id=obj[key].toString();
-        }else if (key== 'giver_type'){
-            my_tickets[i].giver_type=obj[key].toString();
-        }else if (key== 'reciever_id'){
-            my_tickets[i].reciever_id=obj[key].toString();
-        }else if (key== 'reciever_type'){
-            my_tickets[i].reciever_type=obj[key].toString();
-        }else if (key== 'conveyer_id'){
-          my_tickets[i].conveyer_id=obj[key].toString();
-      }
-      }
-    }
-    cb(true,my_tickets);
-    console.log(my_tickets);
-}
-})
+    }) */
   
 }
 /* GET users listing. */
@@ -114,6 +130,7 @@ router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
   get_user_info(user_id, function(result, myinfo, mycompany, mytickets) {
     if(result==true){
+      console.log(2)
       res.render('emitter/mypage',{
         myinfo: myinfo,
         mycompany: mycompany,
@@ -126,7 +143,7 @@ router.get('/', function(req, res, next) {
         mytickets: []
       });
     }
-  })
+  }) 
 });
 
 //전자 인계서 작성 페이지 불러오기
