@@ -357,7 +357,7 @@ function get_user_compassetinfo(user_id, cb){
 }
 //get user's ledger page
 router.get('/ledger', function(req, res, next) {
-  var user_id=req.session.user_id;
+ /* var user_id=req.session.user_id;
   get_user_compassetinfo(user_id, function(result, my_compassets) {
     if(result==true){
       console.log("my_compassets : ",my_compassets);
@@ -369,7 +369,7 @@ router.get('/ledger', function(req, res, next) {
         mycompassets: []
       });
     }
-  }) 
+  })*/ 
 });
 
 module.exports = router;
