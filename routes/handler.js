@@ -199,9 +199,27 @@ router.post('/form', function(req, res, next) {
                   var hanlder_id = rows[0].user_id
                   console.log(hanlder_id)
                   if(rows[0].user_type=="handler"){
-                    network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Handler",con_id)
+                    network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Handler",con_id).then((response) => { 
+                      //return error if error in response
+                      if (response.error != null) {
+                        console.log("create ticket failed");
+                        res.jsonp({success : false, redirect_url : "/handler"})
+                      } else {
+                        console.log("create ticket succeed");
+                        res.jsonp({success : true, redirect_url : "/handler"})
+                      }
+                      });    
                   }else{
-                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Recycler",con_id)
+                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Recycler",con_id).then((response) => { 
+                    //return error if error in response
+                    if (response.error != null) {
+                      console.log("create ticket failed");
+                      res.jsonp({success : false, redirect_url : "/handler"})
+                    } else {
+                      console.log("create ticket succeed");
+                      res.jsonp({success : true, redirect_url : "/handler"})
+                    }
+                    });    
                   }
                 }
               });
@@ -211,9 +229,6 @@ router.post('/form', function(req, res, next) {
       });
     }
   });
-  //block에 insert
-  // network.create_ticket(ticket_id,currentdes,"",weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-  res.jsonp({success : true, redirect_url : "/handler"})
 });
 
 //search material info by name
@@ -235,6 +250,7 @@ router.post('/search', function(req, res, next) {
     }
   });
 });
+
 //get handler's address by handler name
 function get_handler_address(company_name, cb){
   var handler_addr = '';
@@ -252,6 +268,39 @@ function get_handler_address(company_name, cb){
     }
   });
 }
+
+//전자 인계서 작성 페이지 불러오기
+router.get('/form', function(req, res, next) {
+  res.render('emitter/electronic_form',{
+    waste_code: '',
+    handler:'',
+    handle_method: '',
+    handle_address: '',
+    conveyancer: '',
+    conveyancer_car_num: '',
+  });
+});
+
+//search material info by name
+router.post('/search', function(req, res, next) {
+  console.log("search!");
+  var material_type=req.body.material_type;
+  var results=new Array();
+  console.log(material_type);
+  var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
+  connection.query(sqlquery, material_type,function (err, rows) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+      console.log("found company");
+      results=rows;
+      console.log(results);
+      res.render('emitter/search_result',{result : results});
+    }
+  });
+});
+
 
 //choose material from search result
 router.post('/search_result', function(req, res, next) {

@@ -19,9 +19,9 @@ query select_compasset {
         WHERE (asset_id == _$asset_id)
 }
 
-query select_compasset_by_user{
-  description: "Select company asset that matches owner"
+query select_compasset_by_comp_id{
+  description: "Select company asset that matches comp_id"
   statement:
       SELECT org.recycling.tracker.Compasset
-        WHERE (owner == _$owner_id)
+        WHERE (comp_id== _$comp_id)
 }

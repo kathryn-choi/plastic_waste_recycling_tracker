@@ -198,7 +198,16 @@ router.post('/form', function(req, res, next) {
                   console.log("found handler_id");
                   var hanlder_id = rows[0].user_id
                   console.log(hanlder_id)
-                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Recycler",hanlder_id,"Recycler",con_id)
+                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Recycler",hanlder_id,"Recycler",con_id)then((response) => { 
+                    //return error if error in response
+                    if (response.error != null) {
+                      console.log("create ticket failed");
+                      res.jsonp({success : false, redirect_url : "/recycler"})
+                    } else {
+                      console.log("create ticket succeed");
+                      res.jsonp({success : true, redirect_url : "/recycler"})
+                    }
+                    });    
                 }
               });
             }
@@ -207,9 +216,6 @@ router.post('/form', function(req, res, next) {
       });
     }
   });
-  //block에 insert
-  // network.create_ticket(ticket_id,currentdes,"",weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-  res.jsonp({success : true, redirect_url : "/recycler"})
 });
 
 //search material info by name
