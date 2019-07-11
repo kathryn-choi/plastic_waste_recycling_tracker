@@ -279,7 +279,6 @@ module.exports = {
 
     },
 
-
     create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
         try {
             //connect to network with user_id
@@ -420,7 +419,42 @@ module.exports = {
         }
 
     },
+    create_compasset: async function (asset_id,gen_weight,save_weight, handle_weight,comp_id) {
+        try {
+            //connect to network with user_id
+            var businessNetworkConnection = new BusinessNetworkConnection();
+            await businessNetworkConnection.connect('admin@recycling_tracker');
 
+            //get the factory for the business network.
+            var factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+
+            //create transaction
+            const createAsset = factory.newTransaction(namespace, 'CreateCompasset');
+            createAsset.asset_id = asset_id;
+            createAsset.gen_weight = gen_weight;
+            createAsset.save_weight = save_weight;
+            createAsset.handle_weight = handle_weight;
+            createAsset.comp_id = comp_id;
+
+            console.log('before submit transaction');
+            //submit transaction
+            await businessNetworkConnection.submitTransaction(createAsset);
+            console.log('complete submit transaction');
+            //disconnect
+            await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+            return true;
+        }
+        catch(err) {
+            //print and return error
+            console.log(err);
+            var error = {};
+            error.error = err.message;
+
+            return false;
+        }
+
+    },
     update_company_asset: async function (asset_id,gen_weight, handle_weight, save_weight) {
         try {
 

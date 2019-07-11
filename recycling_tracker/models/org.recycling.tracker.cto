@@ -61,9 +61,10 @@ asset Ticket identified by ticket_id {
 //Compasset identified by ticket_id
 asset Compasset identified by asset_id {
   o String asset_id  
-  o Integer gen_weight 
-  o Integer handle_weight 
-  o Integer save_weight 
+  o String waste_code
+  o String gen_weight 
+  o String handle_weight 
+  o String save_weight 
   --> User owner
 }
 
@@ -129,6 +130,22 @@ event ticket_updated {
   --> User conveyancer
 }
 
+transaction CreateCompasset{
+  o String asset_id  
+  o String gen_weight 
+  o String handle_weight 
+  o String save_weight 
+  o String comp_id  
+}
+
+event compasset_create{
+  o String asset_id  
+  o String gen_weight 
+  o String handle_weight 
+  o String save_weight 
+  o String comp_id  
+}
+
 //update company asset
 transaction UpdateCompanyAsset {
   o String gen_weight 
@@ -142,5 +159,5 @@ event compasset_update {
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
-  --> User owner
+  o String comp_id  
 }
