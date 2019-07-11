@@ -19,6 +19,7 @@ var conveyancer = require('./routes/conveyancer');
 var emitter = require('./routes/emitter');
 var handler = require('./routes/handler');
 var recycler = require('./routes/recycler');
+var compasset = require('./routes/compasset');
 //var network = require('./recycling_tracker/network.js');
 
 var app = express();
@@ -47,6 +48,7 @@ app.use('/conveyancer', conveyancer);
 app.use('/emitter', emitter);
 app.use('/handler', handler);
 app.use('/recycler', recycler);
+app.use('/compasset', compasset);
 
 connection = mysql.createConnection({
   host     : 'localhost',

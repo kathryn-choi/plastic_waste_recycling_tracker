@@ -1,32 +1,51 @@
 !DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Page</title>
+    <title>대장 관리</title>
     <meta charset="UTF-8">
 </head>
 
 <body>
-<h1>My Compassets</h1>
+<h1>기업: <%=company_name%></h1>
 <a href="/">Home</a>
 <a href="/logout">Logout</a>
-<a href="/<%=user_type%>/form">전자 인계서 작성하기</a>
-<a href ="/<%=user_type%>/create_compasset">최초보관량 등록하기</a>
-<a href ="/<%=user_type%>/update_compasset">발생량 등록하기</a>
+<a href="/<%=user_type%>">my page</a>
+<a href ="/compasset/create_compasset">최초보관량 등록하기</a>
 <h3>My Compassets</h3>
     < %if(mycompassets.length != 0) {%>
     <table>
         <tr>
             <th>Asset ID</th>
-            <th>Gen Weight</th>
-            <th>Handle Weight</th>
-            <th>Save Weight</th>
+            <th>폐기물 코드</th>
+            <th>폐기물 종류</th>
+            <th>성상</th>
+            <th>구분</th>
+            <th>발생량</th>
+            <th>배출량</th>
+            <th>현재 보관량</th>
+            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
+            <th>수정하기</th>
+            
         </tr>
         <% for(var i=0; i<(mycompassets).length; i++){%>
-        <tr>
+        <!--발생량 등록하기-->
+        <form action="/compasset/update_compasset" method="POST">
+            <input type="hidden" name="asset_id" value="<%=mycompassets[i].asset_id%>">
+            <input type="hidden" name="waste_code" value="<%=mycompassets[i].waste_code%>">
+            <input type="hidden" name="save_weight" value="<%=mycompassets[i].save_weight%>">
+            <tr>
             <td><%=mycompassets[i].asset_id%></td>
-            <td><%=mycompassets[i].gen_weight%></td>
-            <td><%=mycompassets[i].handle_weight%></td>
+            <td><%=mycompassets[i].waste_code%></td>
+            <td><%=mycompassets[i].waste_type%></td>
+            <td><%=mycompassets[i].waste_state%></td>
+            <td><%=mycompassets[i].waste_classify%></td>
+            <td><input type="text" name="gen_weight" value="<%=mycompassets[i].gen_weight%>"></td>
+            <td><input type="text" name="handle_weight" value="<%=mycompassets[i].handle_weight%>"></td>
             <td><%=mycompassets[i].save_weight%></td>
+            <td>
+                <input type="submit" value="수정하기">
+            </td>
+        </form>
         </tr>
         <%}%>
     </table>  

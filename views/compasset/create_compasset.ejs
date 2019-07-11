@@ -6,21 +6,19 @@
 </head>
 
 <body>
-<form action="/<%=user_type%>/electronic_form" method="post">
-    <h3>인계서 작성(배출자)</h3>
-    <li>인계서 내용 입력</li>
-    <li>처리자인수후 2일이내 확정등록(위탁량 입력)을 하지 않을 경우 폐관법및 건폐법 제 66조에 따라 행정처분을 받을 수 있습니다</li>
+<form action="/compasset/create_compasset" method="post">
+   
     <label>*1.폐기물 종류</label>
     <%if (waste_code==''){%>
         <!--search button pop up 해서 폐기물종류 조회하기-->
         <!-- Trigger/Open The Modal -->
-    <button id="myBtn" onclick="material_search()">조회하기</button>
+    <button id="myBtn" onclick="search()">조회하기</button>
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form action="/emitter/search" method="post">
+            <form action="/compasset/search" method="post">
                폐기물:
                 <input type="text" name="material_type">
                 <button type="submit">조회</button>
@@ -28,76 +26,126 @@
         </div>
     </div>
 
-        <td><input type="number" name="waste_code"></td> <br>
-    <label>2. 위탁량</label>
-    <td><input type="number" name="weigh"></td>
+    <label>*2. 날짜</label>
+    <!--달력-->
+    <input id="date" type="date" name="save_date">
+    <br>
+
+    <label>3.최초 보관량</label>
+    <td><input type="number" name="first_save_weight"></td>
     <select name="unit">
         <option value="kg">kg</option>
         <option value="ton">ton</option>
         <option value="g">g</option>
     </select> <br>
-    <label>운반자</label>
-    <input type="text" name="conveyancer"> <br>
-    <label>*3.차량번호</label>
-    <input type="text" name="conveyancer_car_num">
-    <!--조회하기-->
-    <br>
-    <label>처리자</label>
-    <input type="text" name="handler">
-    <br>
-    <label>처리방법</label>
-    <input type="text" name="handle_method">
-    <br>
-    <label>처리장소</label>
-    <input type="text" name="handle_address">
-    <br>
-    <label>*4.인계일자</label>
-    <!--달력-->
-    <input id="date" type="date" name="transfer_date">
-    <br>
-    <label>*5.인계자명</label>
-    <input type="text" name="emitter_name">
-    <br>
-    <button  type="submit" onclick="save()">저장</button>
+
+    <button  type="submit" onclick="save()">등록하기</button>
 
     <%} else{%>
-    <td><input type="number" name="waste_code" value="<%=waste_code%>"></td> <br>
 
-    <label>2. 위탁량</label>
-    <td><input type="number" name="weight"></td>
+    <td><input type="number" name="waste_code" value="<%=waste_code%>"></td> <br>
+    <label>*2. 날짜</label>
+    <!--달력-->
+    <input id="date" type="date" name="save_date">
+    <br>
+
+    <label>3.최초 보관량</label>
+    <td><input type="number" name="first_save_weight"></td>
     <select name="unit">
         <option value="kg">kg</option>
         <option value="ton">ton</option>
         <option value="g">g</option>
     </select> <br>
-    <label>운반자</label>
-    <input type="text" name="conveyancer" value="<%=conveyancer%>"> <br>
-    <label>*3.차량번호</label>
-    <input type="text" name="conveyancer_car_num" value="<%=carnum%>">
-    <!--조회하기-->
-    <br>
-    <label>처리자</label>
-    <input type="text" name="handler" value="<%=handler%>">
-    <br>
-    <label>처리방법</label>
-    <input type="text" name="handle_method" value="<%=handle_method%>">
-    <br>
-    <label>처리장소</label>
-    <input type="text" name="handle_address" value="<%=handle_address%>">
-    <br>
-    <label>*4.인계일자</label>
-    <!--달력-->
-    <input id="date" type="date" name="transfer_date">
-    <br>
-    <label>*5.인계자명</label>
-    <input type="text" name="emitter_name">
-    <br>
-    <button  type="submit" onclick="save()">저장</button>
+
+    <button  type="submit" onclick="save()">등록하기</button>
     <%}%>
 </form>
 
 
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
+<script>
+    // Get the modal
+
+    function search(){
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    function save(){
+        var unit= document.getElementsByName("unit")[0].value;
+        if (unit=="kg"){
+            $.ajax({
+                url:"/compasset/create_compasset",
+                method: "POST",
+                data : {
+                    waste_code : document.getElementsByName("waste_code")[0].value,
+                    save_date : document.getElementsByName("save_date")[0].value,
+                    first_save_weight : document.getElementsByName("first_save_weight")[0].value,
+                },
+                success : function (data) {
+                    if(data.success == true){
+                        window.location.href = data.redirect_url;
+                    }}
+            });
+        }else if (unit=="ton"){
+            //1 ton == 907.185 kg
+            var weight=document.getElementsByName("first_save_weight")[0].value * 907.185;
+            $.ajax({
+                url:"/compasset/create_compasset",
+                method: "POST",
+                data : {
+                    waste_code : document.getElementsByName("waste_code")[0].value,
+                    save_date : document.getElementsByName("save_date")[0].value,
+                    first_save_weight : weight,
+                },
+                success : function (data) {
+                    if(data.success == true){
+                        window.location.href = data.redirect_url;
+                    }}
+            });
+        }else{
+            //1g == 0.001 kg
+            var weight=document.getElementsByName("first_save_weight")[0].value * 0.001;
+            $.ajax({
+                url:"/compasset/create_compasset",
+                method: "POST",
+                data : {
+                    waste_code : document.getElementsByName("waste_code")[0].value,
+                    save_date : document.getElementsByName("save_date")[0].value,
+                    first_save_weight : weight,
+                },
+                success : function (data) {
+                    if(data.success == true){
+                        window.location.href = data.redirect_url;
+                    }}
+            });
+        }
+    }
+</script>
 
 </body>
 </html>

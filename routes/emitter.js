@@ -321,61 +321,6 @@ router.post('/change_ticketinfo', function(req, res, next) {
     }
   });
 });
-//get user's compassetinfo by id
-function get_user_compassetinfo(user_id, cb){
-  console.log("getusercompassetinfo");
-  request.get({
-    url : 'http://localhost:3000/api/queries/select_compasset_by_user?user_id=resource%3Aorg.recycling.tracker.Emitter%23' + user_id
-    },function(error,res,body){
-      if(!error){
-        var compassets = JSON.parse(body);
-        console.log("compassets : ",compassets);
-        var my_compassets = []
-        var count = 0;
-        if(compassets.length == 0){
-          console.log("none!")
-          cb(true,[]);
-        }
-        for(var i = 0; i< compassets.length; i++){
-          //(asset_id,gen_weight, handle_weight, save_weight)
-          var asset_id = compassets[i].asset_id.split('.');
-          var gen_weight=compassets[i].gen_weight;
-          var handle_weight=compassets[i].handle_weight;
-          var save_weight=compassets[i].save_weight;
-          var compasset = {
-            asset_id: asset_id,
-            gen_weight: gen_weight,
-            handle_weight:handle_weight,
-            save_weight: save_weight
-          }
-          my_compassets.push(compasset)
-          count++;
-          if(count == compassets.length){
-            console.log("my compassets : ",my_compassets);
-            cb(true,my_compassets);
-          }
-        }
-      }
-      else{
-        cb(false, []);
-      }
-  })
-}
-//get user's ledger page
-router.get('/ledger', function(req, res, next) {
- /* var user_id=req.session.user_id;
-  get_user_compassetinfo(user_id, function(result, my_compassets) {
-    if(result==true){
-      console.log("my_compassets : ",my_compassets);
-      res.render('emitter/ledger',{
-        mycompassets: my_compassets
-      });
-    }else{
-      res.render('emitter/ledger',{
-        mycompassets: []
-      });
-    }
-  })*/ 
-});
+
 
 module.exports = router;
