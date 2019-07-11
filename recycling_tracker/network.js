@@ -419,7 +419,7 @@ module.exports = {
         }
 
     },
-    create_compasset: async function (asset_id,gen_weight,save_weight, handle_weight,comp_id) {
+    create_compasset: async function (asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) {
         try {
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
@@ -435,6 +435,7 @@ module.exports = {
             createAsset.save_weight = save_weight;
             createAsset.handle_weight = handle_weight;
             createAsset.comp_id = comp_id;
+            createAsset.waste_code = waste_code;
 
             console.log('before submit transaction');
             //submit transaction
@@ -455,7 +456,7 @@ module.exports = {
         }
 
     },
-    update_company_asset: async function (asset_id,gen_weight, handle_weight, save_weight) {
+    update_company_asset: async function (asset_id,gen_weight, handle_weight, save_weight, waste_code) {
         try {
 
             //connect to network with user_id
@@ -475,6 +476,7 @@ module.exports = {
             update_asset.gen_weight = gen_weight;
             update_asset.handle_weight = handle_weight;
             update_asset.save_weight = save_weight;
+            update_asset.waste_code = waste_code;
 
             //submit transaction
             await businessNetworkConnection.submitTransaction(update_asset);

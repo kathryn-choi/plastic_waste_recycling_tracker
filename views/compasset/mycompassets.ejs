@@ -6,11 +6,12 @@
 </head>
 
 <body>
-<h1>My Page</h1>
+<h1>My Compassets</h1>
 <a href="/">Home</a>
 <a href="/logout">Logout</a>
-<a href="/handler/form">전자 인계서 작성하기</a>
-<a href ="/handler/ledger">Ledger</a>
+<a href="/<%=user_type%>/form">전자 인계서 작성하기</a>
+<a href ="/<%=user_type%>/create_compasset">최초보관량 등록하기</a>
+<a href ="/<%=user_type%>/update_compasset">발생량 등록하기</a>
 <h3>My Compassets</h3>
     < %if(mycompassets.length != 0) {%>
     <table>
