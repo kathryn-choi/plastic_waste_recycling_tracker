@@ -70,10 +70,9 @@ router.post('/create_compasset', function(req, res, next) {
     var waste_code=req.body.waste_code;
     var save_date=req.body.save_date;
     var first_save_weight=req.body.first_save_weight;
-    //how are we going to create asset_id...
-    //temporary: asset_id = save_date + "_" + waste_code
-    var asset_id=save_date+"_"+waste_code;
     var user_id= req.session.user_id;
+    //asset_id = save_date + "_" + waste_code+"_" + user_id
+    var asset_id=save_date+"_"+waste_code+"_"+user_id;
     var sqlquery = "SELECT company_id FROM users WHERE user_id=?";
     connection.query(sqlquery, user_id,function (err, row) {
       if (err) {
