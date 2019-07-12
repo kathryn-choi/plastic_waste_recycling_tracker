@@ -198,7 +198,7 @@ router.post('/form', function(req, res, next) {
                   console.log("found handler_id");
                   var hanlder_id = rows[0].user_id
                   console.log(hanlder_id)
-                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Recycler",hanlder_id,"Recycler",con_id)then((response) => { 
+                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Recycler",hanlder_id,"Recycler",con_id).then((response) => { 
                     //return error if error in response
                     if (response.error != null) {
                       console.log("create ticket failed");

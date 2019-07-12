@@ -1,22 +1,24 @@
-var network = require('../recycling_tracker/network.js');
-var compassetM = require('./../../public/modules/compasset.js');
+var express = require('express');
+var router = express.Router();
+var compassetM = require('./../public/modules/compasset.js');
 
  router.get('/', function(req, res, next) {
     console.log("compasset!");
     var user_id= req.session.user_id;
-    var sqlquery = "SELECT company_id FROM users WHERE user_id=?";
-    connection.query(sqlquery, user_id,function (err, rows) {
+    var sqlquery = "SELECT * FROM users WHERE user_id=?";
+    connection.query(sqlquery, user_id,function (err, row) {
       if (err) {
         console.log("no match");
         res.redirect('back');
       } else {
-        var company_id= row[0].company_id;
+        console.log("row : ", row);
+        var company_id= row[0].companies_id;
+        var user_type=row[0].user_type;
         console.log('company id : ', company_id);
         compassetM.get_company_compasset_by_company_id(company_id,function (result, mycompassets) {
             if(result==true){
                 console.log("mycompassest", mycompassets);
                 var company_name = compassetM.get_company_name_by_id(company_id);
-                var user_type= compassetM.get_user_type_by_id(user_id);
                 res.render('compasset/mycompassets', {
                     mycompassets: mycompassets, 
                     company_name: company_name,
@@ -73,13 +75,13 @@ router.post('/create_compasset', function(req, res, next) {
     var user_id= req.session.user_id;
     //asset_id = save_date + "_" + waste_code+"_" + user_id
     var asset_id=save_date+"_"+waste_code+"_"+user_id;
-    var sqlquery = "SELECT company_id FROM users WHERE user_id=?";
+    var sqlquery = "SELECT companies_id FROM users WHERE user_id=?";
     connection.query(sqlquery, user_id,function (err, row) {
       if (err) {
         console.log("no match");
         res.redirect('back');
       } else {
-        var company_id= row[0].company_id;
+        var company_id= row[0].companies_id;
         compassetM.create_compasset(asset_id, first_save_weight, company_id, waste_code, function(result){
             if(result==true){
                 console.log("create compasset true!");
@@ -111,3 +113,5 @@ router.post('/update_compasset', function(req, res, next) {
         }
     });
 });
+
+module.exports = router;

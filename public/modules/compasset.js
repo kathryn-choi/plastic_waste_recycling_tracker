@@ -1,4 +1,4 @@
-var network = require('../recycling_tracker/network.js');
+var network = require('./../../recycling_tracker/network.js');
 
 exports.create_compasset = function(asset_id, save_weight, comp_id, waste_code, cb){
   //(asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) 

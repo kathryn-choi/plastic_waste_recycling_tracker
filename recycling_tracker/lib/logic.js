@@ -112,6 +112,7 @@ async function CreateCompasset(createCompasset) {
   compasset.handle_weight = createCompasset.handle_weight;
   compasset.save_weight = createCompasset.save_weight;
   compasset.comp_id = createCompasset.comp_id;
+  compasset.waste_code = createCompasset.waste_code;
   await compassetRegistry.add(compasset);
   const event = getFactory().newEvent('org.recycling.tracker', 'compasset_create');
   event.asset_id = compasset.asset_id;
@@ -119,6 +120,7 @@ async function CreateCompasset(createCompasset) {
   event.handle_weight = compasset.handle_weight;
   event.save_weight = compasset.save_weight;
   event.comp_id = compasset.comp_id;
+  event.waste_code= compasset.waste_code;
   emit(event)
 
 }
@@ -131,9 +133,12 @@ async function CreateCompasset(createCompasset) {
  */
 async function UpdateCompanyAsset(updatecompanyasset) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Compasset');
+    updatecompanyasset.compasset.asset_id = updatecompanyasset.asset_id;
     updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight;
     updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight;
     updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight;
+    updatecompanyasset.compasset.comp_id = updatecompanyasset.comp_id;
+    updatecompanyasset.compasset.waste_code = updatecompanyasset.waste_code;
     await ticketRegistry.update(updatecompanyasset.compasset);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'compasset_update');
@@ -141,6 +146,8 @@ async function UpdateCompanyAsset(updatecompanyasset) {
     event.gen_weight = updatecompanyasset.compasset.gen_weight
     event.handle_weight = updatecompanyasset.compasset.handle_weight
     event.save_weight = updatecompanyasset.compasset.save_weight
-    event.owner = updatecompanyasset.compasset.owner
+    event.comp_id = updatecompanyasset.compasset.comp_id
+    event.waste_code = updatecompanyasset.compasset.waste_code
+
     emit(event)
 }
