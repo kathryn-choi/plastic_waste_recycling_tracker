@@ -69,6 +69,7 @@ router.post('/search_result', function(req, res, next) {
 
 //최초 보관량 등록하기
 router.post('/create_compasset', function(req, res, next) {
+  console.log("post create_compasset");
     var waste_code=req.body.waste_code;
     var save_date=req.body.save_date;
     var first_save_weight=req.body.first_save_weight;
@@ -81,7 +82,8 @@ router.post('/create_compasset', function(req, res, next) {
         console.log("no match");
         res.redirect('back');
       } else {
-        var company_id= row[0].companies_id;
+        var companies_id= row[0].companies_id;
+        var company_id=companies_id.toString();
         compassetM.create_compasset(asset_id, first_save_weight, company_id, waste_code, function(result){
             if(result==true){
                 console.log("create compasset true!");

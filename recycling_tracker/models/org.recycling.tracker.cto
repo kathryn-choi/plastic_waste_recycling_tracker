@@ -135,7 +135,8 @@ transaction CreateCompasset{
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
-  o String comp_id  
+  o String comp_id
+  o String waste_code  
 }
 
 event compasset_create{
@@ -143,14 +144,19 @@ event compasset_create{
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
-  o String comp_id  
+  o String comp_id
+  o String waste_code  
 }
 
 //update company asset
 transaction UpdateCompanyAsset {
+  o String asset_id  
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
+  o String comp_id
+  o String waste_code 
+
   --> Compasset compasset
 }
 
@@ -159,5 +165,6 @@ event compasset_update {
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
-  o String comp_id  
+  o String comp_id
+  o String waste_code 
 }

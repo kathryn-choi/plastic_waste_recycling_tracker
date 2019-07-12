@@ -1,4 +1,5 @@
 var network = require('./../../recycling_tracker/network.js');
+var request = require('request');
 
 exports.create_compasset = function(asset_id, save_weight, comp_id, waste_code, cb){
   //(asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) 
@@ -42,6 +43,7 @@ exports.get_company_compasset_by_company_id = function(company_id, cb){
               res.redirect('back');
             } else {
               console.log("found company");
+              console.log(row);
               var compasset = {
                 asset_id: asset_id,
                 gen_weight: gen_weight,
@@ -52,6 +54,7 @@ exports.get_company_compasset_by_company_id = function(company_id, cb){
                 waste_state: row[0].waste_state,
                 waste_classify: row[0].waste_classify,
               }
+              console.log(compasset);
               my_compassets.push(compasset)
               count++;
               if(count == compassets.length){

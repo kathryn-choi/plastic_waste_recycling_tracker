@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<form action="/compasset/create_compasset" method="post">
+<!--<form action="/compasset/create_compasset" method="post">-->
    
     <label>*1.폐기물 종류</label>
     <%if (waste_code==''){%>
@@ -59,7 +59,7 @@
 
     <button  type="submit" onclick="save()">등록하기</button>
     <%}%>
-</form>
+<!--</form>-->
 
 
 <!-- jQuery library -->
@@ -96,8 +96,11 @@
     }
 
     function save(){
+        console.log("save!");
         var unit= document.getElementsByName("unit")[0].value;
+        console.log("unit : ",unit);
         if (unit=="kg"){
+            console.log("unit : kg");
             $.ajax({
                 url:"/compasset/create_compasset",
                 method: "POST",
@@ -112,6 +115,7 @@
                     }}
             });
         }else if (unit=="ton"){
+            console.log("unit : ton");
             //1 ton == 907.185 kg
             var weight=document.getElementsByName("first_save_weight")[0].value * 907.185;
             $.ajax({
@@ -129,6 +133,7 @@
             });
         }else{
             //1g == 0.001 kg
+            console.log("unit : g");
             var weight=document.getElementsByName("first_save_weight")[0].value * 0.001;
             $.ajax({
                 url:"/compasset/create_compasset",
