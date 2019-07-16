@@ -456,7 +456,7 @@ module.exports = {
         }
 
     },
-    update_company_asset: async function (asset_id,gen_weight, handle_weight, save_weight, waste_code) {
+    update_company_asset: async function (asset_id,gen_weight, handle_weight, save_weight) {
         try {
 
             //connect to network with user_id
@@ -476,11 +476,11 @@ module.exports = {
             update_asset.gen_weight = gen_weight;
             update_asset.handle_weight = handle_weight;
             update_asset.save_weight = save_weight;
-            update_asset.waste_code = waste_code;
 
+            console.log("1")
             //submit transaction
             await businessNetworkConnection.submitTransaction(update_asset);
-
+            console.log("2")
             //disconnect
             await businessNetworkConnection.disconnect('admin@recycling_tracker');
 

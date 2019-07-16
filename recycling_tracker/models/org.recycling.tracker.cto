@@ -153,9 +153,6 @@ transaction UpdateCompanyAsset {
   o String gen_weight 
   o String handle_weight 
   o String save_weight 
-  o String comp_id
-  o String waste_code 
-
   --> Compasset compasset
 }
 

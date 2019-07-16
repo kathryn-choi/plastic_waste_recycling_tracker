@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var compassetM = require('./../public/modules/compasset.js');
 
- router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
     console.log("compasset!");
     var user_id= req.session.user_id;
     var sqlquery = "SELECT * FROM users WHERE user_id=?";
@@ -105,7 +105,7 @@ router.post('/update_compasset', function(req, res, next) {
     //현재보관량 = 최초 보관량 + 발생량 - 배출량 
     var new_save_weight=save_weight+gen_weight-handle_weight;
     //(asset_id,gen_weight, handle_weight, save_weight, cb)
-    compassetM.update_company_asset(asset_id, gen_weight, handle_weight, new_save_weight, function(result){
+    compassetM.update_company_asset(asset_id, gen_weight.toString(), handle_weight.toString(), new_save_weight.toString(), function(result){
         if(result==true){
             console.log("update compasset true!");
             res.redirect('/compasset');

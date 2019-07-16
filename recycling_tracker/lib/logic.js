@@ -136,8 +136,6 @@ async function UpdateCompanyAsset(updatecompanyasset) {
     updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight;
     updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight;
     updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight;
-    updatecompanyasset.compasset.comp_id = updatecompanyasset.comp_id;
-    updatecompanyasset.compasset.waste_code = updatecompanyasset.waste_code;
     await ticketRegistry.update(updatecompanyasset.compasset);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'compasset_update');
