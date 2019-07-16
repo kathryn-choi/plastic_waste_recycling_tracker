@@ -79,6 +79,7 @@ async function ChangeTicketInfo(changeTicketinfo) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket');
     changeTicketinfo.ticket.currentdes = changeTicketinfo.currentdes;
     changeTicketinfo.ticket.previousdes = changeTicketinfo.previousdes;
+    changeTicketinfo.ticket.weight = changeTicketinfo.weight;
     changeTicketinfo.ticket.transfer_date = changeTicketinfo.transfer_date;
     changeTicketinfo.ticket.giver = changeTicketinfo.giver;
     changeTicketinfo.ticket.reciever = changeTicketinfo.reciever;

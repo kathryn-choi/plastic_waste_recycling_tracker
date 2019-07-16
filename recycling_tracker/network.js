@@ -347,7 +347,7 @@ module.exports = {
             //create transaction
             const update_info = factory.newTransaction(namespace, 'ChangeTicketInfo');
             update_info.ticket = factory.newRelationship(namespace, 'Ticket', ticket_id);
-
+            console.log(update_info.ticket)
             update_info.currentdes = currentdes;
             update_info.previousdes = previousdes;
             update_info.transfer_date = transfer_date;
@@ -369,10 +369,10 @@ module.exports = {
 
             update_info.conveyancer = factory.newRelationship(namespace, 'Conveyancer', conveyer_id);
 
-
+            console.log("before trans")
             //submit transaction
             await businessNetworkConnection.submitTransaction(update_info);
-
+            console.log("complete trans")
             //disconnect
             await businessNetworkConnection.disconnect('admin@recycling_tracker');
 

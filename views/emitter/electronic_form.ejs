@@ -145,9 +145,8 @@
                 emitter_name : document.getElementsByName("emitter_name")[0].value
             },
             success : function (data) {
-                if(data.success == true){
-                    window.location.href = data.redirect_url;
-                }}
+                window.location.href = data.redirect_url;
+            }
         });
     }
 
