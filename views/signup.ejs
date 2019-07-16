@@ -1,101 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Signup</title>
-    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
+
 </head>
+
 <body>
-<style>
-    /* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
 
-    /* Modal Content/Box */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%; /* Could be more or less, depending on screen size */
-    }
-    /* The Close Button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            /* Could be more or less, depending on screen size */
+        }
 
-</style>
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-<!-- <form action="/signup" method="post" > -->
-    <h3>Sign Up</h3>
-    <label>ID</label>
-    <input type="text" name="id"> <br>
-    <label>Password</label>
-    <td><input type="password" name="pw"></td> <br>
-    <label>이름</label>
-    <td><input type="text" name="name"></td> <br>
-    <label>User Type</label>
-    <select name="user_type">
-        <option value="">직업 선택</option>
-        <option value="emitter">배출자</option>
-        <option value="conveyancer">운송자</option>
-        <option value="handler">처리자</option>
-        <option value="recycler">재활용자</option>
-        <option value="admin">환경부</option>
-    </select> <br>
-    <label>Company ID</label>
-    <%if(company_id==-1){%>
-    <!--search button pop up 해서 company 이름으로 id 조회하기-->
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn" onclick="company_search()">조회하기</button>
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        select 
+        { 
+            width: 234px; /* 원하는 너비설정 */ 
+            padding: .4em .4em; /* 여백으로 높이 설정 */ 
+            font-family: inherit; /* 폰트 상속 */ 
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
+            border: 1px solid #999; 
+            border-radius: 0px; /* iOS 둥근모서리 제거 */ 
+            -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+            -moz-appearance: none; 
+            appearance: none; 
+        }
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form action="/search" method="post">
-                기업 이름:
-                <input type="text" name="company_name">
-                <button type="submit">조회</button>
-            </form>
-        </div>
-    </div>
-    <td><input type="number" name="companies_id"value=0 ></td> <br>
-    <%}else{%>
-    <td><input type="number" name="companies_id" value="<%=company_id%>"></td> <br>
-    <%}%>
-    <label>Phone</label>
-    <td><input type="number" name="phone"></td> <br>
-    <label>차량 번호(운반자일 경우 필수 입력)</label>
-    <td><input type="number" name="carnum"></td> <br>
-    <input type="submit" value="회원가입" onclick="sign_up()">Sign Up</button>
-<!-- </form> -->
+    </style>
+
+    <body class="single-page contact-page">
+        <header class="site-header">
+            <div class="nav-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="site-branding d-flex align-items-center">
+                                <a class="d-block" href="/" rel="home"><img class="d-block"
+                                        src="/style/images/logo.png" alt="logo"></a>
+                            </div><!-- .site-branding -->
+
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/">Home</a></li>
+                                    <li><a href="/signup">회원가입</a></li>
+                                    <li><a href="/login">로그인</a></li>
+                                    <li><a href="/logout">로그아웃</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+
+                            <div class="hamburger-menu d-lg-none">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div><!-- .hamburger-menu -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>회원가입</h1>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header -->
+
+        <div class="contact-page-wrap">
+            <div class="container">
+                    <div class="row">
+                            <div class="col-12 col-lg-5">
+                            </div>
+                    <div class="col-12 col-lg-7">
+                        <br> <br>
+                        <label>ID</label> <br>
+                        <input type="text" name="id"> <br>
+                        <label>Password</label> <br>
+                        <td><input type="password" name="pw"></td> <br>
+                        <label>이름</label> <br>
+                        <td><input type="text" name="name"></td> <br>
+                        <label>User Type</label> <br>
+                        <select name="user_type">
+                            <option value="">직업 선택</option>
+                            <option value="emitter">배출자</option>
+                            <option value="conveyancer">운송자</option>
+                            <option value="handler">처리자</option>
+                            <option value="recycler">재활용자</option>
+                            <option value="admin">환경부</option>
+                        </select> <br> <br>
+                        <label>Company ID</label>
+                        <%if(company_id==-1){%>
+                        <!--search button pop up 해서 company 이름으로 id 조회하기-->
+                        <!-- Trigger/Open The Modal -->
+                        <button id="myBtn" onclick="company_search()">조회하기</button> <br>
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <form action="/search" method="post">
+                                    기업 이름:
+                                    <input type="text" name="company_name">
+                                    <button type="submit">조회</button>
+                                </form>
+                            </div>
+                        </div>
+                        <td><input type="number" name="companies_id" value=0></td> <br>
+                        <%}else{%>
+                            <br>
+                        <td><input type="number" name="companies_id" value="<%=company_id%>"></td> <br>
+                        <%}%>
+                        <label>Phone</label> <br>
+                        <td><input type="number" name="phone"></td> <br>
+
+                        <label>차량 번호(운반자일 경우 필수 입력)</label> <br>
+                        <td><input type="number" name="carnum"></td> 
+                        <br> <br>
+                        <input type="submit" class="btn gradient-bg" value="회원가입" onclick="sign_up()">
+                        </div>
+                    </div>  
+                </div><!-- .container -->
+            </div>
+
+            <footer class="site-footer">
+                    <div class="footer-widgets">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="foot-about">
+                                        <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
+                
+                                        <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
+                
+                                    </div>
+                                </div>
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <h2>유관 기관 사이트</h2>
+                
+                                    <ul>
+                                        <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                                        <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                                        <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                                        <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                                        <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                                        <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                                        <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                                    </ul>
+                                </div><!-- .col -->
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <div class="foot-latest-news">
+                                        <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm"><h2>서비스 이용약관</h2></a>
+                                        <br> <br>
+                                        <a href="http://www.keco.or.kr/kr/util/privacy1_1.do"><h2>개인정보처리방침</h2></a>
+                                    </div><!-- .foot-latest-news -->
+                                </div><!-- .col -->
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <div class="foot-contact">
+                                        <h2>연락처 안내</h2>
+                
+                                        <ul>
+                                            <li>운영 시간 : 9:00 ~ 18:00  <br>
+                                                단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                                운영되지 않습니다</li>
+                                            <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                            <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                            <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span></li>
+                                        </ul>
+                                    </div><!-- .foot-contact -->
+                
+                                </div><!-- .col -->
+                            </div><!-- .row -->
+                        </div><!-- .container -->
+                    </div><!-- .footer-widgets -->
+                
+                    <div class="footer-bar">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                </div><!-- .col-12 -->
+                            </div><!-- .row -->
+                        </div><!-- .container -->
+                    </div><!-- .footer-bar -->
+                </footer><!-- .site-footer -->
+
+
 <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
     // Get the modal
 
-    function company_search(){
+    function company_search() {
         var modal = document.getElementById('myModal');
 
         // Get the button that opens the modal
@@ -105,17 +274,17 @@
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
-        btn.onclick = function() {
+        btn.onclick = function () {
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+        span.onclick = function () {
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -123,26 +292,36 @@
     }
 
 
-    function sign_up(){
+    function sign_up() {
         $.ajax({
-        url:"/signup",
-        method: "POST",
-        data : {
-            user_id : document.getElementsByName("id")[0].value,
-            user_pw : document.getElementsByName("pw")[0].value,
-            user_type : document.getElementsByName("user_type")[0].value,
-            user_name : document.getElementsByName("name")[0].value,
-            user_contact : document.getElementsByName("phone")[0].value,
-            companies_id : document.getElementsByName("companies_id")[0].value,
-            car_number : document.getElementsByName("carnum")[0].value
-        },
-        success : function (data) {
-          if(data.success == true){
-            window.location.href = data.redirect_url;
-        }}
+            url: "/signup",
+            method: "POST",
+            data: {
+                user_id: document.getElementsByName("id")[0].value,
+                user_pw: document.getElementsByName("pw")[0].value,
+                user_type: document.getElementsByName("user_type")[0].value,
+                user_name: document.getElementsByName("name")[0].value,
+                user_contact: document.getElementsByName("phone")[0].value,
+                companies_id: document.getElementsByName("companies_id")[0].value,
+                car_number: document.getElementsByName("carnum")[0].value
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = data.redirect_url;
+                }
+            }
         });
     }
 
 </script>
+<script type='text/javascript' src='/style/js/jquery.js'></script>
+<script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/style/js/swiper.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+<script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+<script type='text/javascript' src='/style/js/custom.js'></script>
+
 </body>
 </html>
