@@ -150,7 +150,6 @@ event compasset_create{
 
 //update company asset
 transaction UpdateCompanyAsset {
-  o String asset_id  
   o String gen_weight 
   o String handle_weight 
   o String save_weight 

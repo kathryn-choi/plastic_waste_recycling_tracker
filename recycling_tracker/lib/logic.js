@@ -107,8 +107,7 @@ async function ChangeTicketInfo(changeTicketinfo) {
 async function CreateCompasset(createCompasset) {
   const compassetRegistry = await getAssetRegistry('org.recycling.tracker.Compasset');
   const factory = getFactory();
-  const compasset = factory.newResource('org.recycling.tracker', 'Ticket', createCompasset.ticket_id);
-  compasset.asset_id = createCompasset.asset_id;
+  const compasset = factory.newResource('org.recycling.tracker', 'Compasset', createCompasset.asset_id);
   compasset.gen_weight = createCompasset.gen_weight;
   compasset.handle_weight = createCompasset.handle_weight;
   compasset.save_weight = createCompasset.save_weight;
@@ -134,7 +133,6 @@ async function CreateCompasset(createCompasset) {
  */
 async function UpdateCompanyAsset(updatecompanyasset) {
     const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Compasset');
-    updatecompanyasset.compasset.asset_id = updatecompanyasset.asset_id;
     updatecompanyasset.compasset.gen_weight = updatecompanyasset.gen_weight;
     updatecompanyasset.compasset.handle_weight = updatecompanyasset.handle_weight;
     updatecompanyasset.compasset.save_weight = updatecompanyasset.save_weight;

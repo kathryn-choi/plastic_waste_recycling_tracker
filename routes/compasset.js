@@ -105,7 +105,7 @@ router.post('/update_compasset', function(req, res, next) {
     //현재보관량 = 최초 보관량 + 발생량 - 배출량 
     var new_save_weight=save_weight+gen_weight-handle_weight;
     //(asset_id,gen_weight, handle_weight, save_weight, cb)
-    compassetM.update_compasset(asset_id, gen_weight, handle_weight, new_save_weight, function(result){
+    compassetM.update_company_asset(asset_id, gen_weight, handle_weight, new_save_weight, function(result){
         if(result==true){
             console.log("update compasset true!");
             res.redirect('/compasset');

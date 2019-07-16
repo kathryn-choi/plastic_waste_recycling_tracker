@@ -3,6 +3,7 @@ var request = require('request');
 
 exports.create_compasset = function(asset_id, save_weight, comp_id, waste_code, cb){
   //(asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) 
+    console.log("Comp asset create")
     network.create_compasset(asset_id,'',save_weight,'',comp_id,waste_code).then((response) => { 
     //return error if error in response
     if (response.error != null) {
@@ -72,7 +73,7 @@ exports.get_company_compasset_by_company_id = function(company_id, cb){
 };
 
 exports.update_company_asset = function(asset_id,gen_weight, handle_weight, save_weight, cb){
-    update_company_asset(asset_id,gen_weight, handle_weight, save_weight).then((response) => { 
+  network.update_company_asset(asset_id,gen_weight, handle_weight, save_weight).then((response) => { 
         //return error if error in response
         if (response.error != null) {
             console.log("update company compasset failed");
