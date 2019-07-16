@@ -148,6 +148,7 @@ function get_user_ticketinfo(user_id, cb){
                       user_name : user_name,
                       eform_type : eform_type
                     }
+                    console.log("t : ",ticket);
                     my_tickets.push(ticket)
                     count++;
                     if(count == tickets.length){
@@ -356,7 +357,8 @@ router.post('/search_result', function(req, res, next) {
 
 //choose material from search result
 router.post('/change_ticketinfo', function(req, res, next) {
-  console.log(req.body)
+  console.log("change ticketinfo")
+  //console.log(req.body)
   var ticket_id =req.body.ticket_id;
   var waste_type =req.body.waste_type;
   var conveyancer =req.body.conveyancer;

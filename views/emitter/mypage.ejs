@@ -42,16 +42,33 @@
         <% for(var i=0; i<(mytickets).length; i++){%>
         <tr>
             <form action="/emitter/change_ticketinfo" method="post">
-                <td><input type="text" name="ticket_id" value = "<%=mytickets[i].ticket_id%>"></td>
-                <td><input type="text" name="waste_type" value = "<%=mytickets[i].waste_type%>"></td>
+                <td><%=mytickets[i].ticket_id%>
+                    <input type="hidden" name="ticket_id" value = "<%=mytickets[i].ticket_id%>">
+                </td>
+                <td><%=mytickets[i].waste_type%>
+                    <input type="hidden" name="waste_type" value = "<%=mytickets[i].waste_type%>">
+                </td>
                 <td><input type="text" name="weight" value = "<%=mytickets[i].weight%>"></td>
-                <td><input type="text" name="conveyancer" value = "<%=mytickets[i].conveyancer%>"></td>
-                <td><input type="text" name="carnum" value = "<%=mytickets[i].carnum%>"></td>
-                <td><input type="text" name="waste_handler" value = "<%=mytickets[i].waste_handler%>"></td>
-                <td><input type="text" name="method" value = "<%=mytickets[i].method%>"></td>
-                <td><input type="text" name="comp_loc" value = "<%=mytickets[i].comp_loc%>"></td>
+                <td><%=mytickets[i].conveyancer%>
+                    <input type="hidden" name="conveyancer" value = "<%=mytickets[i].conveyancer%>">
+                </td>
+                <td><%=mytickets[i].carnum%>
+                    <input type="hidden" name="carnum" value = "<%=mytickets[i].carnum%>">
+                </td>
+                <td>
+                    <%=mytickets[i].waste_handler%>
+                    <input type="hidden" name="waste_handler" value = "<%=mytickets[i].waste_handler%>">
+                </td>
+                <td><%=mytickets[i].method%>
+                    <input type="hidden" name="method" value = "<%=mytickets[i].method%>">
+                </td>
+                <td><%=mytickets[i].comp_loc%>
+                    <input type="hidden" name="comp_loc" value = "<%=mytickets[i].comp_loc%>">
+                </td>
                 <td><input type="text" name="transfer_date" value = "<%=mytickets[i].transfer_date%>"></td>
-                <td><input type="text" name="user_name" value = "<%=mytickets[i].user_name%>"></td>
+                <td><%=mytickets[i].user_name%>
+                    <input type="hidden" name="user_name" value = "<%=mytickets[i].user_name%>">
+                </td>
                 <td><button type="submit">Submit</button></td>
             </form>
         </tr>
