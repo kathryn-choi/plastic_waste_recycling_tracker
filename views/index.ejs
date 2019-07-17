@@ -1,747 +1,607 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Waste Recycling Tracker</title>
-    <!--<meta charset="UTF-8">-->
-       <!-- Required meta tags -->
-       <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
-       <!-- Bootstrap CSS -->
-       <link rel="stylesheet" href="/style/css/bootstrap.min.css">
-   
-       <!-- FontAwesome CSS -->
-       <link rel="stylesheet" href="/style/css/font-awesome.min.css">
-   
-       <!-- ElegantFonts CSS -->
-       <link rel="stylesheet" href="/style/css/elegant-fonts.css">
-   
-       <!-- themify-icons CSS -->
-       <link rel="stylesheet" href="/style/css/themify-icons.css">
-   
-       <!-- Swiper CSS -->
-       <link rel="stylesheet" href="/style/css/swiper.min.css">
-   
-       <!-- Styles -->
-       <link rel="stylesheet" href="/style/style.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 
 <body>
-<!--<h1>Waste Recycling Tracker</h1>-->
-<header class="site-header">
-    <div class="nav-bar">
+    <!--<h1>Waste Recycling Tracker</h1>-->
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                    alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/">Home</a></li>
+                                <li><a href="/signup">회원가입</a></li>
+                                <li><a href="/login">로그인</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+    <div class="swiper-container hero-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide hero-content-wrap">
+                <img src="/style/images/blockchain.jpg" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                                <header class="entry-header">
+                                    <h2>블록체인</h2>
+                                    <h4>폐기물처리 관리시스템</h4>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content mt-4">
+                                    <p>&nbsp; &nbsp; &nbsp; &nbsp;컨소시엄 블록체인 Hyperledger Fabric을 사용한 폐기물처리 관리 시스템입니다 <br>
+
+                                    </p>
+                                </div><!-- .entry-content -->
+
+                                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                                    <a href="#" class="btn orange-border">자세히 보기</a>
+                                </footer><!-- .entry-footer -->
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .hero-content-overlay -->
+            </div><!-- .hero-content-wrap -->
+
+            <div class="swiper-slide hero-content-wrap">
+                <img src="/style/images/allbaro.png" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                                <header class="entry-header">
+
+                                    <h4>올바로 시스템</h4>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content mt-4">
+                                    <p>&nbsp; &nbsp; &nbsp; &nbsp;자원이 순환되는 아름다운 환경, 건강한 미래</p>
+                                </div><!-- .entry-content -->
+
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .hero-content-overlay -->
+            </div><!-- .hero-content-wrap -->
+
+            <div class="swiper-slide hero-content-wrap">
+                <img src="/style/images/recycle.jpg" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                                <header class="entry-header">
+
+                                    <h4>시스템 소개</h4>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content mt-4">
+                                    <p> &nbsp; &nbsp; &nbsp; &nbsp; 폐기물의 배출에서부터 운반ㆍ최종처리까지의 전 과정을 인터넷을 통해 실시간으로 투명하게 관리하는
+                                        <br>
+                                        &nbsp; &nbsp; &nbsp; &nbsp; 시스템으로 폐기물의 발생억제(폐기물 감량), 재활용(순환골재유통정보), 적정처리(적법처리,
+                                        <br>
+                                        &nbsp; &nbsp; &nbsp; &nbsp; RFID시스템)을 통한 폐기물의 전 생애적 관리를 하나로 통합한 IT기반 폐기물 종합관리
+                                        시스템입니다.</p>
+                                </div><!-- .entry-content -->
+
+
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .hero-content-overlay -->
+            </div><!-- .hero-content-wrap -->
+        </div><!-- .swiper-wrapper -->
+
+        <div class="pagination-wrap position-absolute w-100">
+            <div class="container">
+                <div class="swiper-pagination"></div>
+            </div><!-- .container -->
+        </div><!-- .pagination-wrap -->
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next flex justify-content-center align-items-center">
+            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
+                </svg></span>
+        </div>
+
+        <div class="swiper-button-prev flex justify-content-center align-items-center">
+            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+                </svg></span>
+        </div>
+    </div><!-- .hero-slider -->
+
+    <div class="home-page-icon-boxes">
         <div class="container">
             <div class="row">
-                <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
-                    <div class="site-branding d-flex align-items-center">
-                       <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png" alt="logo"></a>
-                    </div><!-- .site-branding -->
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+                    <div class="icon-box">
+                        <figure class="d-flex justify-content-center">
+                            <img src="/style/images/lock-gray.png" alt="">
+                            <img src="/style/images/lock-white.png" alt="">
+                        </figure>
 
-                    <nav class="site-navigation d-flex justify-content-end align-items-center">
-                        <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                            <li class="current-menu-item"><a href="/">Home</a></li>
-                            <li><a href="/signup">회원가입</a></li>
-                            <li><a href="/login">로그인</a></li>
-                            <li><a href="/logout">로그아웃</a></li>
-                        </ul>
-                    </nav><!-- .site-navigation -->
+                        <header class="entry-header">
+                            <h3 class="entry-title">보안</h3>
+                        </header>
 
-                   
+                        <div class="entry-content">
+                            <p>블록체인에 인계서 및 장부를 저장하여 관리함으로써, 모든 거래 내역이 기록에 남아서 정보 조작 및 해킹 우려가 없습니다 </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+                    <div class="icon-box">
+                        <figure class="d-flex justify-content-center">
+                            <img src="/style/images/loc-gray.png" alt="">
+                            <img src="/style/images/loc-white.png" alt="">
+                        </figure>
+
+                        <header class="entry-header">
+                            <h3 class="entry-title">정확한 추적 기능</h3>
+                        </header>
+
+                        <div class="entry-content">
+                            <p>실시간으로 내가 인계서에 작성한 폐기물 위치, 현재 소지자, 무게, 재활용 여부 및의 정확한 정보를 신속하게 알 수 있습니다 </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
+                    <div class="icon-box">
+                        <figure class="d-flex justify-content-center">
+                            <img src="/style/images/tap-gray.png" alt="">
+                            <img src="/style/images/tap-white.png" alt="">
+                        </figure>
+
+                        <header class="entry-header">
+                            <h3 class="entry-title">편리한 UI</h3>
+                        </header>
+
+                        <div class="entry-content">
+                            <p>이전 올바로 시스템에서 불편했던 UI/UX를 보다 더 간단하고 편리하게 만들었습니다 </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-icon-boxes -->
+
+    <div class="home-page-welcome">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 order-2 order-lg-1">
+                    <div class="welcome-content">
+                        <header class="entry-header">
+                            <h2 class="entry-title">동영상 매뉴얼 </h2>
+                        </header><!-- .entry-header -->
+
+                        <div class="entry-content mt-5">
+                            <h4> 폐기물 배출에서 처리까지 올바로 알기 </h4>
+                            <p><br>
+                                01 폐기물관리제도 소개 <br>
+                                02 올바로시스템 소개 <br>
+                                03 회원가입 <br>
+                                04 기초정보 관리 <br>
+                                05 배출자 전자인계서 작성 <br>
+                                06 배출자 전자인계서 조회 및 수정 <br>
+                                07 사업장폐기물관리대장 <br>
+                                08 실적보고 <br>
+                            </p>
+                        </div><!-- .entry-content -->
+
+                        <div class="entry-footer mt-5">
+                            <a href="https://www.allbaro.or.kr/html/video_manual/index.html"
+                                class="btn gradient-bg mr-2">자세히 보기</a>
+                        </div><!-- .entry-footer -->
+                    </div><!-- .welcome-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6 mt-4 order-1 order-lg-2">
+                    <img src="/style/images/video-player.png" alt="welcome" style="width: 100px height 100px">
                 </div><!-- .col -->
             </div><!-- .row -->
         </div><!-- .container -->
-    </div><!-- .nav-bar -->
-</header><!-- .site-header -->
+    </div><!-- .home-page-icon-boxes -->
 
-<div class="swiper-container hero-slider">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide hero-content-wrap">
-            <img src="/style/images/blockchain.jpg" alt="">
-
-            <div class="hero-content-overlay position-absolute w-100 h-100">
-                <div class="container h-100">
-                    <div class="row h-100">
-                        <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                            <header class="entry-header">
-                                <h2>블록체인</h2>
-                                <h4>폐기물처리 관리시스템</h4>
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content mt-4">
-                                <p>&nbsp; &nbsp; &nbsp; &nbsp;컨소시엄 블록체인 Hyperledger Fabric을 사용한 폐기물처리 관리 시스템입니다 <br>
-                                    
-                                </p>
-                            </div><!-- .entry-content -->
-
-                            <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
-                                <a href="#" class="btn orange-border">자세히 보기</a>
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .col -->
-                    </div><!-- .row -->
-                </div><!-- .container -->
-            </div><!-- .hero-content-overlay -->
-        </div><!-- .hero-content-wrap -->
-
-        <div class="swiper-slide hero-content-wrap">
-            <img src="/style/images/allbaro.png" alt="">
-
-            <div class="hero-content-overlay position-absolute w-100 h-100">
-                <div class="container h-100">
-                    <div class="row h-100">
-                        <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                            <header class="entry-header">
-                                
-                                <h4>올바로 시스템</h4>
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content mt-4">
-                                <p>&nbsp; &nbsp; &nbsp; &nbsp;자원이 순환되는 아름다운 환경, 건강한 미래</p>
-                            </div><!-- .entry-content -->
-
-                        </div><!-- .col -->
-                    </div><!-- .row -->
-                </div><!-- .container -->
-            </div><!-- .hero-content-overlay -->
-        </div><!-- .hero-content-wrap -->
-
-        <div class="swiper-slide hero-content-wrap">
-            <img src="/style/images/recycle.jpg" alt="">
-
-            <div class="hero-content-overlay position-absolute w-100 h-100">
-                <div class="container h-100">
-                    <div class="row h-100">
-                        <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
-                            <header class="entry-header">
-                                
-                                <h4>시스템 소개</h4>
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content mt-4">
-                                <p> &nbsp; &nbsp; &nbsp; &nbsp; 폐기물의 배출에서부터 운반ㆍ최종처리까지의 전 과정을 인터넷을 통해 실시간으로 투명하게 관리하는 <br>
-                                    &nbsp; &nbsp; &nbsp; &nbsp; 시스템으로 폐기물의 발생억제(폐기물 감량), 재활용(순환골재유통정보), 적정처리(적법처리, <br>
-                                    &nbsp; &nbsp; &nbsp; &nbsp; RFID시스템)을 통한 폐기물의 전 생애적 관리를 하나로 통합한 IT기반 폐기물 종합관리 시스템입니다.</p>
-                            </div><!-- .entry-content -->
-
-                           
-                        </div><!-- .col -->
-                    </div><!-- .row -->
-                </div><!-- .container -->
-            </div><!-- .hero-content-overlay -->
-        </div><!-- .hero-content-wrap -->
-    </div><!-- .swiper-wrapper -->
-
-    <div class="pagination-wrap position-absolute w-100">
+    <div class="home-page-events">
         <div class="container">
-            <div class="swiper-pagination"></div>
-        </div><!-- .container -->
-    </div><!-- .pagination-wrap -->
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="upcoming-events">
+                        <div class="section-heading">
+                            <h2 class="entry-title">팝업존</h2>
+                        </div><!-- .section-heading -->
 
-    <!-- Add Arrows -->
-    <div class="swiper-button-next flex justify-content-center align-items-center">
-        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
-    </div>
+                        <div class="event-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/award.png" alt="">
+                            </figure>
 
-    <div class="swiper-button-prev flex justify-content-center align-items-center">
-        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>
-    </div>
-</div><!-- .hero-slider -->
+                            <div class="event-content-wrap">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a href="#">순환자원정보센터 활용 사업장 우수사례 공모</a></h3>
 
-<div class="home-page-icon-boxes">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-                <div class="icon-box active">
-                    <figure class="d-flex justify-content-center">
-                        <img src="/style/images/hands-gray.png" alt="">
-                        <img src="/style/images/hands-white.png" alt="">
-                    </figure>
+                                    <div class="entry-content">
+                                        <p class="m-0">
+                                            기간:공고일 ~9월30일(월) <br>
+                                            대상:폐기물 배출,처리(재활용) 사업장 <br>
+                                            참여방법: 홈페이지 참조 <br>
+                                            <div class="entry-footer">
+                                                <a href="https://www.re.or.kr/board/viewNoticePage.do?sn=227">자세히 보기</a>
+                                            </div><!-- .entry-footer -->
+                                        </p>
+                                    </div><!-- .entry-content -->
+                            </div><!-- .event-content-wrap -->
+                        </div><!-- .event-wrap -->
 
-                    <header class="entry-header">
-                        <h3 class="entry-title">Become a Volunteer</h3>
-                    </header>
+                        <div class="event-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/award.png" alt="">
+                            </figure>
 
-                    <div class="entry-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. </p>
-                    </div>
-                </div>
-            </div>
+                            <div class="event-content-wrap">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a href="#">2019 지자체 참여 순환자원정보센터 활성화 경진대회</a></h3>
 
-            <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-                <div class="icon-box">
-                    <figure class="d-flex justify-content-center">
-                        <img src="/style/images/donation-gray.png" alt="">
-                        <img src="/style/images/donation-white.png" alt="">
-                    </figure>
+                                    <div class="entry-content">
+                                        <p class="m-0">
+                                            기간:공고일 ~ 8월31일(토) <br>
+                                            대상:전국 기초지자체 229개소 <br>
+                                            참여방법:홈페이지 참조(www.re.or.kr)<br>
+                                            <div class="entry-footer">
+                                                <a href="https://www.re.or.kr/board/viewNoticePage.do?sn=226">자세히 보기</a>
+                                            </div><!-- .entry-footer -->
+                                        </p>
+                                    </div><!-- .entry-content -->
 
-                    <header class="entry-header">
-                        <h3 class="entry-title">Dance & Music</h3>
-                    </header>
 
-                    <div class="entry-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. </p>
-                    </div>
-                </div>
-            </div>
+                            </div><!-- .event-content-wrap -->
+                        </div><!-- .event-wrap -->
 
-            <div class="col-12 col-md-6 col-lg-4 mt-4 mt-lg-0">
-                <div class="icon-box">
-                    <figure class="d-flex justify-content-center">
-                        <img src="/style/images/charity-gray.png" alt="">
-                        <img src="/style/images/charity-white.png" alt="">
-                    </figure>
+                        <div class="event-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/question.png" alt="">
+                            </figure>
 
-                    <header class="entry-header">
-                        <h3 class="entry-title">Online Conference</h3>
-                    </header>
+                            <div class="event-content-wrap">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a href="#">폐기물 배출 및 처리계획 기초정보구축이 필요하신가요?</a></h3>
+                                    <div class="entry-content">
+                                        <p class="m-0">올바로시스템 기초정보변경 서비스를 이용해 보세요!<br>
+                                            <div class="entry-footer">
+                                                <a
+                                                    href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=98717">자세히
+                                                    보기</a>
+                                            </div><!-- .entry-footer -->
+                                        </p>
+                                    </div><!-- .entry-content -->
 
-                    <div class="entry-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. </p>
-                    </div>
-                </div>
-            </div>
-        </div><!-- .row -->
-    </div><!-- .container -->
-</div><!-- .home-page-icon-boxes -->
 
-<div class="home-page-welcome">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-6 order-2 order-lg-1">
-                <div class="welcome-content">
-                    <header class="entry-header">
-                        <h2 class="entry-title">Wellcome to our Charity</h2>
-                    </header><!-- .entry-header -->
+                            </div><!-- .event-content-wrap -->
+                        </div><!-- .event-wrap -->
+                        <div class="event-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/alarm.png" alt="">
+                            </figure>
 
-                    <div class="entry-content mt-5">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestibulum mauris quis aliquam. Integer accumsan sodales odio, id tempus velit ullamcorper id. Quisque at erat eu libero consequat tempus. Quisque molestie convallis tempus. Ut semper purus metus, a euismod sapien sodales ac. Duis viverra eleifend fermentum.</p>
-                    </div><!-- .entry-content -->
+                            <div class="event-content-wrap">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a href="#">폐기물 유해성 정보자료 작성 제도 시행 알림 </a></h3>
+                                    <div class="entry-content">
+                                        <p class="m-0">시행일: 2018년 4월19일 <br>
 
-                    <div class="entry-footer mt-5">
-                        <a href="#" class="btn gradient-bg mr-2">Read More</a>
-                    </div><!-- .entry-footer -->
-                </div><!-- .welcome-content -->
-            </div><!-- .col -->
+                                            대 상 : 자세히 보기 클릭 <br>
+                                            <div class="entry-footer">
+                                                <a
+                                                    href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=98413">자세히
+                                                    보기</a>
+                                            </div><!-- .entry-footer -->
+                                        </p>
+                                    </div><!-- .entry-content -->
 
-            <div class="col-12 col-lg-6 mt-4 order-1 order-lg-2">
-                <img src="/style/images/welcome.jpg" alt="welcome">
-            </div><!-- .col -->
-        </div><!-- .row -->
-    </div><!-- .container -->
-</div><!-- .home-page-icon-boxes -->
 
-<div class="home-page-events">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <div class="upcoming-events">
-                    <div class="section-heading">
-                        <h2 class="entry-title">Upcoming Events</h2>
-                    </div><!-- .section-heading -->
+                            </div><!-- .event-content-wrap -->
+                        </div><!-- .event-wrap -->
+                    </div><!-- .upcoming-events -->
+                </div><!-- .col -->
 
-                    <div class="event-wrap d-flex flex-wrap justify-content-between">
-                        <figure class="m-0">
-                            <img src="/style/images/event-1.jpg" alt="">
-                        </figure>
+                <div class="col-12 col-lg-6">
+                    <div class="featured-cause">
+                        <div class="section-heading">
+                            <h2 class="entry-title">공지 사항</h2>
+                        </div><!-- .section-heading -->
 
-                        <div class="event-content-wrap">
-                            <header class="entry-header d-flex flex-wrap align-items-center">
-                                <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
-
-                                <div class="posted-date">
-                                    <a href="#">Aug 25, 2018 </a>
-                                </div><!-- .posted-date -->
-
-                                <div class="cats-links">
-                                    <a href="#">Ball Room New York</a>
-                                </div><!-- .cats-links -->
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content">
-                                <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                            </div><!-- .entry-content -->
-
-                            <div class="entry-footer">
-                                <a href="#">Read More</a>
-                            </div><!-- .entry-footer -->
-                        </div><!-- .event-content-wrap -->
-                    </div><!-- .event-wrap -->
-
-                    <div class="event-wrap d-flex flex-wrap justify-content-between">
-                        <figure class="m-0">
-                            <img src="/style/images/event-2.jpg" alt="">
-                        </figure>
-
-                        <div class="event-content-wrap">
-                            <header class="entry-header d-flex flex-wrap align-items-center">
-                                <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-
-                                <div class="posted-date">
-                                    <a href="#">Aug 25, 2018 </a>
-                                </div><!-- .posted-date -->
-
-                                <div class="cats-links">
-                                    <a href="#">Ball Room New York</a>
-                                </div><!-- .cats-links -->
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content">
-                                <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                            </div><!-- .entry-content -->
-
-                            <div class="entry-footer">
-                                <a href="#">Read More</a>
-                            </div><!-- .entry-footer -->
-                        </div><!-- .event-content-wrap -->
-                    </div><!-- .event-wrap -->
-
-                    <div class="event-wrap d-flex flex-wrap justify-content-between">
-                        <figure class="m-0">
-                            <img src="/style/images/event-3.jpg" alt="">
-                        </figure>
-
-                        <div class="event-content-wrap">
-                            <header class="entry-header d-flex flex-wrap align-items-center">
-                                <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-
-                                <div class="posted-date">
-                                    <a href="#">Aug 25, 2018 </a>
-                                </div><!-- .posted-date -->
-
-                                <div class="cats-links">
-                                    <a href="#">Ball Room New York</a>
-                                </div><!-- .cats-links -->
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content">
-                                <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                            </div><!-- .entry-content -->
-
-                            <div class="entry-footer">
-                                <a href="#">Read More</a>
-                            </div><!-- .entry-footer -->
-                        </div><!-- .event-content-wrap -->
-                    </div><!-- .event-wrap -->
-                </div><!-- .upcoming-events -->
-            </div><!-- .col -->
-
-            <div class="col-12 col-lg-6">
-                <div class="featured-cause">
-                    <div class="section-heading">
-                        <h2 class="entry-title">Featured Cause</h2>
-                    </div><!-- .section-heading -->
-
-                    <div class="cause-wrap d-flex flex-wrap justify-content-between">
-                        <figure class="m-0">
+                        <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                            <!-- <figure class="m-0">
                             <img src="/style/images/featured-causes.jpg" alt="">
-                        </figure>
-
-                        <div class="cause-content-wrap">
-                            <header class="entry-header d-flex flex-wrap align-items-center">
-                                <h3 class="entry-title w-100 m-0"><a href="#">Fundraiser for Kids</a></h3>
-
-                                <div class="posted-date">
-                                    <a href="#">Aug 25, 2018 </a>
-                                </div><!-- .posted-date -->
-
-                                <div class="cats-links">
-                                    <a href="#">Ball Room New York</a>
-                                </div><!-- .cats-links -->
-                            </header><!-- .entry-header -->
-
-                            <div class="entry-content">
-                                <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris. Lorem ipsum dolor sit amet, consectetur.</p>
-                            </div><!-- .entry-content -->
-
-                            <div class="entry-footer mt-5">
-                                <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                            </div><!-- .entry-footer -->
-                        </div><!-- .cause-content-wrap -->
-
-                        <div class="fund-raised w-100">
-                            <div class="featured-fund-raised-bar barfiller">
-                                <div class="tipWrap">
-                                    <span class="tip"></span>
-                                </div><!-- .tipWrap -->
-
-                                <span class="fill" data-percentage="83"></span>
-                            </div><!-- .fund-raised-bar -->
-
-                            <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                <div class="fund-raised-total mt-4">
-                                    Raised: $56 880
-                                </div><!-- .fund-raised-total -->
-
-                                <div class="fund-raised-goal mt-4">
-                                    Goal: $70 000
-                                </div><!-- .fund-raised-goal -->
-                            </div><!-- .fund-raised-details -->
-                        </div><!-- .fund-raised -->
-                    </div><!-- .cause-wrap -->
-                </div><!-- .featured-cause -->
-            </div><!-- .col -->
-        </div><!-- .row -->
-    </div><!-- .container -->
-</div><!-- .home-page-events -->
-
-<div class="our-causes">
-    <div class="container">
-        <div class="row">
-            <div class="coL-12">
-                <div class="section-heading">
-                    <h2 class="entry-title">Our Causes</h2>
-                </div><!-- .section-heading -->
-            </div><!-- .col -->
-        </div><!-- .row -->
-
-        <div class="row">
-            <div class="col-12">
-                <div class="swiper-container causes-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-1.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-1 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="83"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-2.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-2 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="70"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-3.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-3 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="83"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-1.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-4 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="83"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-2.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Education for all</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-5 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="70"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-
-                        <div class="swiper-slide">
-                            <div class="cause-wrap">
-                                <figure class="m-0">
-                                    <img src="/style/images/cause-3.jpg" alt="">
-
-                                    <div class="figure-overlay d-flex justify-content-center align-items-center position-absolute w-100 h-100">
-                                        <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
-                                    </div><!-- .figure-overlay -->
-                                </figure>
-
-                                <div class="cause-content-wrap">
-                                    <header class="entry-header d-flex flex-wrap align-items-center">
-                                        <h3 class="entry-title w-100 m-0"><a href="#">Bring water to the childrens</a></h3>
-                                    </header><!-- .entry-header -->
-
-                                    <div class="entry-content">
-                                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                                    </div><!-- .entry-content -->
-
-                                    <div class="fund-raised w-100">
-                                        <div class="fund-raised-bar-6 barfiller">
-                                            <div class="tipWrap">
-                                                <span class="tip"></span>
-                                            </div><!-- .tipWrap -->
-
-                                            <span class="fill" data-percentage="83"></span>
-                                        </div><!-- .fund-raised-bar -->
-
-                                        <div class="fund-raised-details d-flex flex-wrap justify-content-between align-items-center">
-                                            <div class="fund-raised-total mt-4">
-                                                Raised: $56 880
-                                            </div><!-- .fund-raised-total -->
-
-                                            <div class="fund-raised-goal mt-4">
-                                                Goal: $70 000
-                                            </div><!-- .fund-raised-goal -->
-                                        </div><!-- .fund-raised-details -->
-                                    </div><!-- .fund-raised -->
-                                </div><!-- .cause-content-wrap -->
-                            </div><!-- .cause-wrap -->
-                        </div><!-- .swiper-slide -->
-                    </div><!-- .swiper-wrapper -->
-
-                </div><!-- .swiper-container -->
-
-                <!-- Add Arrows -->
-                <div class="swiper-button-next flex justify-content-center align-items-center">
-                    <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
-                </div>
-
-                <div class="swiper-button-prev flex justify-content-center align-items-center">
-                    <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>
-                </div>
-            </div><!-- .col -->
-        </div><!-- .row -->
-    </div><!-- .container -->
-</div><!-- .our-causes -->
-
-<div class="home-page-limestone">
-    <div class="container">
-        <div class="row align-items-end">
-            <div class="coL-12 col-lg-6">
-                <div class="section-heading">
-                    <h2 class="entry-title">We love to help all the children that have problems in the world. After 15 years we have many goals achieved.</h2>
-
-                    <p class="mt-5">Dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris quis aliquam. Lorem ipsum dolor sit amet.</p>
-                </div><!-- .section-heading -->
-            </div><!-- .col -->
-
-            <div class="col-12 col-lg-6">
-                <div class="milestones d-flex flex-wrap justify-content-between">
-                    <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-                        <div class="counter-box">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <img src="/style/images/teamwork.png" alt="">
-                            </div>
-
-                            <div class="d-flex justify-content-center align-items-baseline">
-                                <div class="start-counter" data-to="120" data-speed="2000"></div>
-                                <div class="counter-k">K</div>
-                            </div>
-
-                            <h3 class="entry-title">회원가입한 사용자들</h3><!-- entry-title -->
-                        </div><!-- counter-box -->
-                    </div><!-- .col -->
-
-                    <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-                        <div class="counter-box">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <img src="/style/images/donation.png" alt="">
-                            </div>
-
-                            <div class="d-flex justify-content-center align-items-baseline">
-                                <div class="start-counter" data-to="79" data-speed="2000"></div>
-                            </div>
-
-                            <h3 class="entry-title">참여하는 기업들</h3><!-- entry-title -->
-                        </div><!-- counter-box -->
-                    </div><!-- .col -->
-
-                    <div class="col-12 col-sm-4 mt-5 mt-lg-0">
-                        <div class="counter-box">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <img src="/style/images/dove.png" alt="">
-                            </div>
-
-                            <div class="d-flex justify-content-center align-items-baseline">
-                                <div class="start-counter" data-to="253" data-speed="2000"></div>
-                            </div>
-
-                            <h3 class="entry-title">등록된 폐기물들</h3><!-- entry-title -->
-                        </div><!-- counter-box -->
-                    </div><!-- .col -->
-                </div><!-- .milestones -->
-            </div><!-- .col -->
-        </div><!-- .row -->
-    </div><!-- .container -->
-</div><!-- .our-causes -->
-
-<footer class="site-footer">
+                        </figure>-->
+                            <div class="event-content-wrap2">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a
+                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99840">한국환경공단
+                                            노동조합 창립기념일 행사 알림
+                                            [2019.07.08.(월)] </a></h3>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content">
+                                    <p class="m-0">2019-07-04 </p>
+                                </div><!-- .entry-content -->
+
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a
+                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99829">전기설비작업에
+                                            따른 부가서비스 제한 안내 </a></h3>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content">
+                                    <p class="m-0">2019-07-03</p>
+                                </div><!-- .entry-content -->
+
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a
+                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99819">2019년도
+                                            순환골재 홍보 서비스 안내 </a></h3>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content">
+                                    <p class="m-0">2019-06-30</p>
+                                </div><!-- .entry-content -->
+
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a
+                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99800">2019
+                                            폐기물 관리 및 처리기술 발표회 및 드림파크 자원순환포럼 </a></h3>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content">
+                                    <p class="m-0">2019-06-27</p>
+                                </div><!-- .entry-content -->
+
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0"><a
+                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99761">['19.6.15(토)/6.16(일)]ARS시스템
+                                            일시 중단에 따른 전자인계서 작성 안내</a></h3>
+                                </header><!-- .entry-header -->
+
+                                <div class="entry-content">
+                                    <p class="m-0">2019-06-17</p>
+                                </div><!-- .entry-content -->
+
+                                <div class="entry-footer mt-5">
+                                    <a href="https://www.allbaro.or.kr/05_wsc/wsc_notice_list.listBoard.do?board_name=01"
+                                        > 더보기</a>
+                                </div><!-- .entry-footer -->
+                            </div><!-- .cause-content-wrap -->
+
+
+                        </div><!-- .cause-wrap -->
+                    </div><!-- .featured-cause -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-events -->
+
+    <div class="our-causes">
+        <div class="container">
+            <div class="row">
+                <div class="coL-12">
+                    <div class="section-heading">
+                        <h2 class="entry-title">사용 절차</h2>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper-container causes-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+            
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick1">1. 폐기물인허가</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">인허가시스템이란 민원인의 폐기물 인허가 업무를 간소화하기 위해 폐기물처리계획서 등 인허가 업무를 신청에서
+                                                처리까지의 과정을 인터넷 상에서 일괄 처리하는 시스템을 말합니다.</p>
+                                        </div><!-- .entry-content -->
+
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+               
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick2">2. 회원가입</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">올바로시스템 사용을 위해서는 폐기물 전자정보처리프로그램 운영 및 사용 등에 관한 고시(제2016-202호,
+                                                2016.11.04.) 제9조에 따라 올바로시스템에 접속하여 사용신청 후 승인을 받아야 합니다.</p>
+                                        </div><!-- .entry-content -->
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+          
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick3">3. 인증서경로확인</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">공인인증서를 사용하기 위해서는 정확한 경로에 인증서가 있어야 합니다.
+                                                인증서로그인 시 조회되지 않을 경우 인증서의 위치를 변경해야 합니다.</p>
+                                        </div><!-- .entry-content -->
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick4">4. 인증서발급등록절차</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">올바로시스템에 전자인계서 등 자료를 입력하기 위해서는 폐기물 전자정보처리프로그램 운영 및 사용 등에 관한 고시
+                                                제10조와 제10조의2에 따라 전용공인인증서를 발급 받거나 외부 공인인증서를 등록하고 승인 받아야 합니다
+                                                (제2016-202호, 2016.11.04.)</p>
+                                        </div><!-- .entry-content -->
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                    
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick5">5. 폐기물 인계정보 관리</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                Mauris tempus vestib ulum mauris.</p>
+                                        </div><!-- .entry-content -->
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                        
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick6">6. 폐기물 대장관리</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                Mauris tempus vestib ulum mauris.</p>
+                                        </div><!-- .entry-content -->
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                                    
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="https://www.allbaro.or.kr/06_wsi/wsi_organization.vm#quick6">7. 폐기물실적보고</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">축척된 인계정보 및 관리대장 내역을 기초로 지정 · 사업장일반 · 건설폐기물 등 모든 사업장폐기물의 연간배출
+                                                및 운반 · 처리 실적 보고를 전산으로 간편하게 등록 · 제출이 가능하도록 구성되어 있습니다.</p>
+                                        </div><!-- .entry-content -->
+
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+                        </div><!-- .swiper-wrapper -->
+
+                    </div><!-- .swiper-container -->
+
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z" />
+                            </svg></span>
+                    </div>
+
+                    <div class="swiper-button-prev flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z" />
+                            </svg></span>
+                    </div>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .our-causes -->
+
+    <footer class="site-footer">
         <div class="footer-widgets">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="foot-about">
                             <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
-    
-                            <p>Lorem ipsum dolor sit amet, con sectetur adipiscing elit. Mauris temp us vestib ulum mauris.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.Lorem ipsum dolo.</p>
-    
+
+                            <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                팀원 : 윤혜원, 최재은 <br>
+                            </p>
+
                         </div>
                     </div>
-    
+
                     <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
                         <h2>유관 기관 사이트</h2>
-    
+
                         <ul>
                             <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
                             <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
@@ -752,55 +612,66 @@
                             <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
                         </ul>
                     </div><!-- .col -->
-    
+
                     <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
                         <div class="foot-latest-news">
-                            <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm"><h2>서비스 이용약관</h2></a>
+                            <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm">
+                                <h2>서비스 이용약관</h2>
+                            </a>
                             <br> <br>
-                            <a href="http://www.keco.or.kr/kr/util/privacy1_1.do"><h2>개인정보처리방침</h2></a>
+                            <a href="http://www.keco.or.kr/kr/util/privacy1_1.do">
+                                <h2>개인정보처리방침</h2>
+                            </a>
                         </div><!-- .foot-latest-news -->
                     </div><!-- .col -->
-    
+
                     <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
                         <div class="foot-contact">
                             <h2>연락처 안내</h2>
-    
+
                             <ul>
-                                <li>운영 시간 : 9:00 ~ 18:00  <br>
+                                <li>운영 시간 : 9:00 ~ 18:00 <br>
                                     단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
                                     운영되지 않습니다</li>
                                 <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
                                 <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
-                                <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span></li>
+                                <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span>
+                                </li>
                             </ul>
                         </div><!-- .foot-contact -->
-    
+
                     </div><!-- .col -->
                 </div><!-- .row -->
             </div><!-- .container -->
         </div><!-- .footer-widgets -->
-    
+
         <div class="footer-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        <p class="m-0">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                            template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
                     </div><!-- .col-12 -->
                 </div><!-- .row -->
             </div><!-- .container -->
         </div><!-- .footer-bar -->
     </footer><!-- .site-footer -->
 
-<script type='text/javascript' src='/style/js/jquery.js'></script>
-<script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
-<script type='text/javascript' src='/style/js/swiper.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
-<script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
-<script type='text/javascript' src='/style/js/custom.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='/style/js/custom.js'></script>
 
 </body>
+
 </html>

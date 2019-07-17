@@ -1,86 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>My Page</title>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 
-<body>
-    <h1>My Page</h1>
-    <a href="/">Home</a>
-    <a href="/logout">Logout</a>
-    <a href="/emitter/form">전자 인계서 작성하기</a>
-    <a href ="/compasset">대장 관리</a>
-    <h3>My Info</h3>
-    Name : <%=myinfo[0].user_name%> <br>
-    ID : <%=myinfo[0].user_id%> <br>
-    Job : <%=myinfo[0].user_type%> <br>
-    Phone : <%=myinfo[0].user_contact%> <br>
-    <h5>My Company</h5>
-    Name : <%=mycompany[0].company_name%><br>
-    Address : <%=mycompany[0].company_addr%><br>
-    Contact : <%=mycompany[0].company_contact%><br>
-    Type : <%=mycompany[0].company_type%><br>
-    Material Type : <%=mycompany[0].company_material_type%><br>
+<body class="single-page causes-page">
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                    alt="logo"></a>
+                        </div><!-- .site-branding -->
 
-    <h5>My Tickets</h5>
-    <% if(mytickets.length != 0) {%>
-    <table>
-        <tr>
-            <th>Ticket ID</th>
-            <th>폐기물</th>
-            <th>위탁량</th>
-            <th>운반자</th>
-            <th>차량 번호</th>
-            <th>처리자</th>
-            <th>처리방법</th>
-            <th>처리장소</th>
-            <th>인계 일자</th>
-            <th>인계자명</th>
-            <th>수정하기</th>
-        </tr>
-        <% for(var i=0; i<(mytickets).length; i++){%>
-        <tr>
-            <form action="/emitter/change_ticketinfo" method="post">
-                <td><%=mytickets[i].ticket_id%>
-                    <input type="hidden" name="ticket_id" value = "<%=mytickets[i].ticket_id%>">
-                </td>
-                <td><%=mytickets[i].waste_type%>
-                    <input type="hidden" name="waste_type" value = "<%=mytickets[i].waste_type%>">
-                </td>
-                <td><input type="text" name="weight" value = "<%=mytickets[i].weight%>"></td>
-                <td><%=mytickets[i].conveyancer%>
-                    <input type="hidden" name="conveyancer" value = "<%=mytickets[i].conveyancer%>">
-                </td>
-                <td><%=mytickets[i].carnum%>
-                    <input type="hidden" name="carnum" value = "<%=mytickets[i].carnum%>">
-                </td>
-                <td>
-                    <%=mytickets[i].waste_handler%>
-                    <input type="hidden" name="waste_handler" value = "<%=mytickets[i].waste_handler%>">
-                </td>
-                <td><%=mytickets[i].method%>
-                    <input type="hidden" name="method" value = "<%=mytickets[i].method%>">
-                </td>
-                <td><%=mytickets[i].comp_loc%>
-                    <input type="hidden" name="comp_loc" value = "<%=mytickets[i].comp_loc%>">
-                </td>
-                <td><input type="text" name="transfer_date" value = "<%=mytickets[i].transfer_date%>"></td>
-                <td><%=mytickets[i].user_name%>
-                    <input type="hidden" name="user_name" value = "<%=mytickets[i].user_name%>">
-                </td>
-                <td><button type="submit">Submit</button></td>
-            </form>
-        </tr>
-        <%}%>
-    </table>  
-    <%} else{%>
-        No Ticket
-    <%}%>   
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/">Home</a></li>
+                                <li><a href="/emitter/form">전자 인계서 작성하기</a></li>
+                                <li><a href="/compasset">대장 관리</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
 
+
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>마이페이지</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="featured-cause">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h2 class="entry-title">개인 정보 </h2>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                        <figure class="m-0">
+                            <img src="/style/images/user.png" alt="" style="width: 200px ; height : 200px">
+                        </figure>
+
+                        <div class="cause-content-wrap">
+                            <header class="entry-header d-flex flex-wrap align-items-center">
+                                <h3 class="entry-title w-100 m-0">
+                                    회원 정보</h3>
+                                <p>
+                                    <br>
+                                    회원 이름 : <%=myinfo[0].user_name%> <br>
+                                    아이디 : <%=myinfo[0].user_id%> <br>
+                                    직업 종류 : <%=myinfo[0].user_type%> <br>
+                                    연락처 : <%=myinfo[0].user_contact%> <br>
+                                </p>
+                        </div>
+                    </div><!-- .cause-wrap -->
+                </div><!-- .col -->
+                <div class="col-12 col-lg-6">
+                    <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                        <figure class="m-0">
+                            <img src="/style/images/factory.png" alt="" style="width: 200px ; height : 200px">
+                        </figure>
+
+                        <div class="cause-content-wrap">
+                            <header class="entry-header d-flex flex-wrap align-items-center">
+                                <h3 class="entry-title w-100 m-0">회사 정보</h3>
+                                <p>
+                                    <br>
+                                    회사 이름 : <%=mycompany[0].company_name%><br>
+                                    회사 주소 : <%=mycompany[0].company_addr%><br>
+                                    회사 연락처 : <%=mycompany[0].company_contact%><br>
+                                    회사 종류 : <%=mycompany[0].company_type%><br>
+                                    회사 처리 제품 종류 : <%=mycompany[0].company_material_type%><br></p>
+                            </header><!-- .entry-header -->
+                        </div><!-- .cause-content-wrap -->
+                    </div><!-- .cause-wrap -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .featured-cause -->
+
+    <div class="highlighted-cause">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-7 order-2 order-lg-1">
+                    <div class="section-heading">
+                        <h2 class="entry-title">내 전자 인계서</h2>
+                    </div><!-- .section-heading -->
+
+                    <div class="entry-content">
+                        <p>현재 작성된 인계서 갯수</p>
+                    </div><!-- .entry-content -->
+
+                    <div class="fund-raised w-100 mt-5">
+                        <div class="featured-fund-raised-bar barfiller">
+                            <div class="tipWrap">
+                                <span class="tip"></span>
+                            </div><!-- .tipWrap -->
+
+                            <span class="fill" data-percentage="<%=mytickets.length%>"></span>
+                        </div><!-- .fund-raised-bar -->
+                    </div><!-- .fund-raised -->
+
+                    <div class="entry-footer mt-5">
+                        <a href="/emitter/form" class="btn gradient-bg">새로 작성하기</a>
+                    </div><!-- .entry-footer -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-5 order-1 order-lg-2">
+                    <img src="/style/images/folder.png" alt="" style="width: 300px; height: 300px">
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .highlighted-cause -->
+
+    <div class="our-causes">
+        <div class="container">
+            <div class="row">
+                <% if(mytickets.length != 0) {%>
+                <% for(var i=0; i<(mytickets).length; i++){%>
+                <div class="col-12">
+                    <div class="swiper-container causes-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h5 class="entry-title w-100 m-0">인계서 : <%=mytickets[i].ticket_id%></h5>
+                                        </header><!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <p class="m-0">
+                                                <form action="/emitter/change_ticketinfo" method="post">
+                                                    <input type="hidden" name="ticket_id"
+                                                        value="<%=mytickets[i].ticket_id%>">
+                                                    폐기물 : <%=mytickets[i].waste_type%> <br>
+                                                    <input type="hidden" name="waste_type"
+                                                        value="<%=mytickets[i].waste_type%>">
+                                                    위탁량 : <input type="text" name="weight"
+                                                        value="<%=mytickets[i].weight%>"> <br>
+                                                    운반자 : <%=mytickets[i].conveyancer%> <br>
+                                                    <input type="hidden" name="conveyancer"
+                                                        value="<%=mytickets[i].conveyancer%>">
+                                                    차량 번호 : <%=mytickets[i].carnum%> <br>
+                                                    <input type="hidden" name="carnum" value="<%=mytickets[i].carnum%>">
+                                                    처리자 : <%=mytickets[i].waste_handler%> <br>
+                                                    <input type="hidden" name="waste_handler"
+                                                        value="<%=mytickets[i].waste_handler%>">
+                                                    처리방법 : <%=mytickets[i].method%> <br>
+                                                    <input type="hidden" name="method" value="<%=mytickets[i].method%>">
+                                                    처리장소 : <%=mytickets[i].comp_loc%> <br>
+                                                    <input type="hidden" name="comp_loc"
+                                                        value="<%=mytickets[i].comp_loc%>">
+                                                    인계 일자 : <input type="text" name="transfer_date"
+                                                        value="<%=mytickets[i].transfer_date%>"><br>
+                                                    인계자명 : <%=mytickets[i].user_name%> <br>
+                                                    <input type="hidden" name="user_name"
+                                                        value="<%=mytickets[i].user_name%>">
+                                                        <br>
+                                                    <button class="btn gradient-bg" type="submit">수정하기</button>
+                                                </form>
+                                            </p>
+                                        </div><!-- .entry-content -->
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+                            <%}%>     
+                        <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .col -->
+        </div><!-- .our-causes -->
+    </div>
+
+
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a>
+                            </h2>
+
+                            <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                팀원 : 윤혜원, 최재은 <br>
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <h2>유관 기관 사이트</h2>
+
+                        <ul>
+                            <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                            <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                            <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                            <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                            <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                            <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                            <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                        </ul>
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-latest-news">
+                            <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm">
+                                <h2>서비스 이용약관</h2>
+                            </a>
+                            <br> <br>
+                            <a href="http://www.keco.or.kr/kr/util/privacy1_1.do">
+                                <h2>개인정보처리방침</h2>
+                            </a>
+                        </div><!-- .foot-latest-news -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>연락처 안내</h2>
+
+                            <ul>
+                                <li>운영 시간 : 9:00 ~ 18:00 <br>
+                                    단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                    운영되지 않습니다</li>
+                                <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지)
+                                    </span>
+                                </li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+        <div class="footer-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="m-0">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                            This
+                            template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div><!-- .col-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-bar -->
+    </footer><!-- .site-footer -->
+
+    <script type='text/javascript' src='/style/js/jquery.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='/style/js/custom.js'></script>
+    <script>
+        var d = new Date();
+    </script>
 </body>
-<script>
-var d = new Date();
-</script>
 
 </html>
