@@ -76,19 +76,24 @@
             text-decoration: none;
             cursor: pointer;
         }
-        select 
-        { 
-            width: 234px; /* 원하는 너비설정 */ 
-            padding: .4em .4em; /* 여백으로 높이 설정 */ 
-            font-family: inherit; /* 폰트 상속 */ 
-            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
-            border: 1px solid #999; 
-            border-radius: 0px; /* iOS 둥근모서리 제거 */ 
-            -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
-            -moz-appearance: none; 
-            appearance: none; 
-        }
 
+        select {
+            width: 234px;
+            /* 원하는 너비설정 */
+            padding: .4em .4em;
+            /* 여백으로 높이 설정 */
+            font-family: inherit;
+            /* 폰트 상속 */
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+            /* 네이티브 화살표 대체 */
+            border: 1px solid #999;
+            border-radius: 0px;
+            /* iOS 둥근모서리 제거 */
+            -webkit-appearance: none;
+            /* 네이티브 외형 감추기 */
+            -moz-appearance: none;
+            appearance: none;
+        }
     </style>
 
     <body class="single-page contact-page">
@@ -98,8 +103,8 @@
                     <div class="row">
                         <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
                             <div class="site-branding d-flex align-items-center">
-                                <a class="d-block" href="/" rel="home"><img class="d-block"
-                                        src="/style/images/logo.png" alt="logo"></a>
+                                <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                        alt="logo"></a>
                             </div><!-- .site-branding -->
 
                             <nav class="site-navigation d-flex justify-content-end align-items-center">
@@ -135,9 +140,9 @@
 
         <div class="contact-page-wrap">
             <div class="container">
-                    <div class="row">
-                            <div class="col-12 col-lg-5">
-                            </div>
+                <div class="row">
+                    <div class="col-12 col-lg-5">
+                    </div>
                     <div class="col-12 col-lg-7">
                         <br> <br>
                         <label>ID</label> <br>
@@ -169,13 +174,14 @@
                                 <form action="/search" method="post">
                                     기업 이름:
                                     <input type="text" name="company_name">
-                                    <button type="submit">조회</button>
+                                    <button type="submit" onclick="get_search_result()">조회</button>
                                 </form>
                             </div>
                         </div>
+
                         <td><input type="number" name="companies_id" value=0></td> <br>
                         <%}else{%>
-                            <br>
+                        <br>
                         <td><input type="number" name="companies_id" value="<%=company_id%>"></td> <br>
                         <%}%>
                         <label>Phone</label> <br>
@@ -258,7 +264,7 @@
                         </div><!-- .container -->
                     </div><!-- .footer-bar -->
                 </footer><!-- .site-footer -->
-
+                <div id="myModal2" class="modal"><div class="modal-content"><span class="close">&times;</span><table><tr><th>Company ID</th><th>Company Name</th> <th>Company Address</th> <th>Company Contact</th><th>Company Type</th> <th>Company Material Type</th><th>submit</th></tr> </div> </div>
 
 <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -292,7 +298,66 @@
             }
         }
     }
+    function get_search_result() {
+        $.ajax({
+            url: "/search",
+            method: "POST",
+            data: {
+                company_name: document.getElementsByName("company_name")[0].value,
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    var result = JSON.parse(data.results);
+                    var html = '';
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<td>' + result[i].company_id + '</td>'
+                            + '<td>' + result[i].company_name + '</td>'
+                            + '<td>' + result[i].company_addr + '</td>'
+                            + '<td>' + result[i].company_contact + '</td>'
+                            + '<td>' + result[i].company_type + '</td>'
+                            + '<td>' + result[i].company_material_type + '</td>'
+                            + '<td> <button id="myBtn" type="submit" onclick="search_result()" value="'+result[i].company_id + '>조회</button> </td>';
+                    }
+                    console.log(html);
+                   // var modal = $(#myModal2).html(html);
+                 var modal=   document.getElementById('myModal').html(html);
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
 
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+                    btn.onclick = function () {
+                        modal.style.display = "block";
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function search_result() {
+        $.ajax({
+            url: "/search_result",
+            method: "POST",
+            data: {
+                company_id: document.getElementsByName("company_id")[0].value,
+            }
+        });
+    }
 
     function sign_up() {
         $.ajax({
