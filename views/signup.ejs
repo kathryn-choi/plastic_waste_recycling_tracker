@@ -171,11 +171,9 @@
                             <!-- Modal content -->
                             <div class="modal-content">
                                 <span class="close">&times;</span>
-                                <form action="/search" method="post">
-                                    기업 이름:
-                                    <input type="text" name="company_name">
+                                    기업 이름:<input type="text" name="company_name">
                                     <button type="submit" onclick="get_search_result()">조회</button>
-                                </form>
+                                    <div class = "search_result"></div>
                             </div>
                         </div>
 
@@ -307,21 +305,27 @@
             },
             dataType: "json",
             success: function (data) {
+                console.log(data.results)
                 if (data.success == true) {
-                    var result = JSON.parse(data.results);
-                    var html = '';
+                    var result = data.results;
+                    var html = '<table><tr> <th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr>'
                     for (var i = 0; i < result.length; i++) {
-                        html += '<td>' + result[i].company_id + '</td>'
+                        html += '<tr><td>' + result[i].company_id + '</td>'
                             + '<td>' + result[i].company_name + '</td>'
                             + '<td>' + result[i].company_addr + '</td>'
                             + '<td>' + result[i].company_contact + '</td>'
                             + '<td>' + result[i].company_type + '</td>'
                             + '<td>' + result[i].company_material_type + '</td>'
-                            + '<td> <button id="myBtn" type="submit" onclick="search_result()" value="'+result[i].company_id + '>조회</button> </td>';
+                            + '<form action="/search_result" method="post"><input type="hidden" name="company_id" value="'+result[i].company_id+'"><td><button type="submit">Submit</button></td></form></tr>'
+                            //+ '<td><button id=\"myBtn'+i+ '\" type=\"button\" onclick=\"search_result()\">Submit</button> </td></tr>';
                     }
+                    html+='</table>'
                     console.log(html);
+                    var comp_list = $('.search_result')
+                    comp_list.append(html)
                    // var modal = $(#myModal2).html(html);
-                 var modal=   document.getElementById('myModal').html(html);
+                    /*console.log(document.getElementById('myModal'))
+                    var modal=   document.getElementById('myModal').html(html);
                     // Get the button that opens the modal
                     var btn = document.getElementById("myBtn");
 
@@ -343,7 +347,7 @@
                         if (event.target == modal) {
                             modal.style.display = "none";
                         }
-                    }
+                    }*/
                 }
             }
         });
