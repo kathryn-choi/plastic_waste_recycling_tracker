@@ -32,6 +32,34 @@ router.get('/', function(req, res, next) {
       }
   });
 });
+
+router.get('/compasset_history', function(req, res, next) {
+  console.log("compasset history!");
+  var user_id= req.session.user_id;
+  var sqlquery = "SELECT * FROM users WHERE user_id=?";
+  connection.query(sqlquery, user_id,function (err, row) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+      console.log("row : ", row);
+      var company_id= row[0].companies_id;
+      console.log('company id : ', company_id);
+      compassetM.get_compasset_history_by_company_id(company_id,function (result, mycompassets) {
+          if(result==true){
+              console.log("mycompassest", mycompassets);
+              res.render('compasset/compasset_history', {
+                  mycompassets: mycompassets
+              });
+          }else{
+              console.log("error");
+              res.redirect('back');
+          }
+      });
+    }
+});
+});
+
 //최초 보관량 등록하기 페이지 불러오기
 router.get('/create_compasset', function(req, res, next) {
     res.render('compasset/create_compasset',{
@@ -87,10 +115,10 @@ router.post('/create_compasset', function(req, res, next) {
         compassetM.create_compasset(asset_id, first_save_weight, company_id, waste_code, function(result){
             if(result==true){
                 console.log("create compasset true!");
-                res.redirect('/compasset');
+                res.jsonp({success : true, redirect_url : "/compasset"})
             }else{
                 console.log("create compasset false!");
-                res.redirect('/compasset');
+                res.jsonp({success : true, redirect_url : "/compasset"})
             }
         });
     }
