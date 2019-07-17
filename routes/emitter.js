@@ -98,7 +98,7 @@ function get_user_ticketinfo(user_id, cb){
   console.log("getuserticketinfo");
   request.get({
     url : 'http://localhost:3000/api/queries/select_ticket_by_user?user_id=resource%3Aorg.recycling.tracker.Emitter%23' + user_id
-    },function(error,res,body){
+    },async function(error,res,body){
       if(!error){
         var tickets = JSON.parse(body);
         console.log("tickets : ",tickets);
@@ -108,14 +108,15 @@ function get_user_ticketinfo(user_id, cb){
           console.log("none!")
           cb(true,[]);
         }
-        for(var i = 0; i< tickets.length; i++){
-          var temp = tickets[i].ticket_id.split('.')
+        await Promise.all(tickets.map(async (file) =>{
+        //for(var i = 0; i< tickets.length; i++){
+          var temp = file.ticket_id.split('.')
           var user_id = temp[0]
           var waste_code = temp[1]
-          var transfer_date = tickets[i].transfer_date
-          var weight = tickets[i].weight
+          var transfer_date = file.transfer_date
+          var weight = file.weight
           var sqlquery = 'select user_name from users where user_id = ?'
-          var selectt = tickets[i]
+          var selectt = file
           connection.query(sqlquery, user_id,function (err, rows) {
             var user_name  =  rows[0].user_name
             console.log(user_name)
@@ -160,7 +161,7 @@ function get_user_ticketinfo(user_id, cb){
               })
             })
           })
-        }
+        }))
       }
       else{
         cb(false, []);

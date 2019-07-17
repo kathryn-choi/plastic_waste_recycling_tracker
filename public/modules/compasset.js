@@ -15,12 +15,89 @@ exports.create_compasset = function(asset_id, save_weight, comp_id, waste_code, 
       }
     });    
 };
-
-exports.get_company_compasset_by_company_id = function(company_id, cb){
-    console.log("getusercompassetinfo");
+exports.get_compasset_history_by_company_id = function(company_id,cb){
+  console.log("get user compasset history");
   request.get({
+    url : 'http://localhost:3000/api/queries/get_compasset_history'
+    },async function(error,res,body){
+      if(!error){
+        var compassets = JSON.parse(body);
+        console.log("compassets history: ",compassets);
+        var my_compassets = []
+        var temp = []
+        var count = 0;
+        if(compassets.length == 0){
+          console.log("none!")
+          cb(true,[]);
+        }
+        //for(var i = 0; i< compassets.length; i++)
+        await Promise.all(compassets.map(async (file) =>{
+          var event = file.eventsEmitted[0]
+          if(event.comp_id == company_id){
+            temp.push(event);
+          }
+        }))
+        console.log("compasset history : ",temp)
+        if(temp.length == 0) cb(true,my_compassets);
+        else{
+        await Promise.all(temp.map(async (asset) =>{
+          //(asset_id,gen_weight, handle_weight, save_weight
+          var transaction_type = asset.$class.split('.')[3];
+          if(transaction_type == "compasset_create"){
+            transaction_type = "생성"
+          }
+          else{
+            transaction_type = "수정"
+          }
+          var asset_id = asset.asset_id;
+          var gen_weight=asset.gen_weight;
+          var handle_weight=asset.handle_weight;
+          var save_weight=asset.save_weight;
+          var waste_code=asset.waste_code;
+          var timestamp = asset.timestamp;
+          var sqlquery = "SELECT * FROM wastes WHERE waste_code=?";
+          connection.query(sqlquery,waste_code,function (err, row) {
+            if (err) {
+              console.log("no match");
+              res.redirect('back');
+            } else {
+              console.log("found company");
+              console.log(row);
+              var compasset = {
+                asset_id: asset_id,
+                transaction_type: transaction_type,
+                gen_weight: gen_weight,
+                handle_weight:handle_weight,
+                save_weight: save_weight,
+                timestamp : timestamp,
+                waste_code: waste_code,
+                waste_type: row[0].waste_type,
+                waste_state: row[0].waste_state,
+                waste_classify: row[0].waste_classify,
+              }
+              console.log(compasset);
+              my_compassets.push(compasset)
+              count++;
+              if(count == compassets.length){
+                console.log("my compassets : ",my_compassets);
+                cb(true,my_compassets);
+              }
+          }
+        });
+        }))
+      }
+      }
+      else{
+        cb(false, []);
+      }
+  })
+}
+
+exports.get_company_compasset_by_company_id = async function(company_id, cb){
+  console.log("getusercompassetinfo");
+  await request.get({
     url : 'http://localhost:3000/api/queries/select_compasset_by_comp_id?comp_id=' + company_id
-    },function(error,res,body){
+    },async function(error,res,body){
       if(!error){
         var compassets = JSON.parse(body);
         console.log("compassets : ",compassets);
@@ -30,13 +107,15 @@ exports.get_company_compasset_by_company_id = function(company_id, cb){
           console.log("none!")
           cb(true,[]);
         }
-        for(var i = 0; i< compassets.length; i++){
+        //for(var i = 0; i< compassets.length; i++){
+          await Promise.all(compassets.map(async (file) =>{
           //(asset_id,gen_weight, handle_weight, save_weight)
-          var asset_id = compassets[i].asset_id.split('.');
-          var gen_weight=compassets[i].gen_weight;
-          var handle_weight=compassets[i].handle_weight;
-          var save_weight=compassets[i].save_weight;
-          var waste_code=compassets[i].waste_code;
+          console.log(file);
+          var asset_id = file.asset_id.split('.');
+          var gen_weight=file.gen_weight;
+          var handle_weight=file.handle_weight;
+          var save_weight=file.save_weight;
+          var waste_code=file.waste_code;
           var sqlquery = "SELECT * FROM wastes WHERE waste_code=?";
           connection.query(sqlquery,waste_code,function (err, row) {
             if (err) {
@@ -64,7 +143,7 @@ exports.get_company_compasset_by_company_id = function(company_id, cb){
               }
           }
         });
-        }
+        }))
       }
       else{
         cb(false, []);

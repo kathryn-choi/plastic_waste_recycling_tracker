@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Result</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<h3>Company Result</h3>
+length: <%=result.length%>
+
+    <table>
+        <tr>
+            <th>Company ID</th>
+            <th>Company Name</th>
+            <th>Company Address</th>
+            <th>Company Contact</th>
+            <th>Company Type</th>
+            <th>Company Material Type</th>
+            <th>submit</th>
+        </tr>
+        <%for (var i=0; i<result.length; i++) { %>
+        <tr>
+            <td><%=result[i].company_id%></td>
+            <td><%=result[i].company_name%></td>
+            <td><%=result[i].company_addr%></td>
+            <td><%=result[i].company_contact%></td>
+            <td><%=result[i].company_type%></td>
+            <td><%=result[i].company_material_type%></td>
+
+            <form action="history" method="post">
+            <input type="hidden" name="company_id" value="<%=result[i].company_id%>">
+            <td><button  type="submit">Submit</button></td>
+        </form>
+        </tr>
+        <%}%>
+    </table>
+</body>
+</html>

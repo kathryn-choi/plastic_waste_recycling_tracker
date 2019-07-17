@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>대장 History</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<h3>Company Asset Result</h3>
+<%if(compasset.length != 0) {%>
+    <table>
+        <tr>
+            <th>Asset ID</th>
+            <th>Transaction Type </th>
+            <th>폐기물 코드</th>
+            <th>폐기물 종류</th>
+            <th>성상</th>
+            <th>구분</th>
+            <th>발생량</th>
+            <th>배출량</th>
+            <th>현재 보관량</th>
+            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
+            <th>Timestamp</th>
+            
+        </tr>
+        <% for(var i=(compasset).length-1; i>=0; i--){%>
+            <tr>
+            <td><%=compasset[i].asset_id%></td>
+            <td><%=compasset[i].transaction_type%></td>
+            <td><%=compasset[i].waste_code%></td>
+            <td><%=compasset[i].waste_type%></td>
+            <td><%=compasset[i].waste_state%></td>
+            <td><%=compasset[i].waste_classify%></td>
+            <td><%=compasset[i].gen_weight%></td>
+            <td><%=compasset[i].handle_weight%></td>
+            <td><%=compasset[i].save_weight%></td>
+            <td><%=compasset[i].timestamp%></td>
+        </tr>
+        <%}%>
+    </table>  
+    <%} else{%>
+        No Asset History
+    <%}%> 
+
+<h3>Company ticket Result</h3>
+<%if(compticket.length != 0) {%>
+    <table>
+        <tr>
+            <th> Ticket ID </th>
+            <th> 폐기물 코드 </th>
+            <th> 현재 위치 </th>
+            <th> 이전 위치 </th>
+            <th> 인계 날짜 </th>
+            <th> 무게 </th>
+            <th> Giver </th>
+            <th> Reciever</th>
+            <th> Conveyancer </th>
+            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
+            <th>Timestamp</th>
+            
+        </tr>
+        <% for(var i=(compticket).length-1; i>=0; i--){%>
+            <tr>
+            <td><%=compticket[i].ticket_id%></td>
+            <td><%=compticket[i].waste_code%></td>
+            <td><%=compticket[i].currentdes%></td>
+            <td><%=compticket[i].previousdes%></td>
+            <td><%=compticket[i].transfer_date%></td>
+            <td><%=compticket[i].weight%></td>
+            <td><%=compticket[i].giver%></td>
+            <td><%=compticket[i].reciever%></td>
+            <td><%=compticket[i].conveyancer%></td>
+            <td><%=compticket[i].timestamp%></td>
+        </tr>
+        <%}%>
+    </table>  
+    <%} else{%>
+        No Ticket History
+    <%}%> 
+</body>
+</html>

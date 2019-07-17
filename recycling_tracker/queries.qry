@@ -25,3 +25,17 @@ query select_compasset_by_comp_id{
       SELECT org.recycling.tracker.Compasset
         WHERE (comp_id== _$comp_id)
 }
+
+query get_compasset_history{
+  description: "Select company asset history"
+  statement:
+      SELECT org.hyperledger.composer.system.HistorianRecord
+        WHERE (transactionType == 'org.recycling.tracker.CreateCompasset' OR transactionType == 'org.recycling.tracker.UpdateCompanyAsset')
+}
+
+query get_ticket_history{
+  description: "Select ticket history"
+  statement:
+      SELECT org.hyperledger.composer.system.HistorianRecord
+        WHERE (transactionType == 'org.recycling.tracker.CreateTicket' OR transactionType == 'org.recycling.tracker.DeleteTicket' OR transactionType == 'org.recycling.tracker.ChangeTicketInfo')
+}
