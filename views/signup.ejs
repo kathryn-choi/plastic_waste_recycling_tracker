@@ -146,13 +146,13 @@
                     <div class="col-12 col-lg-7">
                         <br> <br>
                         <label>ID</label> <br>
-                        <input type="text" name="id"> <br>
+                        <input type="text" id="id"> <br>
                         <label>Password</label> <br>
-                        <td><input type="password" name="pw"></td> <br>
+                        <td><input type="password" id="pw"></td> <br>
                         <label>이름</label> <br>
-                        <td><input type="text" name="name"></td> <br>
+                        <td><input type="text" id="name"></td> <br>
                         <label>User Type</label> <br>
-                        <select name="user_type">
+                        <select id="user_type">
                             <option value="">직업 선택</option>
                             <option value="emitter">배출자</option>
                             <option value="conveyancer">운송자</option>
@@ -170,23 +170,26 @@
                         <div id="myModal" class="modal">
                             <!-- Modal content -->
                             <div class="modal-content">
+                                <div>
                                 <span class="close">&times;</span>
-                                    기업 이름:<input type="text" name="company_name">
+                                    기업 이름:
+                                    <input type="text" name="company_name">
                                     <button type="submit" onclick="get_search_result()">조회</button>
-                                    <div class = "search_result"></div>
+                                </div>
+                                <div class = "search_result"></div>
                             </div>
                         </div>
 
-                        <td><input type="number" name="companies_id" value=0></td> <br>
+                        <td><input type="number" id="companies_id" value=0></td> <br>
                         <%}else{%>
                         <br>
-                        <td><input type="number" name="companies_id" value="<%=company_id%>"></td> <br>
+                        <td><input type="number" id="companies_id" value="<%=company_id%>"></td> <br>
                         <%}%>
                         <label>Phone</label> <br>
-                        <td><input type="number" name="phone"></td> <br>
+                        <td><input type="number" id="phone"></td> <br>
 
                         <label>차량 번호(운반자일 경우 필수 입력)</label> <br>
-                        <td><input type="number" name="carnum"></td> 
+                        <td><input type="number" id="carnum"></td> 
                         <br> <br>
                         <input type="submit" class="btn gradient-bg" value="회원가입" onclick="sign_up()">
                         </div>
@@ -305,7 +308,6 @@
             },
             dataType: "json",
             success: function (data) {
-                console.log(data.results)
                 if (data.success == true) {
                     var result = data.results;
                     var html = '<table><tr> <th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr>'
@@ -316,51 +318,20 @@
                             + '<td>' + result[i].company_contact + '</td>'
                             + '<td>' + result[i].company_type + '</td>'
                             + '<td>' + result[i].company_material_type + '</td>'
-                            + '<form action="/search_result" method="post"><input type="hidden" name="company_id" value="'+result[i].company_id+'"><td><button type="submit">Submit</button></td></form></tr>'
-                            //+ '<td><button id=\"myBtn'+i+ '\" type=\"button\" onclick=\"search_result()\">Submit</button> </td></tr>';
+                            + '<td><button id = "bnum"'+i+'" onclick = "search_result('+result[i].company_id+')">Submit</button></td></tr>'
                     }
                     html+='</table>'
-                    console.log(html);
                     var comp_list = $('.search_result')
                     comp_list.append(html)
-                   // var modal = $(#myModal2).html(html);
-                    /*console.log(document.getElementById('myModal'))
-                    var modal=   document.getElementById('myModal').html(html);
-                    // Get the button that opens the modal
-                    var btn = document.getElementById("myBtn");
-
-                    // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
-
-                    // When the user clicks on the button, open the modal
-                    btn.onclick = function () {
-                        modal.style.display = "block";
-                    }
-
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function () {
-                        modal.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function (event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                    }*/
                 }
             }
         });
     }
 
-    function search_result() {
-        $.ajax({
-            url: "/search_result",
-            method: "POST",
-            data: {
-                company_id: document.getElementsByName("company_id")[0].value,
-            }
-        });
+    function search_result(comp_id) {
+        var modal = document.getElementById('myModal');
+        $('#companies_id').val(comp_id);
+        modal.style.display = "none";
     }
 
     function sign_up() {
@@ -368,13 +339,13 @@
             url: "/signup",
             method: "POST",
             data: {
-                user_id: document.getElementsByName("id")[0].value,
-                user_pw: document.getElementsByName("pw")[0].value,
-                user_type: document.getElementsByName("user_type")[0].value,
-                user_name: document.getElementsByName("name")[0].value,
-                user_contact: document.getElementsByName("phone")[0].value,
-                companies_id: document.getElementsByName("companies_id")[0].value,
-                car_number: document.getElementsByName("carnum")[0].value
+                user_id: document.getElementById("id").value,
+                user_pw: document.getElementById("pw").value,
+                user_type: document.getElementById("user_type").value,
+                user_name: document.getElementById("name").value,
+                user_contact: document.getElementById("phone").value,
+                companies_id: document.getElementById("companies_id").value,
+                car_number: document.getElementById("carnum").value
             },
             success: function (data) {
                 if (data.success == true) {
