@@ -1,81 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>대장 History</title>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 
-<body>
-<h3>Company Asset Result</h3>
-<%if(compasset.length != 0) {%>
-    <table>
-        <tr>
-            <th>Asset ID</th>
-            <th>Transaction Type </th>
-            <th>폐기물 코드</th>
-            <th>폐기물 종류</th>
-            <th>성상</th>
-            <th>구분</th>
-            <th>발생량</th>
-            <th>배출량</th>
-            <th>현재 보관량</th>
-            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
-            <th>Timestamp</th>
-            
-        </tr>
-        <% for(var i=(compasset).length-1; i>=0; i--){%>
-            <tr>
-            <td><%=compasset[i].asset_id%></td>
-            <td><%=compasset[i].transaction_type%></td>
-            <td><%=compasset[i].waste_code%></td>
-            <td><%=compasset[i].waste_type%></td>
-            <td><%=compasset[i].waste_state%></td>
-            <td><%=compasset[i].waste_classify%></td>
-            <td><%=compasset[i].gen_weight%></td>
-            <td><%=compasset[i].handle_weight%></td>
-            <td><%=compasset[i].save_weight%></td>
-            <td><%=compasset[i].timestamp%></td>
-        </tr>
-        <%}%>
-    </table>  
-    <%} else{%>
-        No Asset History
-    <%}%> 
+<body class="single-page contact-page">
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                    alt="logo"></a>
+                        </div><!-- .site-branding -->
 
-<h3>Company ticket Result</h3>
-<%if(compticket.length != 0) {%>
-    <table>
-        <tr>
-            <th> Ticket ID </th>
-            <th> 폐기물 코드 </th>
-            <th> 현재 위치 </th>
-            <th> 이전 위치 </th>
-            <th> 인계 날짜 </th>
-            <th> 무게 </th>
-            <th> Giver </th>
-            <th> Reciever</th>
-            <th> Conveyancer </th>
-            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
-            <th>Timestamp</th>
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/">Home</a></li>
+                                <li><a href="/<%=user_type%>">마이페이지</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>기업 장부 기록</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+    <div class="contact-page-wrap">
+        <div class="container">
+            <div class="row">
+                <br> <br>
+                <%if(compasset.length != 0) {%>
+                <table border="1px" cellpadding="15px">
+                    <tr>
+                        <th style="width:10%">Asset ID</th>
+                        <th style="width:10%">Transaction Type </th>
+                        <th style="width:10%">폐기물 코드</th>
+                        <th style="width:15%">폐기물 종류</th>
+                        <th style="width:10%">성상</th>
+                        <th style="width:5%">구분</th>
+                        <th style="width:10%">발생량</th>
+                        <th style="width:10%">배출량</th>
+                        <th style="width:10%">현재 보관량</th>
+                        <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
+                        <th style="width:15%">Timestamp</th>
+                    </tr>
+                    <% for(var i=(compasset).length-1; i>=0; i--){%>
+                    <tr>
+                        <td><%=compasset[i].asset_id%></td>
+                        <td><%=compasset[i].transaction_type%></td>
+                        <td><%=compasset[i].waste_code%></td>
+                        <td><%=compasset[i].waste_type%></td>
+                        <td><%=compasset[i].waste_state%></td>
+                        <td><%=compasset[i].waste_classify%></td>
+                        <td><%=compasset[i].gen_weight%></td>
+                        <td><%=compasset[i].handle_weight%></td>
+                        <td><%=compasset[i].save_weight%></td>
+                        <td><%=compasset[i].timestamp%></td>
+                    </tr>
+                    <%}%>
+                </table> 
+                <br> <br> 
+            <%}%>
+            </div><!-- .container -->
+        </div>
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>기업 티켓 거래내역</h1>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header -->
+        <div class="contact-page-wrap">
+            <div class="container">
+                <div class="row">
+                    <br> <br>
+                    <%if(compticket.length != 0) {%>
+                    <table border="1px" cellpadding="15px">
+                        <tr>
+                            <th> 티켓ID </th>
+                            <th> 폐기물 코드 </th>
+                            <th> 현재 위치 </th>
+                            <th> 이전 위치 </th>
+                            <th> 인계 날짜 </th>
+                            <th> 무게 </th>
+                            <th> 배출자 </th>
+                            <th> 처리자</th>
+                            <th> 운송자 </th>
+                            <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
+                            <th>Timestamp</th>
+                        </tr>
+                        <% for(var i=(compticket).length-1; i>=0; i--){%>
+                        <tr>
+                            <td><%=compticket[i].ticket_id%></td>
+                            <td><%=compticket[i].waste_code%></td>
+                            <td><%=compticket[i].currentdes%></td>
+                            <td><%=compticket[i].previousdes%></td>
+                            <td><%=compticket[i].transfer_date%></td>
+                            <td><%=compticket[i].weight%></td>
+                            <td><%=compticket[i].giver%></td>
+                            <td><%=compticket[i].reciever%></td>
+                            <td><%=compticket[i].conveyancer%></td>
+                            <td><%=compticket[i].timestamp%></td>
+                        </tr>
+                        <%}%>
+                    </table>  
+                    <br> <br> 
+                        <%} else{%>
+                        티켓 기록 없음
+                        <%}%>      
+                        </div>    
+                    </div><!-- .container -->
+                </div>    
+<footer class="site-footer">
+                                <div class="footer-widgets">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-lg-3">
+                                                <div class="foot-about">
+                                                    <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
+                            
+                                                    <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                                        블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                                        팀원 : 윤혜원, 최재은 <br>
+                                                    </p>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                                <h2>유관 기관 사이트</h2>
+                            
+                                                <ul>
+                                                    <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                                                    <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                                                    <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                                                    <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                                                    <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                                                    <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                                                    <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                                                </ul>
+                                            </div><!-- .col -->
+                            
+                                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                                <div class="foot-latest-news">
+                                                    <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm"><h2>서비스 이용약관</h2></a>
+                                                    <br> <br>
+                                                    <a href="http://www.keco.or.kr/kr/util/privacy1_1.do"><h2>개인정보처리방침</h2></a>
+                                                </div><!-- .foot-latest-news -->
+                                            </div><!-- .col -->
+                            
+                                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                                <div class="foot-contact">
+                                                    <h2>연락처 안내</h2>
+                            
+                                                    <ul>
+                                                        <li>운영 시간 : 9:00 ~ 18:00  <br>
+                                                            단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                                            운영되지 않습니다</li>
+                                                        <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                                        <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                                        <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span></li>
+                                                    </ul>
+                                                </div><!-- .foot-contact -->
+                            
+                                            </div><!-- .col -->
+                                        </div><!-- .row -->
+                                    </div><!-- .container -->
+                                </div><!-- .footer-widgets -->
+                            
+                                <div class="footer-bar">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                            </div><!-- .col-12 -->
+                                        </div><!-- .row -->
+                                    </div><!-- .container -->
+                                </div><!-- .footer-bar -->
+                            </footer><!-- .site-footer -->
             
-        </tr>
-        <% for(var i=(compticket).length-1; i>=0; i--){%>
-            <tr>
-            <td><%=compticket[i].ticket_id%></td>
-            <td><%=compticket[i].waste_code%></td>
-            <td><%=compticket[i].currentdes%></td>
-            <td><%=compticket[i].previousdes%></td>
-            <td><%=compticket[i].transfer_date%></td>
-            <td><%=compticket[i].weight%></td>
-            <td><%=compticket[i].giver%></td>
-            <td><%=compticket[i].reciever%></td>
-            <td><%=compticket[i].conveyancer%></td>
-            <td><%=compticket[i].timestamp%></td>
-        </tr>
-        <%}%>
-    </table>  
-    <%} else{%>
-        No Ticket History
-    <%}%> 
-</body>
-</html>
+            <!-- jQuery library -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type='text/javascript' src='/style/js/jquery.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+        <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+        <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+        <script type='text/javascript' src='/style/js/custom.js'></script>
+        
+        </body>
+        </html>

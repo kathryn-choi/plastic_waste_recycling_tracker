@@ -2,10 +2,29 @@
 <html lang="en">
 <head>
     <title>My Page</title>
-    <meta charset="UTF-8">
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+ 
+     <!-- FontAwesome CSS -->
+     <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+ 
+     <!-- ElegantFonts CSS -->
+     <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+ 
+     <!-- themify-icons CSS -->
+     <link rel="stylesheet" href="/style/css/themify-icons.css">
+ 
+     <!-- Swiper CSS -->
+     <link rel="stylesheet" href="/style/css/swiper.min.css">
+ 
+     <!-- Styles -->
+     <link rel="stylesheet" href="/style/style.css">
 </head>
-
-<body>
+<body class="single-page causes-page">
     <style>
             /* The Modal (background) */
             .modal {
@@ -68,30 +87,192 @@
             }
     
     </style>
-<h1>My Page</h1>
-<a href="/">Home</a>
-<a href="/logout">Logout</a>
-<a href ="/admin/ledgers">Ledgers</a>
-<button id="myBtn" onclick="company_search()">기업 정보 조회</button> <br>
-<!-- The Modal -->
-<div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <form action="admin/search" method="post">
-            기업 이름:
-            <input type="text" name="company_name">
-            <button type="submit">조회</button>
-        </form>
-    </div>
-</div>
-<h3>My Info</h3>
-Name : <%=myinfo[0].user_name%> <br>
-ID : <%=myinfo[0].user_id%> <br>
-Job : <%=myinfo[0].user_type%> <br>
-Phone : <%=myinfo[0].user_contact%> <br>
+        <header class="site-header">
+            <div class="nav-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="site-branding d-flex align-items-center">
+                                <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                        alt="logo"></a>
+                            </div><!-- .site-branding -->
+    
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/">Home</a></li>
+                                    <li>
+                                        <a id="myBtn" onclick="company_search()">기업 정보 조회</a> <br>
+                                            <!-- The Modal -->
+                                            <div id="myModal" class="modal">
+                                                <!-- Modal content -->
+                                                <div class="modal-content">
+                                                    <span class="close">&times;</span>
+                                                    <form action="admin/search" method="post">
+                                                        기업 이름:
+                                                        <input type="text" name="company_name">
+                                                        <button type="submit">조회</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                    </li>
+                                    <li><a href="/logout">로그아웃</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+    
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>마이페이지</h1>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header -->
+    
+        <div class="featured-cause">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h2 class="entry-title">개인 정보 </h2>
+                        </div><!-- .section-heading -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+    
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/user.png" alt="" style="width: 200px ; height : 200px">
+                            </figure>
+    
+                            <div class="cause-content-wrap">
+                                <header class="entry-header d-flex flex-wrap align-items-center">
+                                    <h3 class="entry-title w-100 m-0">
+                                        회원 정보</h3>
+                                    <p>
+                                        <br>
+                                        회원 이름 : <%=myinfo[0].user_name%> <br>
+                                        아이디 : <%=myinfo[0].user_id%> <br>
+                                        직업 종류 : <%=myinfo[0].user_type%> <br>
+                                        연락처 : <%=myinfo[0].user_contact%> <br>
+                                    </p>
+                            </div>
+                        </div><!-- .cause-wrap -->
+                    </div><!-- .col -->
+                    <div class="col-12 col-lg-6">
+                        <div class="cause-wrap d-flex flex-wrap justify-content-between">
+                            <figure class="m-0">
+                                <img src="/style/images/factory.png" alt="" style="width: 200px ; height : 200px">
+                            </figure>
+                            <div class="cause-content-wrap">
+                                    <header class="entry-header d-flex flex-wrap align-items-center">
+                                        <h3 class="entry-title w-100 m-0">회사 정보</h3>
+                                        <p>
+                                            <br>
+                                            회사 이름 : <%=mycompany[0].company_name%><br>
+                                            회사 주소 : <%=mycompany[0].company_addr%><br>
+                                            회사 연락처 : <%=mycompany[0].company_contact%><br>
+                                            회사 종류 : <%=mycompany[0].company_type%><br>
+                                            
+                                    </header><!-- .entry-header -->
+                                </div><!-- .cause-content-wrap -->
+    
+                        </div><!-- .cause-wrap -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .featured-cause -->
 
-<!-- jQuery library -->
+        <footer class="site-footer">
+            <div class="footer-widgets">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <div class="foot-about">
+                                <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a>
+                                </h2>
+    
+                                <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                    블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                    팀원 : 윤혜원, 최재은 <br>
+                                </p>
+    
+                            </div>
+                        </div>
+    
+                        <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                            <h2>유관 기관 사이트</h2>
+    
+                            <ul>
+                                <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                                <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                                <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                                <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                                <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                                <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                                <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                            </ul>
+                        </div><!-- .col -->
+    
+                        <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                            <div class="foot-latest-news">
+                                <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm">
+                                    <h2>서비스 이용약관</h2>
+                                </a>
+                                <br> <br>
+                                <a href="http://www.keco.or.kr/kr/util/privacy1_1.do">
+                                    <h2>개인정보처리방침</h2>
+                                </a>
+                            </div><!-- .foot-latest-news -->
+                        </div><!-- .col -->
+    
+                        <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                            <div class="foot-contact">
+                                <h2>연락처 안내</h2>
+    
+                                <ul>
+                                    <li>운영 시간 : 9:00 ~ 18:00 <br>
+                                        단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                        운영되지 않습니다</li>
+                                    <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                    <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                    <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지)
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div><!-- .foot-contact -->
+    
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .footer-widgets -->
+    
+            <div class="footer-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="m-0">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                This
+                                template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div><!-- .col-12 -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .footer-bar -->
+        </footer><!-- .site-footer -->
+    
+        <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
@@ -123,6 +304,17 @@ Phone : <%=myinfo[0].user_contact%> <br>
         }
     }
 </script>
-
-</body>
-</html>
+        <script type='text/javascript' src='/style/js/jquery.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+        <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+        <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+        <script type='text/javascript' src='/style/js/custom.js'></script>
+        <script>
+            var d = new Date();
+        </script>
+    </body>
+    
+    </html>

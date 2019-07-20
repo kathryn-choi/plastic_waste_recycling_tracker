@@ -14,22 +14,46 @@ function get_user_info(user_id, cb){
     } else {
       console.log("user login successfully");
       myinfo=rows;
-      cb(true, myinfo);
+      get_user_company_info(rows[0].companies_id, function (result, mycompany){
+        if(result==true){
+          cb(true, myinfo, mycompany);
+        }else{
+          cb(true, myinfo, []);
+        }
+      })
     }
   });
 }
-
+//get user's company_info by company_id
+function get_user_company_info(company_id, cb){
+  var mycompany = new Array();
+  var sqlquery = "SELECT  * FROM companies WHERE company_id = ?";
+  connection.query(sqlquery, company_id,function (err, rows) {
+    if (err) {
+      console.log("no match");
+     cb(false, null);
+    } else {
+      console.log("user login successfully");
+      mycompany=rows;
+      cb(true,mycompany);
+    }
+  });
+}
 /* GET admin listing. */
 router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
-  get_user_info(user_id, function(result, myinfo) {
+  get_user_info(user_id, function(result, myinfo, mycompany) {
     if(result==true){
       res.render('admin/mypage',{
-        myinfo: myinfo
+        myinfo: myinfo,
+        mycompany: mycompany,
+        user_type: 'admin'
       });
     }else{
       res.render('admin/mypage',{
-        myinfo: []
+        myinfo: [],
+        mycompany: [],
+        user_type: 'admin'
       });
     }
   })
@@ -84,7 +108,8 @@ router.post('/history', function(req, res, next) {
                   console.log(ticket_history)
                   res.render('admin/comp_history',{
                     compasset : mycompassets,
-                    compticket : ticket_history
+                    compticket : ticket_history,
+                    user_type: 'admin'
                   })
                 }
               }
