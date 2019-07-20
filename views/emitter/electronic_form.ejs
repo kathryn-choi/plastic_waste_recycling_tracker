@@ -150,14 +150,16 @@
                                 <!-- Modal content -->
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
-                                    <form action="/emitter/search" method="post">
+                                    <!--<form action="/emitter/search" method="post">-->
                                        폐기물:
                                         <input type="text" name="material_type">
-                                        <button type="submit">조회</button>
-                                    </form>
+                                        <button type="submit" onclick="get_search_result()">조회</button>
+                                  <!--  </form>-->
                                 </div>
+                                <div class = "search_result"></div>
                             </div>
-                            <input type="number" name="waste_code"> <br>
+
+                            <input type="number" name="waste_code" id="waste_code"> <br>
                             <label>2. 위탁량</label>  <br>
                             <td><input type="number" name="weigh">
                             <select name="unit">
@@ -190,7 +192,7 @@
                             <input  type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
                         
                             <%} else{%>
-                            <input type="number" name="waste_code" value="<%=waste_code%>">> <br>
+                            <input type="number" name="waste_code" id="waste_code" value="<%=waste_code%>">> <br>
                         
                             <label>2. 위탁량</label>  <br>
                             <input type="number" name="weight">
@@ -340,6 +342,45 @@
         }
     }
 
+    function get_search_result() {
+        $.ajax({
+            url: "/search",
+            method: "POST",
+            data: {
+                material_type: document.getElementsByName("material_type")[0].value,
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    var result = data.results;
+                    var html = '<table border="1px" cellpadding="20px"><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th>'
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<tr><td>' + result[i].waste_code + '</td>'
+                            + '<td>' + result[i].waste_type + '</td>'
+                            + '<td>' + result[i].waste_state + '</td>'
+                            + '<td>' + result[i].waste_classify + '</td>'
+                            + '<td>' + result[i].waste_handler + '</td>'
+                            + '<td>' + result[i].waste_handler_condition + '</td>'
+                            + '<td>' + result[i].waste_handle_method + '</td>'
+                            + '<td>' + result[i].waste_conveyancer + '</td>'
+                            + '<td>' + result[i].waste_conveyancer_condition + '</td>'
+                            + '<td>' + result[i].eform_type + '</td>'
+                            + '<td><button id = "bnum"'+i+'" onclick = "search_result('+result[i].waste_code+')">선택</button></td></tr>'
+                    }
+                    html+='</table>'
+                    var comp_list = $('.search_result')
+                    comp_list.append(html)
+                }
+            }
+        });
+    }
+
+    function search_result(waste_code) {
+        var modal = document.getElementById('myModal');
+        $('#waste_code').val(waste_code);
+        modal.style.display = "none";
+    }
+    
     function save(){
         $.ajax({
             url:"/emitter/form",

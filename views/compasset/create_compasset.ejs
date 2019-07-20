@@ -1,66 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>최초 보관량 등록하기</title>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
+
 </head>
 
 <body>
-<!--<form action="/compasset/create_compasset" method="post">-->
-   
-    <label>*1.폐기물 종류</label>
-    <%if (waste_code==''){%>
-        <!--search button pop up 해서 폐기물종류 조회하기-->
-        <!-- Trigger/Open The Modal -->
-    <button id="myBtn" onclick="search()">조회하기</button>
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form action="/compasset/search" method="post">
-               폐기물:
-                <input type="text" name="material_type">
-                <button type="submit">조회</button>
-            </form>
-        </div>
-    </div>
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
 
-    <label>*2. 날짜</label>
-    <!--달력-->
-    <input id="date" type="date" name="save_date">
-    <br>
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            text-align: justify;
+            /* Could be more or less, depending on screen size */
+        }
 
-    <label>3.최초 보관량</label>
-    <td><input type="number" name="first_save_weight"></td>
-    <select name="unit">
-        <option value="kg">kg</option>
-        <option value="ton">ton</option>
-        <option value="g">g</option>
-    </select> <br>
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    <button  type="submit" onclick="save()">등록하기</button>
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    <%} else{%>
+        select {
+            width: 80px; /* 원하는 너비설정 */ 
+                    padding: .4em .4em; /* 여백으로 높이 설정 */ 
+                    font-family: inherit; /* 폰트 상속 */ 
+                    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
+                    border: 1px solid #999; 
+                    border-radius: 0px; /* iOS 둥근모서리 제거 */ 
+                    -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+                    -moz-appearance: none; 
+                    appearance: none; 
+        }
+    </style>
 
-    <td><input type="number" name="waste_code" value="<%=waste_code%>"></td> <br>
-    <label>*2. 날짜</label>
-    <!--달력-->
-    <input id="date" type="date" name="save_date">
-    <br>
+    <body class="single-page contact-page">
+        <header class="site-header">
+            <div class="nav-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="site-branding d-flex align-items-center">
+                                <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                        alt="logo"></a>
+                            </div><!-- .site-branding -->
 
-    <label>3.최초 보관량</label>
-    <td><input type="number" name="first_save_weight"></td>
-    <select name="unit">
-        <option value="kg">kg</option>
-        <option value="ton">ton</option>
-        <option value="g">g</option>
-    </select> <br>
+                            <nav class="site-navigation d-flex justify-content-end align-items-center">
+                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                    <li class="current-menu-item"><a href="/">Home</a></li>
+                                    <li><a href="/<%=user_type%>">마이페이지</a></li>
+                                    <li><a href="/compasset">대장 관리</a></li>
+                                    <li><a href="/compasset/compasset_history">대장 history</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                                </ul>
+                            </nav><!-- .site-navigation -->
+                            <div class="hamburger-menu d-lg-none">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div><!-- .hamburger-menu -->
+                        </div><!-- .col -->
+                    </div><!-- .row -->
+                </div><!-- .container -->
+            </div><!-- .nav-bar -->
+        </header><!-- .site-header -->
 
-    <button  type="submit" onclick="save()">등록하기</button>
-    <%}%>
-<!--</form>-->
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>최초 보관량 등록하기</h1>
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header -->
 
+        <div class="contact-page-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-5">
+                    </div>
+                    <div class="col-12 col-lg-7">
+                        <br> <br>
+                        <label>*1.폐기물 종류</label>
+                        <%if (waste_code==''){%>
+                        <!--search button pop up 해서 폐기물종류 조회하기-->
+                        <!-- Trigger/Open The Modal -->
+                        <button id="myBtn" onclick="search()">조회하기</button>
+                    
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <form action="/compasset/search" method="post">
+                                    폐기물:
+                                    <input type="text" name="material_type">
+                                    <button type="submit">조회</button>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <label>*2. 날짜</label> <br>
+                        <!--달력-->
+                        <input id="date" type="date" name="save_date">
+                        <br>
+
+                        <label>3.최초 보관량</label> <br>
+                        <td><input type="number" name="first_save_weight"></td>
+                        <select name="unit">
+                            <option value="kg">kg</option>
+                            <option value="ton">ton</option>
+                            <option value="g">g</option>
+                        </select> <br> <br>
+                        <button type="submit" class="btn gradient-bg" onclick="save()">등록하기</button>
+                        <br>
+                        <br>
+
+                        <%} else{%>
+                        <br>
+                        <input type="number" name="waste_code" value="<%=waste_code%>"> <br>
+                        <label>*2. 날짜</label> <br>
+                        <!--달력-->
+                        <input id="date" type="date" name="save_date">
+                        <br>
+
+                        <label>3.최초 보관량</label> <br>
+                        <td><input type="number" name="first_save_weight"></td>
+                        <select name="unit">
+                            <option value="kg">kg</option>
+                            <option value="ton">ton</option>
+                            <option value="g">g</option>
+                        </select> <br> <br>
+                        <button type="submit" class="btn gradient-bg" onclick="save()">등록하기</button>
+                        <br>
+                        <br>
+                        <%}%>
+
+                    </div>
+                </div><!-- .container -->
+            </div>
+
+            <footer class="site-footer">
+                    <div class="footer-widgets">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="foot-about">
+                                        <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
+                
+                                        <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                            블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                            팀원 : 윤혜원, 최재은 <br>
+                                        </p>
+                                    </div>
+                                </div>
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <h2>유관 기관 사이트</h2>
+                
+                                    <ul>
+                                        <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                                        <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                                        <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                                        <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                                        <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                                        <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                                        <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                                    </ul>
+                                </div><!-- .col -->
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <div class="foot-latest-news">
+                                        <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm"><h2>서비스 이용약관</h2></a>
+                                        <br> <br>
+                                        <a href="http://www.keco.or.kr/kr/util/privacy1_1.do"><h2>개인정보처리방침</h2></a>
+                                    </div><!-- .foot-latest-news -->
+                                </div><!-- .col -->
+                
+                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                    <div class="foot-contact">
+                                        <h2>연락처 안내</h2>
+                
+                                        <ul>
+                                            <li>운영 시간 : 9:00 ~ 18:00  <br>
+                                                단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                                운영되지 않습니다</li>
+                                            <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                            <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                            <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span></li>
+                                        </ul>
+                                    </div><!-- .foot-contact -->
+                
+                                </div><!-- .col -->
+                            </div><!-- .row -->
+                        </div><!-- .container -->
+                    </div><!-- .footer-widgets -->
+                
+                    <div class="footer-bar">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                </div><!-- .col-12 -->
+                            </div><!-- .row -->
+                        </div><!-- .container -->
+                    </div><!-- .footer-bar -->
+                </footer><!-- .site-footer -->
 
 <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -68,7 +274,7 @@
 <script>
     // Get the modal
 
-    function search(){
+    function search() {
         var modal = document.getElementById('myModal');
 
         // Get the button that opens the modal
@@ -78,80 +284,91 @@
         var span = document.getElementsByClassName("close")[0];
 
         // When the user clicks on the button, open the modal
-        btn.onclick = function() {
+        btn.onclick = function () {
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
+        span.onclick = function () {
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
     }
 
-    function save(){
+    function save() {
         console.log("save!");
-        var unit= document.getElementsByName("unit")[0].value;
-        console.log("unit : ",unit);
+        var unit = document.getElementsByName("unit")[0].value;
+        console.log("unit : ", unit);
         console.log(document.getElementsByName("save_date")[0].value);
-        if (unit=="kg"){
+        if (unit == "kg") {
             console.log("unit : kg");
             $.ajax({
-                url:"/compasset/create_compasset",
+                url: "/compasset/create_compasset",
                 method: "POST",
-                data : {
-                    waste_code : document.getElementsByName("waste_code")[0].value,
-                    save_date : document.getElementsByName("save_date")[0].value,
-                    first_save_weight : document.getElementsByName("first_save_weight")[0].value,
+                data: {
+                    waste_code: document.getElementsByName("waste_code")[0].value,
+                    save_date: document.getElementsByName("save_date")[0].value,
+                    first_save_weight: document.getElementsByName("first_save_weight")[0].value,
                 },
-                success : function (data) {
-                    if(data.success == true){
+                success: function (data) {
+                    if (data.success == true) {
                         window.location.href = data.redirect_url;
-                    }}
+                    }
+                }
             });
-        }else if (unit=="ton"){
+        } else if (unit == "ton") {
             console.log("unit : ton");
             //1 ton == 907.185 kg
-            var weight=document.getElementsByName("first_save_weight")[0].value * 907.185;
+            var weight = document.getElementsByName("first_save_weight")[0].value * 907.185;
             $.ajax({
-                url:"/compasset/create_compasset",
+                url: "/compasset/create_compasset",
                 method: "POST",
-                data : {
-                    waste_code : document.getElementsByName("waste_code")[0].value,
-                    save_date : document.getElementsByName("save_date")[0].value,
-                    first_save_weight : weight,
+                data: {
+                    waste_code: document.getElementsByName("waste_code")[0].value,
+                    save_date: document.getElementsByName("save_date")[0].value,
+                    first_save_weight: weight,
                 },
-                success : function (data) {
-                    if(data.success == true){
+                success: function (data) {
+                    if (data.success == true) {
                         window.location.href = data.redirect_url;
-                    }}
+                    }
+                }
             });
-        }else{
+        } else {
             //1g == 0.001 kg
             console.log("unit : g");
-            var weight=document.getElementsByName("first_save_weight")[0].value * 0.001;
+            var weight = document.getElementsByName("first_save_weight")[0].value * 0.001;
             $.ajax({
-                url:"/compasset/create_compasset",
+                url: "/compasset/create_compasset",
                 method: "POST",
-                data : {
-                    waste_code : document.getElementsByName("waste_code")[0].value,
-                    save_date : document.getElementsByName("save_date")[0].value,
-                    first_save_weight : weight,
+                data: {
+                    waste_code: document.getElementsByName("waste_code")[0].value,
+                    save_date: document.getElementsByName("save_date")[0].value,
+                    first_save_weight: weight,
                 },
-                success : function (data) {
-                    if(data.success == true){
+                success: function (data) {
+                    if (data.success == true) {
                         window.location.href = data.redirect_url;
-                    }}
+                    }
+                }
             });
         }
     }
 </script>
+<script type='text/javascript' src='/style/js/jquery.js'></script>
+<script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+<script type='text/javascript' src='/style/js/swiper.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+<script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+<script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+<script type='text/javascript' src='/style/js/custom.js'></script>
 
 </body>
 </html>

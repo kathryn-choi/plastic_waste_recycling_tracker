@@ -211,6 +211,7 @@ router.post('/search', function(req, res, next) {
       }
   });
 });
+
 //choose company from search result
 router.post('/search_result', function(req, res, next) {
   var company_id=req.body.company_id;

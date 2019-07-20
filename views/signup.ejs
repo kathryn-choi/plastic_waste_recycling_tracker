@@ -58,7 +58,8 @@
             /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 50%;
+            width: 60%;
+            text-align: justify;
             /* Could be more or less, depending on screen size */
         }
 
@@ -265,7 +266,6 @@
                         </div><!-- .container -->
                     </div><!-- .footer-bar -->
                 </footer><!-- .site-footer -->
-                <div id="myModal2" class="modal"><div class="modal-content"><span class="close">&times;</span><table><tr><th>Company ID</th><th>Company Name</th> <th>Company Address</th> <th>Company Contact</th><th>Company Type</th> <th>Company Material Type</th><th>submit</th></tr> </div> </div>
 
 <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -310,7 +310,7 @@
             success: function (data) {
                 if (data.success == true) {
                     var result = data.results;
-                    var html = '<table><tr> <th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr>'
+                    var html = '<br><table border="1px" cellpadding="20px"><tr> <th> 기업ID </th><th> 기업 이름 </th><th>주소</th><th>연락처</th><th>기업 종류</th><th>재료 종류</th><th>선택하기</th></tr>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].company_id + '</td>'
                             + '<td>' + result[i].company_name + '</td>'
@@ -318,7 +318,7 @@
                             + '<td>' + result[i].company_contact + '</td>'
                             + '<td>' + result[i].company_type + '</td>'
                             + '<td>' + result[i].company_material_type + '</td>'
-                            + '<td><button id = "bnum"'+i+'" onclick = "search_result('+result[i].company_id+')">Submit</button></td></tr>'
+                            + '<td><button id = "bnum"'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button></td></tr>'
                     }
                     html+='</table>'
                     var comp_list = $('.search_result')

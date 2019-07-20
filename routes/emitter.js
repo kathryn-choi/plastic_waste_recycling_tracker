@@ -293,7 +293,8 @@ router.post('/search', function(req, res, next) {
       console.log("found company");
       results=rows;
       console.log(results);
-      res.render('emitter/search_result',{result : results});
+      res.jsonp({success : true, results: results});
+      //res.render('emitter/search_result',{result : results});
     }
   });
 });
