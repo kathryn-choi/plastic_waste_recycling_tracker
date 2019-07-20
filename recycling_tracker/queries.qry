@@ -39,3 +39,10 @@ query get_ticket_history{
       SELECT org.hyperledger.composer.system.HistorianRecord
         WHERE (transactionType == 'org.recycling.tracker.CreateTicket' OR transactionType == 'org.recycling.tracker.DeleteTicket' OR transactionType == 'org.recycling.tracker.ChangeTicketInfo')
 }
+
+query select_ticket_user_received{
+  description: "Select ticket that matches owner"
+  statement:
+      SELECT org.recycling.tracker.Ticket
+        WHERE (conveyancer == _$user_id OR reciever == _$user_id)
+}

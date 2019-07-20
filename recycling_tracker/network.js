@@ -582,6 +582,30 @@ module.exports = {
             return error;
         }
     },
+    get_ticket_user_received : async function (_user_id) {
+
+        try {
+            //connect to network with user_id
+            var businessNetworkConnection = new BusinessNetworkConnection();
+            await businessNetworkConnection.connect('admin@recycling_tracker');
+
+            //query my ticket from the network
+            const my_tickets = await businessNetworkConnection.query('select_ticket_user_received', {user_id: _user_id});
+
+            //disconnect
+            await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+            //return ticket object
+            return my_tickets;
+        }
+        catch(err) {
+            //print and return error
+            console.log(err);
+            var error = {};
+            error.error = err.message;
+            return error;
+        }
+    },
     get_compasset_info_by_id : async function (asset_id) {
 
         try {

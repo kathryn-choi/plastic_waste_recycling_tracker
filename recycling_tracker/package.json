@@ -3,7 +3,7 @@
     "composer": "^0.20.8"
   },
   "name": "recycling_tracker",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Waste recycling tracker network",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/recycling_tracker.bna",

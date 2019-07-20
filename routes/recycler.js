@@ -26,7 +26,7 @@ function get_user_info(user_id, cb){
   connection.query(sqlquery, user_id,function (err, rows) {
     if (err) {
       console.log("no match");
-      cb(false, [], [], []);
+      cb(false, [], [], [],[]);
     } else {
       console.log("user login successfully");
       myinfo=rows;
@@ -35,14 +35,20 @@ function get_user_info(user_id, cb){
           get_user_ticketinfo(user_id, function(r,mytickets){
             if(r==true){
               console.log("HI")
-              cb(true, myinfo, arr, mytickets);
+              get_my_received_ticket(user_id, function(r,rtickets){
+                if(r==true){
+                  console.log("HI");
+                  cb(true, myinfo, arr, mytickets, rtickets);
+                }else{
+                  cb(true, myinfo, arr, mytickets, []);
+                }
+              });
             }else{
-              cb(true, myinfo, arr, []);
+              cb(true, myinfo, arr, [],[]);
             }
           })
-          //cb(true,myinfo, arr,[]);
         }else{
-          cb(true, myinfo, [], []);
+          cb(true, myinfo, [], [],[]);
         }
       });
     }
@@ -121,10 +127,85 @@ function get_user_ticketinfo(user_id, cb){
       }
   })
 }
+//get my received ticket by userid
+function get_my_received_ticket(user_id, cb){
+  console.log("getuserticketinfo");
+  request.get({
+    url : 'http://localhost:3000/api/queries/select_ticket_user_received?user_id=resource%3Aorg.recycling.tracker.Recycler%23' + user_id
+    },async function(error,res,body){
+      if(!error){
+        var tickets = JSON.parse(body);
+        console.log("tickets : ",tickets);
+        var my_tickets = []
+        var count = 0;
+        if(tickets.length == 0){
+          console.log("none!")
+          cb(true,[]);
+        }
+        await Promise.all(tickets.map(async (file) =>{
+        //for(var i = 0; i< tickets.length; i++){
+          var temp = file.ticket_id.split('.')
+          var user_id = temp[0]
+          var waste_code = temp[1]
+          var transfer_date = file.transfer_date
+          var weight = file.weight
+          var sqlquery = 'select user_name from users where user_id = ?'
+          var selectt = file
+          connection.query(sqlquery, user_id,function (err, rows) {
+            var user_name  =  rows[0].user_name
+            console.log(user_name)
+            var sqlquery2 = 'select * from wastes where waste_code = ?'
+            connection.query(sqlquery2, waste_code,function (err, rows1) {
+              var waste_type = rows1[0].waste_type
+              var waste_handler = rows1[0].waste_handler
+              var method = rows1[0].waste_handle_method
+              var eform_type = rows1[0].eform_type
+              var conveyancer = rows1[0].waste_conveyancer
+              var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
+              connection.query(sqlquery3, (selectt.conveyancer).split('#')[1],function (err, rows2) {
+                var carnum = rows2[0].carnum
+                var sqlquery4 = "select companies_id from users where user_id = ?"
+                connection.query(sqlquery4, selectt.reciever.split('#')[1],function (err, rows3) {
+                  var comp_id = rows3[0].companies_id
+                  var sqlquery4 = "select company_addr from companies where company_id = ?"
+                  connection.query(sqlquery4, comp_id,function (err, rows4) {
+                    var comp_loc = rows4[0].company_addr
+                    var ticket = {
+                      ticket_id: selectt.ticket_id,
+                      waste_type : waste_type,
+                      weight : weight,
+                      conveyancer : conveyancer,
+                      carnum : carnum,
+                      waste_handler : waste_handler,
+                      method : method,
+                      comp_loc : comp_loc,
+                      transfer_date : transfer_date,
+                      user_name : user_name,
+                      eform_type : eform_type
+                    }
+                    console.log("t : ",ticket);
+                    my_tickets.push(ticket)
+                    count++;
+                    if(count == tickets.length){
+                      console.log("my tickets : ",my_tickets);
+                      cb(true,my_tickets);
+                    }
+                  })
+                })
+              })
+            })
+          })
+        }))
+      }
+      else{
+        cb(false, []);
+      }
+  })
+}
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
-  get_user_info(user_id, function(result, myinfo, mycompany, mytickets) {
+  get_user_info(user_id, function(result, myinfo, mycompany, mytickets, rtickets) {
     if(result==true){
       console.log("mytickets: ",mytickets);
       console.log("myinfo: ", myinfo);
@@ -132,13 +213,15 @@ router.get('/', function(req, res, next) {
       res.render('recycler/mypage',{
         myinfo: myinfo,
         mycompany: mycompany,
-        mytickets: mytickets
+        mytickets: mytickets,
+        rtickets: rtickets
       });
     }else{
       res.render('recycler/mypage',{
         myinfo: [],
         mycompany: [],
-        mytickets: []
+        mytickets: [],
+        rtickets : []
       });
     }
   }) 
