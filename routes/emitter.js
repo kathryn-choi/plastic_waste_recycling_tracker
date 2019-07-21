@@ -294,7 +294,7 @@ router.post('/search', function(req, res, next) {
       results=rows;
       console.log(results);
       res.jsonp({success : true, results: results});
-      //res.render('emitter/search_result',{result : results});
+
     }
   });
 });
@@ -333,24 +333,19 @@ router.post('/search_result', function(req, res, next) {
       console.log(row[0].carnum);
       get_handler_address(handler, function(result, handler_addr){
         if(result==true){
-          res.render('emitter/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: handler_addr,
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
+          handler_addr = handler_addr
         }else{
-          res.render('emitter/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: '',
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
+          handler_addr = ''
         }
+        results = {
+          waste_code: waste_code,
+          handler:handler,
+          handle_method: handle_method,
+          handle_address: handler_addr,
+          conveyancer: conveyancer,
+          carnum : convey_carnum
+        }
+        res.jsonp({success : true, results: results});
       })
     }
   });

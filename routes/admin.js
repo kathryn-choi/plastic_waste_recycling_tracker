@@ -71,7 +71,7 @@ router.post('/search', function(req, res, next) {
         console.log("found company");
         results=rows;
         console.log(results);
-        res.render('admin/search_result',{result : results});
+        res.jsonp({success : true, results: results});
       }
   });
 });
@@ -106,11 +106,12 @@ router.post('/history', function(req, res, next) {
                 count++
                 if(count == users.length){
                   console.log(ticket_history)
-                  res.render('admin/comp_history',{
+                  results = {
                     compasset : mycompassets,
                     compticket : ticket_history,
                     user_type: 'admin'
-                  })
+                  }
+                  res.jsonp({success : true, redirect_url : "admin/comp_history", results : results})
                 }
               }
             })

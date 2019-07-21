@@ -106,12 +106,13 @@
                                             <div id="myModal" class="modal">
                                                 <!-- Modal content -->
                                                 <div class="modal-content">
+                                                    <div>
                                                     <span class="close">&times;</span>
-                                                    <form action="admin/search" method="post">
                                                         기업 이름:
                                                         <input type="text" name="company_name">
-                                                        <button type="submit">조회</button>
-                                                    </form>
+                                                        <button type="submit" onclick="get_search_result()">조회</button>
+                                                    </div>
+                                                    <div class = "search_result"></div>
                                                 </div>
                                             </div>
                                     </li>
@@ -303,6 +304,53 @@
             }
         }
     }
+
+    function get_search_result() {
+        $.ajax({
+            url: "/admin/search",
+            method: "POST",
+            data: {
+                company_name: document.getElementsByName("company_name")[0].value,
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    console.log(data)
+                    var result = data.results;
+                    var html = '<table border="1px" cellpadding="20px"><tr><th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr>'
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<tr><td>' + result[i].company_id + '</td>'
+                            + '<td>' + result[i].company_name + '</td>'
+                            + '<td>' + result[i].company_addr + '</td>'
+                            + '<td>' + result[i].company_contact + '</td>'
+                            + '<td>' + result[i].company_type + '</td>'
+                            + '<td>' + result[i].company_material_type + '</td>'
+                            + '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button></td></tr>'
+                    }
+                    html+='</table>'
+                    console.log(html)
+                    var comp_list = $('.search_result')
+                    comp_list.append(html)
+                }
+            }
+        });
+    }
+
+    function search_result(company_id) {
+        $.ajax({
+            url: "/admin/history",
+            method: "POST",
+            data: {
+                company_id: company_id
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = data.redirect_url + data.results;
+                }
+            }
+        });
+    }
+
 </script>
         <script type='text/javascript' src='/style/js/jquery.js'></script>
         <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
