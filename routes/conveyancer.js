@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+var network = require('../recycling_tracker/network.js');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb){
@@ -143,19 +144,21 @@ router.get('/', function(req, res, next) {
 
 //complete transfer
 router.post('/complete_ticket', function(req, res, next) {
-  //changed previousdes to curdes
+  //changed previousdes to curdes & changed transfer date to today
   var ticket_id =req.body.ticket_id;
   var currentdes =req.body.currentdes;
   var previousdes =req.body.currentdes;
   var transfer_date =req.body.transfer_date;
   var weight =req.body.weight;
-  var giver_id =req.body.giver_id;
+  var giver_name =req.body.user_name;
+  //giver_name 으로 giver_id, giver_type 찾기
   var giver_type =req.body.giver_type;
-  var reciever_id =req.body.reciever_id;
+  var reciever_id =req.body.waste_handler;
+  //receiver_type 찾기
   var reciever_type =req.body.reciever_type;
   var conveyer_id =req.body.conveyer_id;
 
-  //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
+  //(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) 
   network.change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id).then((response) => { 
     //return error if error in response
     if (response.error != null) {
