@@ -325,7 +325,10 @@
                             + '<td>' + result[i].company_contact + '</td>'
                             + '<td>' + result[i].company_type + '</td>'
                             + '<td>' + result[i].company_material_type + '</td>'
-                            + '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button></td></tr>'
+                            + '<td><form action=\"/admin/history\" method=\"post\">'
+                            + '<input type="hidden" name="company_id" value="'+result[i].company_id+'">'
+                            + '<button type="submit">선택</button></form></td></tr>'
+                            //+ '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button> </form></td></tr>'
                     }
                     html+='</table>'
                     console.log(html)

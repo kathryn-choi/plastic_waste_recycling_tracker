@@ -106,12 +106,12 @@ router.post('/history', function(req, res, next) {
                 count++
                 if(count == users.length){
                   console.log(ticket_history)
-                  results = {
+                  res.render('admin/comp_history',{
                     compasset : mycompassets,
                     compticket : ticket_history,
                     user_type: 'admin'
-                  }
-                  res.jsonp({success : true, redirect_url : "admin/comp_history", results : results})
+                  })
+                  //res.jsonp({success : true, redirect_url : "admin/comp_history", results : results})
                 }
               }
             })

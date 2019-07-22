@@ -120,6 +120,7 @@
                     <table border="1px" cellpadding="15px">
                         <tr>
                             <th> 티켓ID </th>
+                            <th> Transaction Type </th>
                             <th> 폐기물 코드 </th>
                             <th> 현재 위치 </th>
                             <th> 이전 위치 </th>
@@ -134,6 +135,7 @@
                         <% for(var i=(compticket).length-1; i>=0; i--){%>
                         <tr>
                             <td><%=compticket[i].ticket_id%></td>
+                            <td><%=compticket[i].transaction_type%></td>
                             <td><%=compticket[i].waste_code%></td>
                             <td><%=compticket[i].currentdes%></td>
                             <td><%=compticket[i].previousdes%></td>

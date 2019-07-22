@@ -141,7 +141,6 @@
                     <div class="col-12 col-lg-7">
                         <br> <br>
                         <label>*1.폐기물 종류</label>
-                        <%if (waste_code==''){%>
                         <!--search button pop up 해서 폐기물종류 조회하기-->
                         <!-- Trigger/Open The Modal -->
                         <button id="myBtn" onclick="search()">조회하기</button>
@@ -150,15 +149,18 @@
                         <div id="myModal" class="modal">
                             <!-- Modal content -->
                             <div class="modal-content">
+                                <div>
                                 <span class="close">&times;</span>
-                                <form action="/compasset/search" method="post">
                                     폐기물:
                                     <input type="text" name="material_type">
-                                    <button type="submit">조회</button>
-                                </form>
+                                    <button type="submit" onclick="get_search_result()">조회</button>
+                                 </div>
+                            <div class = "search_result"></div>
                             </div>
                         </div>
                         <br>
+                        <input type="number" id="waste_code">
+                        <br>
                         <label>*2. 날짜</label> <br>
                         <!--달력-->
                         <input id="date" type="date" name="save_date">
@@ -174,26 +176,6 @@
                         <button type="submit" class="btn gradient-bg" onclick="save()">등록하기</button>
                         <br>
                         <br>
-
-                        <%} else{%>
-                        <br>
-                        <input type="number" name="waste_code" value="<%=waste_code%>"> <br>
-                        <label>*2. 날짜</label> <br>
-                        <!--달력-->
-                        <input id="date" type="date" name="save_date">
-                        <br>
-
-                        <label>3.최초 보관량</label> <br>
-                        <td><input type="number" name="first_save_weight"></td>
-                        <select name="unit">
-                            <option value="kg">kg</option>
-                            <option value="ton">ton</option>
-                            <option value="g">g</option>
-                        </select> <br> <br>
-                        <button type="submit" class="btn gradient-bg" onclick="save()">등록하기</button>
-                        <br>
-                        <br>
-                        <%}%>
 
                     </div>
                 </div><!-- .container -->
@@ -300,6 +282,46 @@
             }
         }
     }
+    function get_search_result() {
+        $.ajax({
+            url: "/compasset/search",
+            method: "POST",
+            data: {
+                material_type: document.getElementsByName("material_type")[0].value,
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    console.log(data)
+                    var result = data.result;
+                    var html = '<table border="1px" cellpadding="20px"><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr>'
+                    for (var i = 0; i < result.length; i++) {
+                        html += '<tr><td>' + result[i].waste_code + '</td>'
+                            + '<td>' + result[i].waste_type + '</td>'
+                            + '<td>' + result[i].waste_state + '</td>'
+                            + '<td>' + result[i].waste_classify + '</td>'
+                            + '<td>' + result[i].waste_handler + '</td>'
+                            + '<td>' + result[i].waste_handler_condition + '</td>'
+                            + '<td>' + result[i].waste_handle_method + '</td>'
+                            + '<td>' + result[i].waste_conveyancer + '</td>'
+                            + '<td>' + result[i].waste_conveyancer_condition + '</td>'
+                            + '<td>' + result[i].eform_type + '</td>'
+                            + '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].waste_code+')">선택</button></td></tr>'
+                    }
+                    html+='</table>'
+                    console.log(html)
+                    var comp_list = $('.search_result')
+                    comp_list.append(html)
+                }
+            }
+        });
+    }
+
+    function search_result(waste_code) {
+        var modal = document.getElementById('myModal');
+        $('#waste_code').val(waste_code);;
+        modal.style.display = "none";
+    }
 
     function save() {
         console.log("save!");
@@ -312,7 +334,7 @@
                 url: "/compasset/create_compasset",
                 method: "POST",
                 data: {
-                    waste_code: document.getElementsByName("waste_code")[0].value,
+                    waste_code: document.getElementById("waste_code").value,
                     save_date: document.getElementsByName("save_date")[0].value,
                     first_save_weight: document.getElementsByName("first_save_weight")[0].value,
                 },
@@ -360,6 +382,12 @@
             });
         }
     }
+
+    var dateControl = document.querySelector('input[type="date"]');
+    var d = new Date();
+    var n = d.toISOString();
+    var current_date=n.slice(0,10);
+    dateControl.value = current_date;
 </script>
 <script type='text/javascript' src='/style/js/jquery.js'></script>
 <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>

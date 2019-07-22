@@ -99,7 +99,7 @@ function get_my_received_ticket(user_id, cb){
                       method : method,
                       comp_loc : comp_loc,
                       transfer_date : transfer_date,
-                      user_name : user_name,
+                      user_name : user_id,
                       eform_type : eform_type
                     }
                     console.log("t : ",ticket);
@@ -145,29 +145,41 @@ router.get('/', function(req, res, next) {
 //complete transfer
 router.post('/complete_ticket', function(req, res, next) {
   //changed previousdes to curdes & changed transfer date to today
+  
   var ticket_id =req.body.ticket_id;
-  var currentdes =req.body.currentdes;
-  var previousdes =req.body.currentdes;
   var transfer_date =req.body.transfer_date;
-  var weight =req.body.weight;
-  var giver_name =req.body.user_name;
-  //giver_name 으로 giver_id, giver_type 찾기
-  var giver_type =req.body.giver_type;
-  var reciever_id =req.body.waste_handler;
-  //receiver_type 찾기
-  var reciever_type =req.body.reciever_type;
-  var conveyer_id =req.body.conveyer_id;
 
-  //(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) 
-  network.change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id).then((response) => { 
-    //return error if error in response
-    if (response.error != null) {
-      console.log("network change ticket info failed");
-      res.redirect('/conveyancer');
-    } else {
-      console.log("network change ticket info succeed");
-      res.redirect('/conveyancer'); 
-    }
-  });
+  console.log(ticket_id)
+  var weight =req.body.weight;
+  var giver_id =req.body.user_name; 
+  var reciever_id =req.body.waste_handler;
+  var conveyer_id =req.body.conveyancer;
+  var sqlquery = "select * from users where user_id = ?"
+  connection.query(sqlquery, giver_id,function (err, rows) {
+    //giver_name 으로 giver_id, giver_type 찾기
+    console.log(rows)
+    var giver_type =rows[0].user_type;
+    var sqlquery2 = "select * from companies where company_id = ?"
+    connection.query(sqlquery2, rows[0].companies_id,function (err, rows2) {
+      var previousdes = rows2[0].company_addr
+      connection.query(sqlquery, reciever_id,function (err, rows3) {
+      //receiver_type 찾기
+      var reciever_type =rows3[0].user_type;
+      var currentdes = req.body.comp_loc
+      console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
+      //(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) 
+      network.change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id).then((response) => { 
+        //return error if error in response
+        if (response.error != null) {
+          console.log("network change ticket info failed");
+          res.redirect('/conveyancer');
+        } else {
+          console.log("network change ticket info succeed");
+          res.redirect('/conveyancer'); 
+        }
+      })
+    })
+  })
+  })
 });
 module.exports = router;

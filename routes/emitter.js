@@ -50,13 +50,15 @@ function get_user_info(user_id, cb) {
 }
 
 function get_ticket_info(user_id, conveyancer, handler, cb) {
-  var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
+  var sqlquery = "SELECT * FROM users WHERE user_id = ?"
   connection.query(sqlquery, conveyancer, function (err, rows) {
     if (err) {
       console.log(conveyancer)
       console.log("no match");
     } else {
       console.log("found user_id");
+      console.log(conveyancer)
+      console.log(rows)
       var con_id = rows[0].user_id
       var sqlquery2 = "SELECT * FROM users WHERE user_id = ?"
       connection.query(sqlquery2, user_id, function (err, rows) {
@@ -74,7 +76,7 @@ function get_ticket_info(user_id, conveyancer, handler, cb) {
             } else {
               console.log("found company_loc");
               var company_loc = rows[0].company_addr
-              var sqlquery4 = "SELECT * FROM users WHERE user_name = ? and user_type = 'handler'"
+              var sqlquery4 = "SELECT * FROM users WHERE user_id = ?"
               connection.query(sqlquery4, handler, function (err, rows) {
                 if (err) {
                   console.log("no match");
@@ -218,7 +220,7 @@ router.post('/form', function (req, res, next) {
   var ticket_id = user_id + "." + waste_code + "." + transfer_date
   get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
     if (result == true) {
-      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "Emitter", hanlder_id, "Handler", con_id).then((response) => {
+      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network create ticket info failed");
@@ -301,14 +303,15 @@ router.post('/search', function (req, res, next) {
 //get handler's address by handler name
 function get_handler_address(handler_id, cb) {
   var handler_addr = '';
-  var sqlquery = "SELECT companies_id FROM companies WHERE user_id = ?";
-  connection.query(sqlquery, company_name, function (err, row) {
+  var sqlquery = "SELECT companies_id FROM users WHERE user_id = ?";
+  connection.query(sqlquery, handler_id, function (err, row) {
     if (err) {
       console.log("no match");
       cb(false, null);
     } else {
-      var sqlquery = "SELECT company_addr FROM companies WHERE company_name = ?";
-      connection.query(sqlquery, company_name, function (err, row) {
+      companies_id = row[0].companies_id
+      var sqlquery = "SELECT company_addr FROM companies WHERE company_id = ?";
+      connection.query(sqlquery, companies_id, function (err, row) {
         if (err) {
           console.log("no match");
           cb(false, null);
@@ -379,38 +382,10 @@ router.post('/change_ticketinfo', function (req, res, next) {
   var user_name = req.body.user_name;
   var user_id = req.session.user_id
   get_ticket_info(user_id, conveyancer, waste_handler, function (result, con_id, hanlder_id, company_loc) {
-    /*if(result == true){
-    request({
-      url : 'http://localhost:3000/api/org.recycling.tracker.Ticket/'+ticket_id,
-      method : "PUT",
-      header : {
-        "content-type" : "application/json",
-      },
-      json : {
-        "$class": "org.recycling.tracker.Ticket",
-        "ticket_id": ticket_id,
-        "currentdes": company_loc,
-        "previousdes": " ",
-        "transfer_date": transfer_date,
-        "weight": weight,
-        "giver": "resource:org.recycling.tracker.Emitter#"+user_id,
-        "reciever": "resource:org.recycling.tracker.Handler#"+hanlder_id,
-        "conveyancer": "resource:org.recycling.tracker.Conveyancer#"+con_id
-      }
-      }),function(error,res,body){
-        if(!error){
-          console.log("network change ticket info succeed");
-          res.redirect('/emitter'); 
-        }
-        else{
-          console.log("network change ticket info failed");
-          res.redirect('/emitter');
-        }
-      }*/
 
     if (result == true) {
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-      network.change_ticket_info(ticket_id, company_loc, "", transfer_date, weight, user_id, "Emitter", hanlder_id, "Handler", con_id).then((response) => {
+      network.change_ticket_info(ticket_id, company_loc, "", transfer_date, weight, user_id, "emitter", hanlder_id, "handler", con_id).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network change ticket info failed");
@@ -426,8 +401,6 @@ router.post('/change_ticketinfo', function (req, res, next) {
       res.redirect('/emitter');
     }
   })
-
-
 });
 
 

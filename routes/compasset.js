@@ -109,7 +109,7 @@ router.post('/search', function (req, res, next) {
       console.log("found company");
       results = rows;
       console.log(results);
-      res.render('compasset/search_result', { result: results });
+      res.jsonp({ success: true, result: results });
     }
   });
 });
@@ -159,10 +159,12 @@ router.post('/update_compasset', function (req, res, next) {
   var gen_weight = req.body.gen_weight;
   var handle_weight = req.body.handle_weight;
   var save_weight = req.body.save_weight;
+
   //현재보관량 = 최초 보관량 + 발생량 - 배출량 
-  var new_save_weight = save_weight + gen_weight - handle_weight;
+  //var new_save_weight = save_weight + gen_weight - handle_weight;
   //(asset_id,gen_weight, handle_weight, save_weight, cb)
-  compassetM.update_company_asset(asset_id, gen_weight.toString(), handle_weight.toString(), new_save_weight.toString(), function (result) {
+
+  compassetM.update_company_asset(asset_id, gen_weight, handle_weight, save_weight, function (result) {
     if (result == true) {
       console.log("update compasset true!");
       res.redirect('/compasset');

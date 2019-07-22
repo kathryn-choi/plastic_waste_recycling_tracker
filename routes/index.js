@@ -179,6 +179,7 @@ router.post('/login', function(req, res, next) {
           res.redirect('/login');
         }
       }else{
+        console.log(bytes)
         console.log("wrong password!");
         res.render('login',{
           msg : "아이디나 비밀번호가 일치하지 않습니다."

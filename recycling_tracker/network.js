@@ -295,17 +295,17 @@ module.exports = {
             createTicket.previousdes = previousdes;
             createTicket.transfer_date = transfer_date;
             createTicket.weight = weight;
-            if(giver_type == 'Emitter'){
+            if(giver_type == 'emitter'){
                 createTicket.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
             }
-            else if(giver_type == 'Handler'){
+            else if(giver_type == 'handler'){
                 createTicket.giver = factory.newRelationship(namespace, 'Handler', giver_id);
             }
 
-            if(reciever_type == 'Handler'){
+            if(reciever_type == 'handler'){
                 createTicket.reciever = factory.newRelationship(namespace, 'Handler', reciever_id);
             }
-            else if(reciever_type == 'Recycler'){
+            else if(reciever_type == 'recycler'){
                 createTicket.reciever = factory.newRelationship(namespace, 'Recycler', reciever_id);
             }
 
@@ -353,17 +353,17 @@ module.exports = {
             update_info.transfer_date = transfer_date;
             update_info.weight = weight;
 
-            if(giver_type == 'Emitter'){
+            if(giver_type == 'emitter'){
                 update_info.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
             }
-            else if(giver_type == 'Handler'){
+            else if(giver_type == 'handler'){
                 update_info.giver = factory.newRelationship(namespace, 'Handler', giver_id);
             }
 
-            if(reciever_type == 'Handler'){
+            if(reciever_type == 'handler'){
                 update_info.reciever = factory.newRelationship(namespace, 'Handler', reciever_id);
             }
-            else if(reciever_type == 'Recycler'){
+            else if(reciever_type == 'recycler'){
                 update_info.reciever = factory.newRelationship(namespace, 'Recycler', reciever_id);
             }
 
@@ -401,9 +401,10 @@ module.exports = {
             const deleteTicket = factory.newTransaction(namespace, 'DeleteTicket');
 
 
+            deleteTicket.ticket = factory.newRelationship(namespace, 'Ticket', ticket_id);
+
             //submit transaction
             await businessNetworkConnection.submitTransaction(deleteTicket);
-            deleteTicket.ticket = factory.newRelationship(namespace, 'Ticket', ticket_id);
 
             //disconnect
             await businessNetworkConnection.disconnect('admin@recycling_tracker');
@@ -472,10 +473,12 @@ module.exports = {
             //create transaction
             const update_asset = factory.newTransaction(namespace, 'UpdateCompanyAsset');
             update_asset.compasset = factory.newRelationship(namespace, 'Compasset', asset_id);
+            console.log(save_weight)
+            update_asset.gen_weight = gen_weight.toString();
+            update_asset.handle_weight = handle_weight.toString();
+            update_asset.save_weight = save_weight.toString();
 
-            update_asset.gen_weight = gen_weight;
-            update_asset.handle_weight = handle_weight;
-            update_asset.save_weight = save_weight;
+            console.log(update_asset.save_weight)
 
             console.log("1")
             //submit transaction
@@ -643,16 +646,16 @@ module.exports = {
             //query all tickets from the network
             console.log('user_id:',_user_id);
             var query_select = ' ';
-            if(type == 'Emitter'){
+            if(type == 'emitter'){
                 query_select = 'resource:'+namespace+'.Emitter#'+_user_id;
             }
-            else if (type == 'Conveyancer'){
+            else if (type == 'conveyancer'){
                 query_select = 'resource:'+namespace+'.Conveyancer#'+_user_id;
             }
-            else if (type == 'Handler'){
+            else if (type == 'handler'){
                 query_select = 'resource:'+namespace+'.Handler#'+_user_id;
             }
-            else if (type == 'Recycler'){
+            else if (type == 'recycler'){
                 query_select = 'resource:'+namespace+'.Recycler#'+_user_id;
             }
             //console.log(query_select)

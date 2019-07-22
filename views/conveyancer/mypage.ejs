@@ -140,8 +140,9 @@
                                                     처리자 : <%=mytickets[i].waste_handler%> <br>
                                                     처리방법 : <%=mytickets[i].method%> <br>
                                                     처리장소 : <%=mytickets[i].comp_loc%> <br>
-                                                    인계 일자 :<%=mytickets[i].transfer_date%> <br>
-                                                    인계자명 : <%=mytickets[i].user_name%> <br>
+                                                    인계 일자 : <input type="date" name="transfer_date" > <br>
+                                                    인계자 id : <%=mytickets[i].user_name%> <br>
+                                                    <input type="hidden" name="ticket_id" value="<%=mytickets[i].ticket_id%>">
                                                     <input type="hidden" name="waste_type" value="<%=mytickets[i].waste_type%>">
                                                     <input type="hidden" name="weight" value="<%=mytickets[i].weight%>">
                                                     <input type="hidden" name="conveyancer" value="<%=mytickets[i].conveyancer%>">
@@ -149,7 +150,6 @@
                                                     <input type="hidden" name="waste_handler" value="<%=mytickets[i].waste_handler%>">
                                                     <input type="hidden" name="method" value="<%=mytickets[i].method%>">
                                                     <input type="hidden" name="comp_loc" value="<%=mytickets[i].comp_loc%>">
-                                                    <input type="hidden" name="transfer_date" value="<%=d%>">
                                                     <input type="hidden" name="user_name" value="<%=mytickets[i].user_name%>">
                                                     <button class="btn gradient-bg" type="submit">완료하기</button>
                                                 </form>
@@ -257,8 +257,13 @@
     <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
     <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
     <script type='text/javascript' src='/style/js/custom.js'></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script>
+        var dateControl = document.querySelector('input[type="date"]');
         var d = new Date();
+        var n = d.toISOString();
+        var current_date=n.slice(0,10);
+        document.getElementsByName("transfer_date")[0].value = current_date
     </script>
 </body>
 

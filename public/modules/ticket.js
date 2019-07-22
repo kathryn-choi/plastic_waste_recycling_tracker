@@ -21,7 +21,7 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
           console.log("ticket history : ",temp)
           if(temp.length == 0 ) {
               cb(true,my_ticket);
-            }
+          }
           else{
           await Promise.all(temp.map(async (ticket) =>{
             //(asset_id,gen_weight, handle_weight, save_weight
@@ -72,6 +72,7 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
                                 waste_code : waste_code,
                                 currentdes: currentdes,
                                 previousdes:previousdes,
+                                transaction_type : transaction_type,
                                 transfer_date: transfer_date,
                                 weight: weight,
                                 timestamp: timestamp,

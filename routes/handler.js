@@ -320,42 +320,52 @@ router.post('/form', function(req, res, next) {
 });
 
 //search material info by name
-router.post('/search', function(req, res, next) {
+router.post('/search', function (req, res, next) {
   console.log("search!");
-  var material_type="%"+req.body.material_type+ "%";
-  var results=new Array();
+  var material_type = "%" + req.body.material_type + "%";
+  var results = new Array();
   console.log(material_type);
   var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
-  connection.query(sqlquery, material_type,function (err, rows) {
+  connection.query(sqlquery, material_type, function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');
     } else {
       console.log("found company");
-      results=rows;
+      results = rows;
       console.log(results);
-      res.render('handler/search_result',{result : results});
+      res.jsonp({ success: true, results: results });
+
     }
   });
 });
-
 //get handler's address by handler name
-function get_handler_address(company_name, cb){
+function get_handler_address(handler_id, cb) {
   var handler_addr = '';
-  var sqlquery = "SELECT company_addr FROM companies WHERE company_name = ?";
-  connection.query(sqlquery, company_name,function (err, row) {
+  var sqlquery = "SELECT companies_id FROM users WHERE user_id = ?";
+  connection.query(sqlquery, handler_id, function (err, row) {
     if (err) {
       console.log("no match");
       cb(false, null);
     } else {
-      console.log("found company addr");
-      console.log(row);
-      handler_addr=row[0].company_addr;
-      console.log(handler_addr)
-      cb(true,handler_addr);
+      companies_id = row[0].companies_id
+      var sqlquery = "SELECT company_addr FROM companies WHERE company_id = ?";
+      connection.query(sqlquery, companies_id, function (err, row) {
+        if (err) {
+          console.log("no match");
+          cb(false, null);
+        } else {
+          console.log("found company addr");
+          console.log(row);
+          handler_addr = row[0].company_addr;
+          console.log(handler_addr)
+          cb(true, handler_addr);
+        }
+      });
     }
   });
 }
+
 
 //전자 인계서 작성 페이지 불러오기
 router.get('/form', function(req, res, next) {
@@ -369,35 +379,18 @@ router.get('/form', function(req, res, next) {
   });
 });
 
-//search material info by name
-router.post('/search', function(req, res, next) {
-  console.log("search!");
-  var material_type=req.body.material_type;
-  var results=new Array();
-  console.log(material_type);
-  var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
-  connection.query(sqlquery, material_type,function (err, rows) {
-    if (err) {
-      console.log("no match");
-      res.redirect('back');
-    } else {
-      console.log("found company");
-      results=rows;
-      console.log(results);
-      res.render('emitter/search_result',{result : results});
-    }
-  });
-});
+
 
 
 //choose material from search result
-router.post('/search_result', function(req, res, next) {
-  var waste_code=req.body.waste_code;
-  var handler=req.body.handler;
-  var handle_method=req.body.handle_method;
-  var conveyancer=req.body.conveyancer;
-  var sqlquery = "SELECT carnum FROM users WHERE user_name = ?";
-  connection.query(sqlquery, conveyancer,function (err, row) {
+router.post('/search_result', function (req, res, next) {
+  var waste_code = req.body.waste_code;
+  var handler = req.body.handler;
+  var handle_method = req.body.handle_method;
+  var conveyancer = req.body.conveyancer;
+  console.log(conveyancer);
+  var sqlquery = "SELECT carnum FROM users WHERE user_id = ?";
+  connection.query(sqlquery, conveyancer, function (err, row) {
     if (err) {
       console.log("no match");
       cb(false, null);
@@ -405,30 +398,27 @@ router.post('/search_result', function(req, res, next) {
       console.log("get convey carnum success");
       var convey_carnum = row[0].carnum;
       console.log(row[0].carnum);
-      get_handler_address(handler, function(result, handler_addr){
-        if(result==true){
-          res.render('handler/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: handler_addr,
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
-        }else{
-          res.render('handler/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: '',
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
+      get_handler_address(handler, function (result, handler_addr) {
+        if (result == true) {
+          handler_addr = handler_addr
+        } else {
+          handler_addr = ''
         }
+       
+        results = {
+          waste_code: waste_code,
+          handler: handler,
+          handle_method: handle_method,
+          handle_address: handler_addr,
+          conveyancer: conveyancer,
+          carnum: convey_carnum
+        }
+        console.log(results)
+        res.jsonp({ success: true, results: results });
       })
     }
   });
-  
+
 });
 
 //change ticket info
@@ -460,6 +450,7 @@ router.post('/change_ticketinfo', function(req, res, next) {
 //complete ticket info
 router.post('/complete_ticket', function(req, res, next) {
   var ticket_id =req.body.ticket_id;
+  console.log(ticket_id)
  //delete_ticket(ticket_id) 
   network.delete_ticket(ticket_id).then((response) => { 
     //return error if error in response
