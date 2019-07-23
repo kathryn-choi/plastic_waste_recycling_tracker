@@ -79,6 +79,9 @@ exports.get_compasset_history_by_company_id = function (company_id, cb) {
               my_compassets.push(compasset)
               count++;
               if (count == compassets.length) {
+                my_compassets.sort(function(a, b) { 
+                  return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
+                });
                 console.log("my compassets : ", my_compassets);
                 cb(true, my_compassets);
               }

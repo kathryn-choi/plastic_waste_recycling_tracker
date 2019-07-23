@@ -84,6 +84,9 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
                               my_ticket.push(compticket)
                               count++;
                               if(count == temp.length){
+                                my_ticket.sort(function(a, b) { 
+                                  return a.timestamp > b.timestamp ? -1 : a.timestamp < b.timestamp ? 1 : 0;
+                                });
                                 console.log("my_ticket : ",my_ticket);
                                 cb(true,my_ticket);
                               }
