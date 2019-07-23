@@ -241,82 +241,61 @@ router.get('/form', function(req, res, next) {
 
 //전자 인계서 저장하기
 router.post('/form', function(req, res, next) {
+  console.log("FORM!");
+  var ticket_id= req.body.ticket_id;
+  var previousdes=req.body.previousdes;
   var waste_code=req.body.waste_code;
   var weight=req.body.weight;
   var conveyancer=req.body.conveyancer;
   var conveyancer_car_num=req.body.conveyancer_car_num;
-  var handler=req.body.handler;
+  var reciever_id=req.body.handler;
   var handle_address=req.body.handle_address;
   var transfer_date=req.body.transfer_date;
-  var emitter_name=req.body.emitter_name;
-  var user_id = req.session.user_id
-  var ticket_id = user_id + "." + waste_code + "." + transfer_date
-
-  var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
-  connection.query(sqlquery, conveyancer,function (err, rows) {
-    if (err) {
-      console.log("no match");
+  var giver_id = req.body.emitter_name;
+  var giver_type="handler";
+  get_usertype_by_id(reciever_id, function(result, reciever_type){
+    if(result==true){
+      console.log(ticket_id);
+      console.log(handle_address);
+      console.log(previousdes);
+      console.log(weight);
+      console.log(giver_id);
+      console.log(giver_type);
+      console.log(reciever_id);
+      console.log(reciever_type);
+      console.log(conveyancer);
+    //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
+   network.change_ticket_info(ticket_id,handle_address,previousdes, transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyancer).then((response) => { 
+    //return error if error in response
+    if (response.error != null) {
+      console.log("network change ticket info failed");
+      res.jsonp({success : false, redirect_url : "/handler"})
     } else {
-      console.log("found user_id");
-      var con_id = rows[0].user_id
-      var sqlquery2 = "SELECT * FROM users WHERE user_id = ?"
-      connection.query(sqlquery2, user_id,function (err, rows) {
-        if (err) {
-          console.log("no match");
-        } else {
-          console.log("found company_id");
-          var company_id = rows[0].companies_id
-          var sqlquery3= "SELECT * FROM companies WHERE company_id = ?"
-          connection.query(sqlquery3, company_id,function (err, rows) {
-            if (err) {
-              console.log("no match");
-            } else {
-              console.log("found company_loc");
-              var company_loc = rows[0].company_addr
-              var sqlquery4= "SELECT * FROM users WHERE user_name = ? and user_type='recycler'"
-              connection.query(sqlquery4, handler,function (err, rows) {
-                if (err) {
-                  console.log("no match");
-                } else {
-                  console.log("found handler_id");
-                  var hanlder_id = rows[0].user_id
-                  console.log(hanlder_id)
-                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Recycler",hanlder_id,"Recycler",con_id).then((response) => { 
-                    //return error if error in response
-                    if (response.error != null) {
-                      console.log("create ticket failed");
-                      res.jsonp({success : false, redirect_url : "/recycler"})
-                    } else {
-                      console.log("create ticket succeed");
-                      res.jsonp({success : true, redirect_url : "/recycler"})
-                    }
-                    });    
-                }
-              });
-            }
-          });
-        }
-      });
+      console.log("network change ticket info succeed");
+      res.jsonp({success : true, redirect_url : "/handler"})
     }
   });
+    }
+  })
 });
 
 //search material info by name
 router.post('/search', function(req, res, next) {
   console.log("search!");
-  var material_type="%" +req.body.material_type+ "%";
-  var results=new Array();
+  var material_type = "%" + req.body.material_type + "%";
+  var results = new Array();
   console.log(material_type);
   var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
-  connection.query(sqlquery, material_type,function (err, rows) {
+  connection.query(sqlquery, material_type, function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');
     } else {
       console.log("found company");
-      results=rows;
+      results = rows;
       console.log(results);
-      res.render('recycler/search_result',{result : results});
+      res.jsonp({ success: true, results: results });
+
     }
   });
 });
@@ -340,12 +319,13 @@ function get_handler_address(company_name, cb){
 
 //choose material from search result
 router.post('/search_result', function(req, res, next) {
-  var waste_code=req.body.waste_code;
-  var handler=req.body.handler;
-  var handle_method=req.body.handle_method;
-  var conveyancer=req.body.conveyancer;
-  var sqlquery = "SELECT carnum FROM users WHERE user_name = ?";
-  connection.query(sqlquery, conveyancer,function (err, row) {
+  var waste_code = req.body.waste_code;
+  var handler = req.body.handler;
+  var handle_method = req.body.handle_method;
+  var conveyancer = req.body.conveyancer;
+  
+  var sqlquery = "SELECT carnum FROM users WHERE user_id = ?";
+  connection.query(sqlquery, conveyancer, function (err, row) {
     if (err) {
       console.log("no match");
       cb(false, null);
@@ -353,30 +333,24 @@ router.post('/search_result', function(req, res, next) {
       console.log("get convey carnum success");
       var convey_carnum = row[0].carnum;
       console.log(row[0].carnum);
-      get_handler_address(handler, function(result, handler_addr){
-        if(result==true){
-          res.render('recycler/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: handler_addr,
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
-        }else{
-          res.render('recycler/electronic_form',{
-            waste_code: waste_code,
-            handler:handler,
-            handle_method: handle_method,
-            handle_address: '',
-            conveyancer: conveyancer,
-            carnum : convey_carnum
-          });
+      get_handler_address(handler, function (result, handler_addr) {
+        var handler_addr='';
+        if (result == true) {
+          handler_addr = handler_addr
+        } 
+        results = {
+          waste_code: waste_code,
+          handler: handler,
+          handle_method: handle_method,
+          handle_address: handler_addr,
+          conveyancer: conveyancer,
+          carnum: convey_carnum
         }
+        console.log(results)
+        res.jsonp({ success: true, results: results });
       })
     }
   });
-  
 });
 
 //change ticket info
@@ -419,5 +393,32 @@ router.post('/complete_ticket', function(req, res, next) {
     }
   });
 });
+//get usertype by userid
+function get_usertype_by_id(user_id, cb) {
+  var sqlquery = "SELECT user_type FROM users WHERE user_id = ?";
+  connection.query(sqlquery, user_id, function (err, row) {
+    if (err) {
+      console.log("no match");
+      cb(false, null);
+    } else {
+      var user_type = row[0].user_type;
+      console.log("type : " ,user_type);
+      cb(true, user_type);
+    }
+  });
+}
 
+//전자 인계서 수정 페이지 불러오기
+router.post('/eform', function(req, res, next) {
+  res.render('recycler/electronic_form',{
+    ticket_id: req.body.ticket_id,
+    previousdes: req.body.previousdes,
+    waste_code: '',
+    handler:'',
+    handle_method: '',
+    handle_address: '',
+    conveyancer: '',
+    conveyancer_car_num: '',
+  });
+});
 module.exports = router;

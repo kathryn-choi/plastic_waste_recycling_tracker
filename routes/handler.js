@@ -284,67 +284,6 @@ router.post('/form', function(req, res, next) {
   });
     }
   })
-   
-  /*var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
-  connection.query(sqlquery, conveyancer,function (err, rows) {
-    if (err) {
-      console.log("no match");
-    } else {
-      console.log("found user_id");
-      var con_id = rows[0].user_id
-      var sqlquery2 = "SELECT * FROM users WHERE user_id = ?"
-      connection.query(sqlquery2, user_id,function (err, rows) {
-        if (err) {
-          console.log("no match");
-        } else {
-          console.log("found company_id");
-          var company_id = rows[0].companies_id
-          var sqlquery3= "SELECT * FROM companies WHERE company_id = ?"
-          connection.query(sqlquery3, company_id,function (err, rows) {
-            if (err) {
-              console.log("no match");
-            } else {
-              console.log("found company_loc");
-              var company_loc = rows[0].company_addr
-              var sqlquery4= "SELECT * FROM users WHERE user_name = ? and (user_type = 'handler' or user_type='recycler')"
-              connection.query(sqlquery4, handler,function (err, rows) {
-                if (err) {
-                  console.log("no match");
-                } else {
-                  console.log("found handler_id");
-                  var hanlder_id = rows[0].user_id
-                  console.log(hanlder_id)
-                  if(rows[0].user_type=="handler"){
-                    network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Handler",con_id).then((response) => { 
-                      //return error if error in response
-                      if (response.error != null) {
-                        console.log("create ticket failed");
-                        res.jsonp({success : false, redirect_url : "/handler"})
-                      } else {
-                        console.log("create ticket succeed");
-                        res.jsonp({success : true, redirect_url : "/handler"})
-                      }
-                      });    
-                  }else{
-                  network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Handler",hanlder_id,"Recycler",con_id).then((response) => { 
-                    //return error if error in response
-                    if (response.error != null) {
-                      console.log("create ticket failed");
-                      res.jsonp({success : false, redirect_url : "/handler"})
-                    } else {
-                      console.log("create ticket succeed");
-                      res.jsonp({success : true, redirect_url : "/handler"})
-                    }
-                    });    
-                  }
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-  });*/
 });
 
 //search material info by name
@@ -475,7 +414,6 @@ router.post('/search_result', function (req, res, next) {
       })
     }
   });
-
 });
 
 //change ticket info
