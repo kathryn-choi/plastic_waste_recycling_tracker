@@ -3,6 +3,8 @@ var request = require('request');
 var router = express.Router();
 var network = require('../recycling_tracker/network.js');
 
+var completed_ticket = []
+
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb){
   var mycompany = new Array();
@@ -70,50 +72,62 @@ function get_my_received_ticket(user_id, cb){
           var weight = file.weight
           var sqlquery = 'select user_name from users where user_id = ?'
           var selectt = file
-          connection.query(sqlquery, user_id,function (err, rows) {
-            var user_name  =  rows[0].user_name
-            console.log(user_name)
-            var sqlquery2 = 'select * from wastes where waste_code = ?'
-            connection.query(sqlquery2, waste_code,function (err, rows1) {
-              var waste_type = rows1[0].waste_type
-              var waste_handler = rows1[0].waste_handler
-              var method = rows1[0].waste_handle_method
-              var eform_type = rows1[0].eform_type
-              var conveyancer = rows1[0].waste_conveyancer
-              var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
-              connection.query(sqlquery3, (selectt.conveyancer).split('#')[1],function (err, rows2) {
-                var carnum = rows2[0].carnum
-                var sqlquery4 = "select companies_id from users where user_id = ?"
-                connection.query(sqlquery4, selectt.reciever.split('#')[1],function (err, rows3) {
-                  var comp_id = rows3[0].companies_id
-                  var sqlquery4 = "select company_addr from companies where company_id = ?"
-                  connection.query(sqlquery4, comp_id,function (err, rows4) {
-                    var comp_loc = rows4[0].company_addr
-                    var ticket = {
-                      ticket_id: selectt.ticket_id,
-                      waste_type : waste_type,
-                      weight : weight,
-                      conveyancer : conveyancer,
-                      carnum : carnum,
-                      waste_handler : waste_handler,
-                      method : method,
-                      comp_loc : comp_loc,
-                      transfer_date : transfer_date,
-                      user_name : user_id,
-                      eform_type : eform_type
-                    }
-                    console.log("t : ",ticket);
-                    my_tickets.push(ticket)
-                    count++;
-                    if(count == tickets.length){
-                      console.log("my tickets : ",my_tickets);
-                      cb(true,my_tickets);
-                    }
+          console.log(selectt.ticket_id)
+          console.log(completed_ticket)
+          if(completed_ticket.indexOf(selectt.ticket_id) == -1 || completed_ticket.length == 0)
+          {
+            connection.query(sqlquery, user_id,function (err, rows) {
+              var user_name  =  rows[0].user_name
+              console.log(user_name)
+              var sqlquery2 = 'select * from wastes where waste_code = ?'
+              connection.query(sqlquery2, waste_code,function (err, rows1) {
+                var waste_type = rows1[0].waste_type
+                var waste_handler = rows1[0].waste_handler
+                var method = rows1[0].waste_handle_method
+                var eform_type = rows1[0].eform_type
+                var conveyancer = rows1[0].waste_conveyancer
+                var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
+                connection.query(sqlquery3, (selectt.conveyancer).split('#')[1],function (err, rows2) {
+                  var carnum = rows2[0].carnum
+                  var sqlquery4 = "select companies_id from users where user_id = ?"
+                  connection.query(sqlquery4, selectt.reciever.split('#')[1],function (err, rows3) {
+                    var comp_id = rows3[0].companies_id
+                    var sqlquery4 = "select company_addr from companies where company_id = ?"
+                    connection.query(sqlquery4, comp_id,function (err, rows4) {
+                      var comp_loc = rows4[0].company_addr
+                      var ticket = {
+                        ticket_id: selectt.ticket_id,
+                        waste_type : waste_type,
+                        weight : weight,
+                        conveyancer : conveyancer,
+                        carnum : carnum,
+                        waste_handler : waste_handler,
+                        method : method,
+                        comp_loc : comp_loc,
+                        transfer_date : transfer_date,
+                        user_name : user_id,
+                        eform_type : eform_type
+                      }
+                      console.log("t : ",ticket);
+                      my_tickets.push(ticket)
+                      count++;
+                      if(count == tickets.length){
+                        console.log("my tickets : ",my_tickets);
+                        cb(true,my_tickets);
+                      }
+                    })
                   })
                 })
               })
-            })
-          })
+              })
+            }
+            else{
+              count++;
+              if(count == tickets.length){
+                console.log("my tickets : ",my_tickets);
+                cb(true,my_tickets);
+              }
+            }
         }))
       }
       else{
@@ -174,6 +188,7 @@ router.post('/complete_ticket', function(req, res, next) {
           console.log("network change ticket info failed");
           res.redirect('/conveyancer');
         } else {
+          completed_ticket.push(ticket_id)
           console.log("network change ticket info succeed");
           res.redirect('/conveyancer'); 
         }
