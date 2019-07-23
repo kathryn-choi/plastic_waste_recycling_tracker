@@ -334,6 +334,7 @@ module.exports = {
     change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
         try {
             console.log("NETWORK CHANGE TICKET INFO");
+            console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id);
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
             await businessNetworkConnection.connect('admin@recycling_tracker');
@@ -368,7 +369,7 @@ module.exports = {
             }
 
             update_info.conveyancer = factory.newRelationship(namespace, 'Conveyancer', conveyer_id);
-
+            console.log(update_info.reciever);
             console.log("before trans")
             //submit transaction
             await businessNetworkConnection.submitTransaction(update_info);

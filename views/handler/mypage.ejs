@@ -26,6 +26,68 @@
 </head>
 
 <body class="single-page causes-page">
+        <style>
+                /* The Modal (background) */
+                .modal {
+                    display: none;
+                    /* Hidden by default */
+                    position: fixed;
+                    /* Stay in place */
+                    z-index: 1;
+                    /* Sit on top */
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    /* Full width */
+                    height: 100%;
+                    /* Full height */
+                    overflow: auto;
+                    /* Enable scroll if needed */
+                    background-color: rgb(0, 0, 0);
+                    /* Fallback color */
+                    background-color: rgba(0, 0, 0, 0.4);
+                    /* Black w/ opacity */
+                }
+        
+                /* Modal Content/Box */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 15% auto;
+                    /* 15% from the top and centered */
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 50%;
+                    /* Could be more or less, depending on screen size */
+                }
+        
+                /* The Close Button */
+                .close {
+                    color: #aaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+        
+                .close:hover,
+                .close:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                select 
+                { 
+                    width: 80px; /* 원하는 너비설정 */ 
+                    padding: .4em .4em; /* 여백으로 높이 설정 */ 
+                    font-family: inherit; /* 폰트 상속 */ 
+                    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
+                    border: 1px solid #999; 
+                    border-radius: 0px; /* iOS 둥근모서리 제거 */ 
+                    -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+                    -moz-appearance: none; 
+                    appearance: none; 
+                }
+        
+            </style>
         <header class="site-header">
             <div class="nav-bar">
                 <div class="container">
@@ -227,35 +289,23 @@
     
                                             <div class="entry-content">
                                                 <p class="m-0">
-                                                    <form action="/handler/change_ticketinfo" method="post">
-                                                        <input type="hidden" name="ticket_id"
-                                                            value="<%=rtickets[i].ticket_id%>">
+                    <!--<form action="/handler/change_ticketinfo" method="post">-->
+                                                        
                                                         폐기물 : <%=rtickets[i].waste_type%> <br>
-                                                        <input type="hidden" name="waste_type"
-                                                            value="<%=rtickets[i].waste_type%>">
-                                                        위탁량 : <input type="text" name="weight"
-                                                            value="<%=rtickets[i].weight%>"> <br>
+                                                        위탁량 :<%=rtickets[i].weight%>"> <br>
                                                         운반자 : <%=rtickets[i].conveyancer%> <br>
-                                                        <input type="hidden" name="conveyancer"
-                                                            value="<%=rtickets[i].conveyancer%>">
                                                         차량 번호 : <%=rtickets[i].carnum%> <br>
-                                                        <input type="hidden" name="carnum" value="<%=rtickets[i].carnum%>">
                                                         처리자 : <%=rtickets[i].waste_handler%> <br>
-                                                        <input type="hidden" name="waste_handler"
-                                                            value="<%=rtickets[i].waste_handler%>">
                                                         처리방법 : <%=rtickets[i].method%> <br>
-                                                        <input type="hidden" name="method" value="<%=rtickets[i].method%>">
-                                                        처리장소 : <%=rtickets[i].comp_loc%> <br>
-                                                        <input type="hidden" name="comp_loc"
-                                                            value="<%=rtickets[i].comp_loc%>">
-                                                        인계 일자 : <input type="text" name="transfer_date"
-                                                            value="<%=rtickets[i].transfer_date%>"><br>
-                                                        인계자명 : <%=rtickets[i].user_name%> <br>
-                                                        <input type="hidden" name="user_name"
-                                                            value="<%=rtickets[i].user_name%>">
+                                                       처리장소 : <%=rtickets[i].comp_loc%> <br>
+                                                        인계 일자 : <%=rtickets[i].transfer_date%><br>
+                                                        인계자명 : <%=rtickets[i].user_name%>
                                                             <br>
-                                                        <button class="btn gradient-bg" type="submit">수정하기</button>
-                                                    </form>
+                                                            <form action="/handler/eform" method="post">
+                                                                <input type="hidden" name="ticket_id" value="<%=rtickets[i].ticket_id%>" >
+                                                                <input type="hidden" name="previousdes" value="<%=rtickets[i].comp_loc%>" >
+                                                                <button class="btn gradient-bg" type="submit">인계하기</button>
+                                                            </form>
                                                     <form action="/handler/complete_ticket" method="post">
                                                         <input type="hidden" name="ticket_id" value="<%=rtickets[i].ticket_id%>">
                                                         <button type="submit" class="btn gradient-bg">완료하기</button>

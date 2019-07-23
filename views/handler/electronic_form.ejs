@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>전자 인계서</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="/style/css/bootstrap.min.css">
-    
-        <!-- FontAwesome CSS -->
-        <link rel="stylesheet" href="/style/css/font-awesome.min.css">
-    
-        <!-- ElegantFonts CSS -->
-        <link rel="stylesheet" href="/style/css/elegant-fonts.css">
-    
-        <!-- themify-icons CSS -->
-        <link rel="stylesheet" href="/style/css/themify-icons.css">
-    
-        <!-- Swiper CSS -->
-        <link rel="stylesheet" href="/style/css/swiper.min.css">
-    
-        <!-- Styles -->
-        <link rel="stylesheet" href="/style/style.css">
+    <title>인계서 수정하기</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 <body class="single-page contact-page">
         <style>
@@ -122,7 +122,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1>전자 인계서 작성하기</h1>
+                        <h1>전자 인계서 수정하기</h1>
                     </div><!-- .col -->
                 </div><!-- .row -->
             </div><!-- .container -->
@@ -140,6 +140,8 @@
                     </div>
                     <div class="col-12 col-lg-7">
                         <br> <br>
+                        <input type="hidden" name="ticket_id" id="ticket_id" value="<%=ticket_id%>">
+                        <input type="hidden" name="previousdes" id="previousdes" value="<%=previousdes%>">
                             <label>*1.폐기물 종류 : </label>
                                 <!--search button pop up 해서 폐기물종류 조회하기-->
                                 <!-- Trigger/Open The Modal -->
@@ -148,17 +150,17 @@
                             <div id="myModal" class="modal">
                                 <!-- Modal content -->
                                 <div class="modal-content">
-                                    
                                     <div>
                                     <span class="close">&times;</span>
-                                        폐기물:
+                                       폐기물:
                                         <input type="text" name="material_type">
                                         <button type="submit" onclick="get_search_result()">조회</button>
                                     </div>
                                     <div class = "search_result"></div>
                                 </div>
                             </div>
-                            <input type="number" id="waste_code"> <br>
+
+                            <input type="number" name="waste_code" id="waste_code"> <br>
                             <label>2. 위탁량</label>  <br>
                             <td><input type="number" id="weight">
                             <select id="unit">
@@ -183,14 +185,12 @@
                             <br>
                             <label>*4.인계일자</label>  <br>
                             <!--달력-->
-                            <input id="date" type="date" id="transfer_date">
+                            <input type="date" id="transfer_date">
                             <br>
                             <label>*5.인계자 id</label>  <br>
                             <input type="text" id="emitter_name">
-                            <br><br> <br>
+                            <br> <br>
                             <input  type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
-                        
-                        
                   </div>
                         </div>
                     </div><!-- .row -->
@@ -276,10 +276,6 @@
                 <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
                 <script type='text/javascript' src='/style/js/custom.js'></script>
                 <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
-
-<!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
@@ -378,12 +374,14 @@
         $('#conveyancer_car_num').val(carnum);
         modal.style.display = "none";
     }
-
+    
     function save(){
         $.ajax({
             url:"/handler/form",
             method: "POST",
             data : {
+                ticket_id : document.getElementById("ticket_id").value,
+                previousdes: document.getElementById("previousdes").value,
                 waste_code : document.getElementById("waste_code").value,
                 weight : document.getElementById("weight").value + document.getElementById("unit").value ,
                 conveyancer : document.getElementById("conveyancer").value,
@@ -395,11 +393,21 @@
                 emitter_name : document.getElementById("emitter_name").value
             },
             success : function (data) {
-                if(data.success == true){
-                    window.location.href = data.redirect_url;
-                }}
+                window.location.href = data.redirect_url;
+            }
         });
     }
+
+
+    function fill_form(waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
+        var modal = document.getElementById('myModal');
+        $('#waste_code').val(waste_code);
+        $('#handler').val(waste_handler);
+        $('#handle_method').val(waste_handle_method);
+        $('#conveyancer').val(waste_conveyancer);
+        modal.style.display = "none";
+    }
+
 
     var dateControl = document.querySelector('input[type="date"]');
     var d = new Date();
@@ -408,5 +416,5 @@
     dateControl.value = current_date;
 
 </script>
-</body>
+            </body>
 </html>

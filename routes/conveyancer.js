@@ -161,11 +161,12 @@ router.post('/complete_ticket', function(req, res, next) {
     var giver_type =rows[0].user_type;
     var sqlquery2 = "select * from companies where company_id = ?"
     connection.query(sqlquery2, rows[0].companies_id,function (err, rows2) {
-      var previousdes = rows2[0].company_addr
+     // var previousdes = rows2[0].company_addr
       connection.query(sqlquery, reciever_id,function (err, rows3) {
       //receiver_type 찾기
       var reciever_type =rows3[0].user_type;
       var currentdes = req.body.comp_loc
+      var previousdes=currentdes;
       console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
       //(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) 
       network.change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id).then((response) => { 
