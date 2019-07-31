@@ -154,9 +154,11 @@ router.post('/login', function(req, res, next) {
   connection.query(sqlquery, user_id,function (err, row) {
     if (err) {
       console.log("no match");
-      res.redirect('back');
+      res.redirect('/');
     } else {
       console.log(row);
+      console.log(row.length);
+      if(row.length!=0){
       var bytes =cryptoM.decrypt(row[0].user_pw);
       if(bytes===user_pw) {
         console.log("user login successfully");
@@ -184,6 +186,11 @@ router.post('/login', function(req, res, next) {
         res.render('login',{
           msg : "아이디나 비밀번호가 일치하지 않습니다."
         });
+      }
+    }else{// no matching id
+      res.render('login',{
+        msg : "아이디가 일치하지 않습니다."
+      });
       }
     }
   });
