@@ -279,7 +279,7 @@ module.exports = {
 
     },
 
-    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
+    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count) {
         try {
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
@@ -294,6 +294,8 @@ module.exports = {
             createTicket.currentdes = currentdes;
             createTicket.previousdes = previousdes;
             createTicket.transfer_date = transfer_date;
+            createTicket.cur_convey_count = cur_convey_count;
+            createTicket.pre_convey_count = pre_convey_count;
             createTicket.weight = weight;
             if(giver_type == 'emitter'){
                 createTicket.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
@@ -328,7 +330,6 @@ module.exports = {
 
             return false;
         }
-
     },
 
     change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
@@ -421,6 +422,43 @@ module.exports = {
         }
 
     },
+    change_convey_count: async function (ticket_id,cur_convey_count, pre_convey_count) {
+        try {
+            console.log("NETWORK UPDATE CONVEY COUNT");
+            console.log(cur_convey_count, pre_convey_count);
+            //connect to network with user_id
+            var businessNetworkConnection = new BusinessNetworkConnection();
+            await businessNetworkConnection.connect('admin@recycling_tracker');
+
+            //get the factory for the business network.
+            var factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+
+            //create transaction
+            const update_info = factory.newTransaction(namespace, 'ChangeTicketInfo');
+            update_info.ticket = factory.newRelationship(namespace, 'Ticket', ticket_id);
+            console.log(update_info.ticket)
+            update_info.cur_convey_count = cur_convey_count;
+            update_info.pre_convey_count = pre_convey_count;
+            
+            console.log(update_info.cur_pre_convey_count);
+            console.log("before trans")
+            //submit transaction
+            await businessNetworkConnection.submitTransaction(update_info);
+            console.log("complete trans")
+            //disconnect
+            await businessNetworkConnection.disconnect('admin@recycling_tracker');
+
+            return true;
+        }
+        catch(err) {
+            //print and return error
+            console.log(err);
+            var error = {};
+            error.error = err.message;
+            return error;
+        }
+    },
+
     create_compasset: async function (asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) {
         try {
             //connect to network with user_id
