@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
 --
--- Host: localhost    Database: recycling
+-- Host: 127.0.0.1    Database: recycling
 -- ------------------------------------------------------
--- Server version	5.7.26-0ubuntu0.16.04.1
+-- Server version	5.7.27-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `alarms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `alarms` (
-  `alarms_index` int(11) NOT NULL,
+  `alarms_index` int(11) NOT NULL AUTO_INCREMENT,
   `ticket_id` varchar(100) DEFAULT NULL,
   `is_complete` tinyint(4) DEFAULT '0',
   `last_date` datetime DEFAULT NULL,
   PRIMARY KEY (`alarms_index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `alarms` (
 
 LOCK TABLES `alarms` WRITE;
 /*!40000 ALTER TABLE `alarms` DISABLE KEYS */;
+INSERT INTO `alarms` VALUES (1,NULL,0,NULL);
 /*!40000 ALTER TABLE `alarms` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-22 22:17:12
+-- Dump completed on 2019-08-01  1:35:32

@@ -118,9 +118,9 @@ function get_user_ticketinfo(user_id, cb) {
         var waste_index = temp[1]
         var transfer_date = file.transfer_date
         var weight = file.weight
-        var cur_convey_count=file.cur_convey_count
-        var pre_convey_count=file.pre_convey_count
-        console.log("CONVEY COUNT : ",cur_convey_count, pre_convey_count);
+        var cur_convey_count = file.cur_convey_count
+        var pre_convey_count = file.pre_convey_count
+        console.log("CONVEY COUNT : ", cur_convey_count, pre_convey_count);
         var sqlquery = 'select user_name from users where user_id = ?'
         var selectt = file
         connection.query(sqlquery, user_id, function (err, rows) {
@@ -145,7 +145,7 @@ function get_user_ticketinfo(user_id, cb) {
                   var comp_loc = rows4[0].company_addr
                   var ticket = {
                     ticket_id: selectt.ticket_id,
-                    waste_code : waste_code,
+                    waste_code: waste_code,
                     waste_type: waste_type,
                     weight: weight,
                     conveyancer: conveyancer,
@@ -208,7 +208,7 @@ router.get('/form', function (req, res, next) {
     handle_address: '',
     conveyancer: '',
     conveyancer_car_num: '',
-    user_id : req.session.user_id
+    user_id: req.session.user_id
   });
 });
 
@@ -226,14 +226,26 @@ router.post('/form', function (req, res, next) {
   var ticket_id = user_id + "." + waste_code + "." + transfer_date
   get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
     if (result == true) {
-      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0" , "0").then((response) => {
+      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0", "0").then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network create ticket info failed");
           res.jsonp({ redirect_url: "/emitter" })
         } else {
           console.log("network create ticket info succeed");
-          res.jsonp({ redirect_url: "/emitter" })
+          //insert into alarms db
+          var sql2 = "INSERT INTO alarms(ticket_id, is_complete, last_date) VALUES (?,?,?)";
+          var today = new Date();
+          connection.query(sql2, [ticket_id, false,today], function (err) {
+            if (err) {
+              console.log("inserting alarm failed");
+              res.jsonp({ redirect_url: "/emitter" })
+              throw err;
+            } else {
+              console.log("alarm inserted successfully");
+              res.jsonp({ redirect_url: "/emitter" })
+            }
+          });
         }
       })
     }
@@ -313,7 +325,7 @@ router.post('/search_result', function (req, res, next) {
         } else {
           handler_addr = ''
         }
-       
+
         results = {
           waste_code: waste_code,
           handler: handler,
@@ -346,7 +358,6 @@ router.post('/change_ticketinfo', function (req, res, next) {
   var user_name = req.body.user_name;
   var user_id = req.session.user_id
   get_ticket_info(user_id, conveyancer, waste_handler, function (result, con_id, hanlder_id, company_loc) {
-
     if (result == true) {
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
       network.change_ticket_info(ticket_id, company_loc, "", transfer_date, weight, user_id, "emitter", hanlder_id, "handler", con_id).then((response) => {

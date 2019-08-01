@@ -417,7 +417,19 @@ router.post('/complete_ticket', function (req, res, next) {
       res.redirect('/recycler');
     } else {
       console.log("network delete ticket info succeed");
-      res.redirect('/recycler');
+      // update alarms db
+      var sql2 = "UPDATE alarms SET is_complete = ?,last_date=? WHERE ticket_id=? ";
+      var today = new Date();
+      connection.query(sql2, [true, today, ticket_id], function (err) {
+        if (err) {
+          console.log("updating alarm failed");
+          res.redirect('/recycler');
+          throw err;
+        } else {
+          console.log("alarm updated successfully");
+          res.redirect('/recycler');
+        }
+      });
     }
   });
 });

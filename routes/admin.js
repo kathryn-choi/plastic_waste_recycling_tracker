@@ -33,7 +33,7 @@ function get_user_company_info(company_id, cb){
       console.log("no match");
      cb(false, null);
     } else {
-      console.log("user login successfully");
+      console.log("company search successfully");
       mycompany=rows;
       cb(true,mycompany);
     }
@@ -44,16 +44,30 @@ router.get('/', function(req, res, next) {
   var user_id=req.session.user_id;
   get_user_info(user_id, function(result, myinfo, mycompany) {
     if(result==true){
+      get_alarms(function(result, alarms){
+        if(result==true){
+        res.render('admin/mypage',{
+          myinfo: myinfo,
+          mycompany: mycompany,
+          user_type: 'admin',
+          alarms : alarms,
+        });
+      }else{
+        res.render('admin/mypage',{
+          myinfo: myinfo,
+          mycompany: mycompany,
+          user_type: 'admin',
+          alarms : [],
+        });
+      }
+      })
+    
+    }else{
       res.render('admin/mypage',{
         myinfo: myinfo,
         mycompany: mycompany,
-        user_type: 'admin'
-      });
-    }else{
-      res.render('admin/mypage',{
-        myinfo: [],
-        mycompany: [],
-        user_type: 'admin'
+        user_type: 'admin',
+        alarms : [],
       });
     }
   })
@@ -121,5 +135,40 @@ router.post('/history', function(req, res, next) {
     }
   })
 });
+
+//get user's alarms
+function get_alarms(cb){
+  var alarms = new Array();
+  var today=new Date();
+  console.log("today : ", today);
+  var sqlquery = "SELECT  * FROM alarms WHERE is_complete=?";
+  connection.query(sqlquery, [false],function (err, rows) {
+    if (err) {
+      console.log("no match");
+     cb(false, []);
+    } else {
+      console.log("got alarms");
+      count=0;
+      for (var i=0; i<rows.length; i++){
+        var last_date=rows[i].last_date;
+        console.log("last_date", last_date);
+        var daydif = today- last_date
+     
+        if(daydif>30){
+          var ticket_id=rows[i].ticket_id;
+          var alarm={
+            ticket_id : ticket_id,
+            last_date : last_date,
+          }
+          alarms.push(alarm);
+        }
+        count ++;
+        if(count==rows.length){
+          cb(true,alarms);
+        }
+      }
+    }
+  });
+}
 
 module.exports = router;
