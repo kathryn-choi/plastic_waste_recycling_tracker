@@ -81,15 +81,16 @@ router.post('/complete_ticket', function (req, res, next) {
   var giver_id = req.body.user_name;
   var reciever_id = req.body.waste_handler;
   var conveyer_id = req.body.conveyancer;
+  var pre_convey_count = req.body.pre_convey_count;
   var c_convey_count = req.body.cur_convey_count;
+  // increase current convey count +1
   var increased_count = parseInt(c_convey_count)
   increased_count=increased_count+1
   console.log("i : ", increased_count);
-  // increase current convey count +1
   var cur_convey_count = (increased_count).toString();
   console.log("ccc", cur_convey_count);
   console.log(typeof (cur_convey_count));
-  var pre_convey_count = req.body.pre_convey_count;
+
   var sqlquery = "select * from users where user_id = ?"
   connection.query(sqlquery, giver_id, function (err, rows) {
     //giver_name 으로 giver_id, giver_type 찾기
@@ -214,7 +215,5 @@ function get_my_received_ticket(user_id, cb) {
   })
 }
 
-
 module.exports = router;
-
 
