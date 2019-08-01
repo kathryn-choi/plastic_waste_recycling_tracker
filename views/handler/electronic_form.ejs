@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>인계서 수정하기</title>
+    <title>인계하기</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -122,7 +122,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h1>전자 인계서 수정하기</h1>
+                        <h1>인계하기</h1>
                     </div><!-- .col -->
                 </div><!-- .row -->
             </div><!-- .container -->
@@ -142,6 +142,9 @@
                         <br> <br>
                         <input type="hidden" name="ticket_id" id="ticket_id" value="<%=ticket_id%>">
                         <input type="hidden" name="previousdes" id="previousdes" value="<%=previousdes%>">
+                        <input type="hidden" name="cur_convey_count" id="cur_convey_count" value="<%=cur_convey_count%>">
+                        <input type="hidden" name="pre_convey_count" id="pre_convey_count" value="<%=pre_convey_count%>">
+                       
                             <label>*1.폐기물 종류 : </label>
                                 <!--search button pop up 해서 폐기물종류 조회하기-->
                                 <!-- Trigger/Open The Modal -->
@@ -188,7 +191,7 @@
                             <input type="date" id="transfer_date">
                             <br>
                             <label>*5.인계자 id</label>  <br>
-                            <input type="text" id="emitter_name">
+                            <input type="text" id="emitter_name" value="<%=user_id%>">
                             <br> <br>
                             <input  type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
                   </div>
@@ -390,7 +393,9 @@
                 handle_method : document.getElementById("handle_method").value,
                 handle_address : document.getElementById("handle_address").value,
                 transfer_date : document.getElementById("transfer_date").value,
-                emitter_name : document.getElementById("emitter_name").value
+                emitter_name : document.getElementById("emitter_name").value,
+                pre_convey_count : document.getElementById("pre_convey_count").value,
+                cur_convey_count : document.getElementById("cur_convey_count").value,
             },
             success : function (data) {
                 window.location.href = data.redirect_url;

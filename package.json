@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "ajv": "^5.0.0",
     "async": "^2.6.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",

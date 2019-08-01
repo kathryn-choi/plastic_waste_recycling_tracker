@@ -31,6 +31,7 @@ query get_compasset_history{
   statement:
       SELECT org.hyperledger.composer.system.HistorianRecord
         WHERE (transactionType == 'org.recycling.tracker.CreateCompasset' OR transactionType == 'org.recycling.tracker.UpdateCompanyAsset')
+          
 }
 
 query get_ticket_history{
@@ -38,7 +39,7 @@ query get_ticket_history{
   statement:
       SELECT org.hyperledger.composer.system.HistorianRecord
         WHERE (transactionType == 'org.recycling.tracker.CreateTicket' OR transactionType == 'org.recycling.tracker.DeleteTicket' OR transactionType == 'org.recycling.tracker.ChangeTicketInfo')
-}
+}        
 
 query select_ticket_user_received{
   description: "Select ticket that matches owner"

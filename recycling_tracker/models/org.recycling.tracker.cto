@@ -53,6 +53,8 @@ asset Ticket identified by ticket_id {
   o String previousdes
   o String transfer_date 
   o String weight 
+  o String pre_convey_count
+  o String cur_convey_count
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -75,6 +77,8 @@ transaction CreateTicket {
   o String previousdes 
   o String transfer_date 
   o String weight 
+  o String pre_convey_count
+  o String cur_convey_count
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -86,6 +90,9 @@ event ticket_created {
   o String previousdes 
   o String transfer_date
   o String weight 
+  o String pre_convey_count
+  o String cur_convey_count
+
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -102,6 +109,9 @@ event ticket_deleted {
   o String previousdes 
   o String transfer_date 
   o String weight 
+  o String pre_convey_count
+  o String cur_convey_count
+  
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -113,11 +123,14 @@ transaction ChangeTicketInfo {
   o String previousdes 
   o String weight 
   o String transfer_date 
+  o String pre_convey_count
+  o String cur_convey_count
   --> User giver
   --> User reciever
   --> User conveyancer
   --> Ticket ticket
 }
+
 
 event ticket_updated {
   o String ticket_id  
@@ -125,6 +138,8 @@ event ticket_updated {
   o String previousdes 
   o String transfer_date 
   o String weight 
+  o String pre_convey_count
+  o String cur_convey_count
   --> User giver
   --> User reciever
   --> User conveyancer

@@ -34,6 +34,8 @@ async function CreateTicket(createTicket) {
     ticket.giver = createTicket.giver;
     ticket.reciever = createTicket.reciever;
     ticket.conveyancer = createTicket.conveyancer;
+    ticket.pre_convey_count = createTicket.pre_convey_count;
+    ticket.cur_convey_count = createTicket.cur_convey_count;
     await ticketRegistry.add(ticket);
     const event = getFactory().newEvent('org.recycling.tracker', 'ticket_created');
 	  event.ticket_id = ticket.ticket_id
@@ -44,6 +46,8 @@ async function CreateTicket(createTicket) {
     event.giver = ticket.giver
   	event.reciever = ticket.reciever
     event.conveyancer = ticket.conveyancer
+    event.pre_convey_count=ticket.pre_convey_count
+    event.cur_convey_count=ticket.cur_convey_count
   	emit(event)
 
 }
@@ -67,6 +71,8 @@ async function DeleteTicket(deleteTicket) {
     event.giver = deleteTicket.ticket.giver
   	event.reciever = deleteTicket.ticket.reciever
     event.conveyancer = deleteTicket.ticket.conveyancer
+    event.pre_convey_count = deleteTicket.ticket.pre_convey_count
+    event.cur_convey_count=deleteTicket.ticket.cur_convey_count
     emit(event)
 }
 
@@ -84,6 +90,8 @@ async function ChangeTicketInfo(changeTicketinfo) {
     changeTicketinfo.ticket.giver = changeTicketinfo.giver;
     changeTicketinfo.ticket.reciever = changeTicketinfo.reciever;
     changeTicketinfo.ticket.conveyancer = changeTicketinfo.conveyancer;
+    changeTicketinfo.ticket.pre_convey_count = changeTicketinfo.pre_convey_count;
+    changeTicketinfo.ticket.cur_convey_count = changeTicketinfo.cur_convey_count;
     await ticketRegistry.update(changeTicketinfo.ticket);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'ticket_updated');
@@ -95,6 +103,8 @@ async function ChangeTicketInfo(changeTicketinfo) {
     event.giver = changeTicketinfo.ticket.giver
   	event.reciever = changeTicketinfo.ticket.reciever
     event.conveyancer = changeTicketinfo.ticket.conveyancer
+    event.cur_convey_count = changeTicketinfo.ticket.cur_convey_count
+    event.pre_convey_count = changeTicketinfo.ticket.pre_convey_count
     emit(event)
 
 }

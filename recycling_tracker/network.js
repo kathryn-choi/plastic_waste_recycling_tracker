@@ -279,7 +279,7 @@ module.exports = {
 
     },
 
-    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
+    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count) {
         try {
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
@@ -294,6 +294,8 @@ module.exports = {
             createTicket.currentdes = currentdes;
             createTicket.previousdes = previousdes;
             createTicket.transfer_date = transfer_date;
+            createTicket.cur_convey_count = cur_convey_count;
+            createTicket.pre_convey_count = pre_convey_count;
             createTicket.weight = weight;
             if(giver_type == 'emitter'){
                 createTicket.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
@@ -328,13 +330,12 @@ module.exports = {
 
             return false;
         }
-
     },
 
-    change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id) {
+    change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count) {
         try {
             console.log("NETWORK CHANGE TICKET INFO");
-            console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id);
+            console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count);
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
             await businessNetworkConnection.connect('admin@recycling_tracker');
@@ -353,6 +354,8 @@ module.exports = {
             update_info.previousdes = previousdes;
             update_info.transfer_date = transfer_date;
             update_info.weight = weight;
+            update_info.pre_convey_count=pre_convey_count;
+            update_info.cur_convey_count=cur_convey_count;
 
             if(giver_type == 'emitter'){
                 update_info.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
@@ -386,7 +389,6 @@ module.exports = {
             error.error = err.message;
             return error;
         }
-
     },
 
     delete_ticket: async function (ticket_id) {
@@ -421,6 +423,8 @@ module.exports = {
         }
 
     },
+  
+
     create_compasset: async function (asset_id,gen_weight,save_weight, handle_weight,comp_id, waste_code) {
         try {
             //connect to network with user_id

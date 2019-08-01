@@ -114,16 +114,21 @@ function get_user_ticketinfo(user_id, cb) {
         //for(var i = 0; i< tickets.length; i++){
         var temp = file.ticket_id.split('.')
         var user_id = temp[0]
-        var waste_code = temp[1]
+        //waste index로 조회하기
+        var waste_index = temp[1]
         var transfer_date = file.transfer_date
         var weight = file.weight
+        var cur_convey_count=file.cur_convey_count
+        var pre_convey_count=file.pre_convey_count
+        console.log("CONVEY COUNT : ",cur_convey_count, pre_convey_count);
         var sqlquery = 'select user_name from users where user_id = ?'
         var selectt = file
         connection.query(sqlquery, user_id, function (err, rows) {
           var user_name = rows[0].user_name
           console.log(user_name)
-          var sqlquery2 = 'select * from wastes where waste_code = ?'
-          connection.query(sqlquery2, waste_code, function (err, rows1) {
+          var sqlquery2 = 'select * from wastes where waste_index = ?'
+          connection.query(sqlquery2, waste_index, function (err, rows1) {
+            var waste_code = rows1[0].waste_code
             var waste_type = rows1[0].waste_type
             var waste_handler = rows1[0].waste_handler
             var method = rows1[0].waste_handle_method
@@ -140,6 +145,7 @@ function get_user_ticketinfo(user_id, cb) {
                   var comp_loc = rows4[0].company_addr
                   var ticket = {
                     ticket_id: selectt.ticket_id,
+                    waste_code : waste_code,
                     waste_type: waste_type,
                     weight: weight,
                     conveyancer: conveyancer,
@@ -202,12 +208,12 @@ router.get('/form', function (req, res, next) {
     handle_address: '',
     conveyancer: '',
     conveyancer_car_num: '',
+    user_id : req.session.user_id
   });
 });
 
 //전자 인계서 저장하기
 router.post('/form', function (req, res, next) {
-
   var waste_code = req.body.waste_code;
   var weight = req.body.weight;
   var conveyancer = req.body.conveyancer;
@@ -220,7 +226,7 @@ router.post('/form', function (req, res, next) {
   var ticket_id = user_id + "." + waste_code + "." + transfer_date
   get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
     if (result == true) {
-      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id).then((response) => {
+      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0" , "0").then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network create ticket info failed");
@@ -236,48 +242,6 @@ router.post('/form', function (req, res, next) {
       res.jsonp({ redirect_url: "/emitter" })
     }
   })
-
-  // var sqlquery = "SELECT * FROM users WHERE user_name = ? and user_type = 'conveyancer'"
-  // connection.query(sqlquery, conveyancer,function (err, rows) {
-  //   if (err) {
-  //     console.log("no match");
-  //   } else {
-  //     console.log("found user_id");
-  //     var con_id = rows[0].user_id
-  //     var sqlquery2 = "SELECT * FROM users WHERE user_id = ?"
-  //     connection.query(sqlquery2, user_id,function (err, rows) {
-  //       if (err) {
-  //         console.log("no match");
-  //       } else {
-  //         console.log("found company_id");
-  //         var company_id = rows[0].companies_id
-  //         var sqlquery3= "SELECT * FROM companies WHERE company_id = ?"
-  //         connection.query(sqlquery3, company_id,function (err, rows) {
-  //           if (err) {
-  //             console.log("no match");
-  //           } else {
-  //             console.log("found company_loc");
-  //             var company_loc = rows[0].company_addr
-  //             var sqlquery4= "SELECT * FROM users WHERE user_name = ? and user_type = 'handler'"
-  //             connection.query(sqlquery4, handler,function (err, rows) {
-  //               if (err) {
-  //                 console.log("no match");
-  //               } else {
-  //                 console.log("found handler_id");
-  //                 var hanlder_id = rows[0].user_id
-  //                 console.log(hanlder_id)
-  //                 network.create_ticket(ticket_id,company_loc,"",weight,transfer_date,user_id, "Emitter",hanlder_id,"Handler",con_id)
-  //               }
-  //             });
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
-  //block에 insert
-  // network.create_ticket(ticket_id,currentdes,"",weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-  //res.jsonp({success : true, redirect_url : "/emitter"})
 });
 
 //search material info by name
