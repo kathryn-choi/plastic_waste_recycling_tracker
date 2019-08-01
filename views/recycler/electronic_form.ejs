@@ -142,6 +142,8 @@
                         <br> <br>
                         <input type="hidden" name="ticket_id" id="ticket_id" value="<%=ticket_id%>">
                         <input type="hidden" name="previousdes" id="previousdes" value="<%=previousdes%>">
+                        <input type="hidden" name="cur_convey_count" id="cur_convey_count" value="<%=cur_convey_count%>">
+                        <input type="hidden" name="pre_convey_count" id="pre_convey_count" value="<%=pre_convey_count%>">
                             <label>*1.폐기물 종류 : </label>
                                 <!--search button pop up 해서 폐기물종류 조회하기-->
                                 <!-- Trigger/Open The Modal -->
@@ -390,7 +392,9 @@
                 handle_method : document.getElementById("handle_method").value,
                 handle_address : document.getElementById("handle_address").value,
                 transfer_date : document.getElementById("transfer_date").value,
-                emitter_name : document.getElementById("emitter_name").value
+                emitter_name : document.getElementById("emitter_name").value,
+                pre_convey_count : document.getElementById("pre_convey_count").value,
+                cur_convey_count : document.getElementById("cur_convey_count").value,
             },
             success : function (data) {
                 window.location.href = data.redirect_url;

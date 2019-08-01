@@ -160,6 +160,7 @@ function get_my_received_ticket(user_id, cb) {
         var selectt = file
         var cur_convey_count = file.cur_convey_count
         var pre_convey_count = file.pre_convey_count
+        console.log("count : ", cur_convey_count, pre_convey_count);
         //only the ones that are finished convey
         if(cur_convey_count!=pre_convey_count){
         connection.query(sqlquery, user_id, function (err, rows) {
@@ -192,7 +193,9 @@ function get_my_received_ticket(user_id, cb) {
                     comp_loc: comp_loc,
                     transfer_date: transfer_date,
                     user_name: user_name,
-                    eform_type: eform_type
+                    eform_type: eform_type,
+                    pre_convey_count : pre_convey_count,
+                    cur_convey_count : cur_convey_count
                   }
                   console.log("t : ", ticket);
                   my_tickets.push(ticket)
@@ -275,6 +278,7 @@ router.post('/form', function (req, res, next) {
   var giver_id = req.body.emitter_name;
   var cur_convey_count= req.body.cur_convey_count;
   var p_convey_count = req.body.pre_convey_count;
+  console.log("count : ", cur_convey_count, p_convey_count)
    // increase previous convey count +1
   var increased_count = parseInt(p_convey_count)
   increased_count=increased_count+1
@@ -393,7 +397,8 @@ router.post('/eform', function (req, res, next) {
     conveyancer: '',
     conveyancer_car_num: '',
     cur_convey_count : req.body.cur_convey_count,
-    pre_convey_count : req.body.pre_convey_count
+    pre_convey_count : req.body.pre_convey_count,
+    user_id : req.session.user_id
   });
 });
 

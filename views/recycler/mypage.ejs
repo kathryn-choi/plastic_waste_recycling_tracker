@@ -232,6 +232,10 @@
                                                     <form action="/recycler/change_ticketinfo" method="post">
                                                         <input type="hidden" name="ticket_id"
                                                             value="<%=mytickets[i].ticket_id%>">
+                                                        <input type="hidden" name="pre_convey_count"
+                                                            value="<%=mytickets[i].pre_convey_count%>">
+                                                        <input type="hidden" name="cur_convey_count"
+                                                            value="<%=mytickets[i].cur_convey_count%>">    
                                                         폐기물 : <%=mytickets[i].waste_type%> <br>
                                                         <input type="hidden" name="waste_type"
                                                             value="<%=mytickets[i].waste_type%>">
@@ -304,6 +308,8 @@
                                                             <form action="/recycler/eform" method="post">
                                                                 <input type="hidden" name="ticket_id" value="<%=rtickets[i].ticket_id%>" >
                                                                 <input type="hidden" name="previousdes" value="<%=rtickets[i].comp_loc%>" >
+                                                                <input type="hidden" name="cur_convey_count" value="<%=rtickets[i].cur_convey_count%>" >
+                                                                <input type="hidden" name="pre_convey_count" value="<%=rtickets[i].pre_convey_count%>" >
                                                                 <button class="btn gradient-bg" type="submit">인계하기</button>
                                                             </form>
                                                     <form action="/recycler/complete_ticket" method="post">
