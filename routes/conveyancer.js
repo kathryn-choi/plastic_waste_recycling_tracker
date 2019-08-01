@@ -142,6 +142,14 @@ function get_my_received_ticket(user_id, cb) {
           console.log(i, " TICKET  :", tickets[i]);
           var temp = file.ticket_id.split('.')
           var user_id = temp[0]
+          
+         //----------------
+          var giver = file.giver.split('#')
+          var giver_id= giver[1]
+          var reciever = file.reciever.split('#')
+          var reciever_id=reciever[1]
+          console.log("giver : ", giver_id, "reciever : ", reciever_id);
+          //------------------
           var waste_code = temp[1]
           var transfer_date = file.transfer_date
           var weight = file.weight
@@ -154,7 +162,8 @@ function get_my_received_ticket(user_id, cb) {
             var previousdes = file.previousdes;
             console.log(currentdes + " , " + previousdes);
             console.log(selectt.ticket_id)
-            connection.query(sqlquery, user_id, function (err, rows) {
+            connection.query(sqlquery, reciever_id, function (err, rows) {
+            //connection.query(sqlquery, user_id, function (err, rows) {
               var user_name = rows[0].user_name
               console.log(user_name)
               var sqlquery2 = 'select * from wastes where waste_code = ?'
