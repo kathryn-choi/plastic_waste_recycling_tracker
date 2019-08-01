@@ -123,14 +123,6 @@ transaction ChangeTicketInfo {
   o String previousdes 
   o String weight 
   o String transfer_date 
-  --> User giver
-  --> User reciever
-  --> User conveyancer
-  --> Ticket ticket
-}
-
-//change convey count
-transaction ChangeConveyCount {
   o String pre_convey_count
   o String cur_convey_count
   --> User giver
@@ -138,6 +130,7 @@ transaction ChangeConveyCount {
   --> User conveyancer
   --> Ticket ticket
 }
+
 
 event ticket_updated {
   o String ticket_id  
@@ -145,18 +138,11 @@ event ticket_updated {
   o String previousdes 
   o String transfer_date 
   o String weight 
-  --> User giver
-  --> User reciever
-  --> User conveyancer
-}
-
-event convey_count_updated {
   o String pre_convey_count
   o String cur_convey_count
   --> User giver
   --> User reciever
   --> User conveyancer
-  --> Ticket ticket  
 }
 
 transaction CreateCompasset{

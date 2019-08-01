@@ -90,6 +90,8 @@ async function ChangeTicketInfo(changeTicketinfo) {
     changeTicketinfo.ticket.giver = changeTicketinfo.giver;
     changeTicketinfo.ticket.reciever = changeTicketinfo.reciever;
     changeTicketinfo.ticket.conveyancer = changeTicketinfo.conveyancer;
+    changeTicketinfo.ticket.pre_convey_count = changeTicketinfo.pre_convey_count;
+    changeTicketinfo.ticket.cur_convey_count = changeTicketinfo.cur_convey_count;
     await ticketRegistry.update(changeTicketinfo.ticket);
 
     const event = getFactory().newEvent('org.recycling.tracker', 'ticket_updated');
@@ -101,24 +103,10 @@ async function ChangeTicketInfo(changeTicketinfo) {
     event.giver = changeTicketinfo.ticket.giver
   	event.reciever = changeTicketinfo.ticket.reciever
     event.conveyancer = changeTicketinfo.ticket.conveyancer
+    event.cur_convey_count = changeTicketinfo.ticket.cur_convey_count
+    event.pre_convey_count = changeTicketinfo.ticket.pre_convey_count
     emit(event)
 
-}
-/**
- * ChangeConveyCount transaction
- * @param {org.recycling.tracker.ChangeTicketInfo} changeTicketinfo
- * @transaction
- */
-async function ChangeConveyCount(changeTicketinfo) {
-  const ticketRegistry = await getAssetRegistry('org.recycling.tracker.Ticket');
-  changeTicketinfo.ticket.cur_convey_count = changeTicketinfo.cur_convey_count;
-  changeTicketinfo.ticket.pre_convey_count = changeTicketinfo.pre_convey_count;
-  await ticketRegistry.update(changeTicketinfo.ticket);
-
-  const event = getFactory().newEvent('org.recycling.tracker', 'convey_count_updated');
-  event.cur_convey_count = changeTicketinfo.ticket.cur_convey_count
-  event.pre_convey_count = changeTicketinfo.ticket.pre_convey_count
-  emit(event)
 }
 
 /**
