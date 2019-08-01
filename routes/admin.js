@@ -153,22 +153,40 @@ function get_alarms(cb){
         var last_date=rows[i].last_date;
         console.log("last_date", last_date);
         var daydif = today- last_date
-     
         if(daydif>30){
           var ticket_id=rows[i].ticket_id;
+          var alarms_index=rows[i].alarms_index;
           var alarm={
             ticket_id : ticket_id,
             last_date : last_date,
+            alarms_index : alarms_index
           }
           alarms.push(alarm);
         }
         count ++;
-        if(count==rows.length){
+        if(count==rows.length && alarms.length!=0){
           cb(true,alarms);
         }
+      }
+      if(rows.length==0){
+        cb(true, []);
       }
     }
   });
 }
-
+//delete alarms
+router.post('/delete_alarm', function(req, res, next) {
+  console.log("delete alarm")
+  var alarms_index=req.body.alarms_index;
+  var sqlquery =" Delete from alarms where alarms_index = ?"
+      connection.query(sqlquery, alarms_index,function (err, rows) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+          console.log("deleted alarms");
+          res.redirect('/admin');
+        }
+      });
+});
 module.exports = router;

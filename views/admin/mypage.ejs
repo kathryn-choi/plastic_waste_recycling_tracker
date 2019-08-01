@@ -215,13 +215,19 @@
                     <%for (var i=0; i<alarms.length; i++){%>
                     <table class="w3-table-all" border="1px" cellpadding="15px">
                         <tr>
-                            <th style="width:10%">Ticket ID</th>
-                            <th style="width:10%">Last Date </th>
+                            <th style="width:10%">티켓 아이디</th>
+                            <th style="width:10%">마지막 날짜</th>
+                            <th style="width:3%"> 삭제하기</th>
                         </tr>
 
                         <tr>
                             <td><%=alarms[i].ticket_id%></td>
                             <td><%=alarms[i].last_date%></td>
+                            <td><form action = "/admin/delete_alarm" method="post">
+                    <%=alarms[i].alarms_index%>
+                                <input type="hidden" , name = "alarms_index", value="<%=alarms[i].alarms_index%>">
+                                <input type="submit", value="X">
+                            </form> </td>
                         </tr>
                     </table>
                     <%}%>
