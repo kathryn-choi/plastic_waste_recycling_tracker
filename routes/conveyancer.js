@@ -3,8 +3,6 @@ var request = require('request');
 var router = express.Router();
 var network = require('../recycling_tracker/network.js');
 
-//var completed_ticket = []
-
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb) {
   var mycompany = new Array();
@@ -142,15 +140,8 @@ function get_my_received_ticket(user_id, cb) {
           console.log(i, " TICKET  :", tickets[i]);
           var temp = file.ticket_id.split('.')
           var user_id = temp[0]
-          
-         //----------------
-          var giver = file.giver.split('#')
-          var giver_id= giver[1]
-          var reciever = file.reciever.split('#')
-          var reciever_id=reciever[1]
-          console.log("giver : ", giver_id, "reciever : ", reciever_id);
-          //------------------
-          var waste_code = temp[1]
+          // waste_index로 조회하기
+          var waste_index = temp[1] 
           var transfer_date = file.transfer_date
           var weight = file.weight
           var cur_convey_count = file.cur_convey_count
@@ -162,12 +153,14 @@ function get_my_received_ticket(user_id, cb) {
             var previousdes = file.previousdes;
             console.log(currentdes + " , " + previousdes);
             console.log(selectt.ticket_id)
-            connection.query(sqlquery, reciever_id, function (err, rows) {
+          /* 필요 없지 않나??  
+          connection.query(sqlquery, user_id, function (err, rows) {
             //connection.query(sqlquery, user_id, function (err, rows) {
               var user_name = rows[0].user_name
-              console.log(user_name)
-              var sqlquery2 = 'select * from wastes where waste_code = ?'
-              connection.query(sqlquery2, waste_code, function (err, rows1) {
+              console.log(user_name)*/
+              var sqlquery2 = 'select * from wastes where waste_index = ?'
+              connection.query(sqlquery2, waste_index, function (err, rows1) {
+                var waste_code = rows1[0].waste_code
                 var waste_type = rows1[0].waste_type
                 var waste_handler = rows1[0].waste_handler
                 var method = rows1[0].waste_handle_method
@@ -184,6 +177,7 @@ function get_my_received_ticket(user_id, cb) {
                       var comp_loc = rows4[0].company_addr
                       var ticket = {
                         ticket_id: selectt.ticket_id,
+                        waste_code : waste_code,
                         waste_type: waste_type,
                         weight: weight,
                         conveyancer: conveyancer,
@@ -207,9 +201,10 @@ function get_my_received_ticket(user_id, cb) {
                     })
                   })
                 })
-              })
+             // })
             })
-          } else {//cur_convey_count != pre_convey_count (convey finished)
+          } else {
+            //cur_convey_count != pre_convey_count (convey finished)
             count++;
             if (count == tickets.length) {
               console.log("my tickets : ", my_tickets);

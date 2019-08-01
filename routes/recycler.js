@@ -73,7 +73,8 @@ function get_user_ticketinfo(user_id, cb) {
         console.log(i, " TICKET  :", tickets[i]);
         var temp = tickets[i].ticket_id.split('.')
         var user_id = temp[0]
-        var waste_code = temp[1]
+        //waste_index로 조회하기
+        var waste_index = temp[1]
         var transfer_date = tickets[i].transfer_date
         var weight = tickets[i].weight
         var sqlquery = 'select user_name from users where user_id = ?'
@@ -81,8 +82,9 @@ function get_user_ticketinfo(user_id, cb) {
         connection.query(sqlquery, user_id, function (err, rows) {
           var user_name = rows[0].user_name
           console.log(user_name)
-          var sqlquery2 = 'select * from wastes where waste_code = ?'
-          connection.query(sqlquery2, waste_code, function (err, rows1) {
+          var sqlquery2 = 'select * from wastes where waste_index = ?'
+          connection.query(sqlquery2, waste_index, function (err, rows1) {
+            var waste_code = rows1[0].waste_code
             var waste_type = rows1[0].waste_type
             var waste_handler = rows1[0].waste_handler
             var method = rows1[0].waste_handle_method
@@ -100,6 +102,7 @@ function get_user_ticketinfo(user_id, cb) {
                   var ticket = {
                     ticket_id: selectt.ticket_id,
                     waste_type: waste_type,
+                    waste_code : waste_code,
                     weight: weight,
                     conveyancer: conveyancer,
                     carnum: carnum,
@@ -147,7 +150,8 @@ function get_my_received_ticket(user_id, cb) {
         //for(var i = 0; i< tickets.length; i++){
         var temp = file.ticket_id.split('.')
         var user_id = temp[0]
-        var waste_code = temp[1]
+        //waste_index 로 조회하기
+        var waste_index = temp[1]
         var transfer_date = file.transfer_date
         var weight = file.weight
         var cur_convey_count = file.cur_convey_count
@@ -160,8 +164,9 @@ function get_my_received_ticket(user_id, cb) {
           connection.query(sqlquery, user_id, function (err, rows) {
             var user_name = rows[0].user_name
             console.log(user_name)
-            var sqlquery2 = 'select * from wastes where waste_code = ?'
-            connection.query(sqlquery2, waste_code, function (err, rows1) {
+            var sqlquery2 = 'select * from wastes where waste_index = ?'
+            connection.query(sqlquery2, waste_index, function (err, rows1) {
+              var waste_code= rows1[0].waste_code
               var waste_type = rows1[0].waste_type
               var waste_handler = rows1[0].waste_handler
               var method = rows1[0].waste_handle_method
@@ -182,6 +187,7 @@ function get_my_received_ticket(user_id, cb) {
                       weight: weight,
                       conveyancer: conveyancer,
                       carnum: carnum,
+                      waste_code : waste_code,
                       waste_handler: waste_handler,
                       method: method,
                       comp_loc: comp_loc,

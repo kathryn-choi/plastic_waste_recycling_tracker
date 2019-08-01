@@ -235,8 +235,11 @@
                                                         <input type="hidden" name="pre_convey_count"
                                                             value="<%=mytickets[i].pre_convey_count%>">
                                                         <input type="hidden" name="cur_convey_count"
-                                                            value="<%=mytickets[i].cur_convey_count%>">    
-                                                        폐기물 : <%=mytickets[i].waste_type%> <br>
+                                                            value="<%=mytickets[i].cur_convey_count%>">
+                                                        폐기물 코드 : <%=mytickets[i].waste_code%> <br>
+                                                        <input type="hidden" name="waste_code"
+                                                                value="<%=mytickets[i].waste_code%>">        
+                                                        폐기물 종류 : <%=mytickets[i].waste_type%> <br>
                                                         <input type="hidden" name="waste_type"
                                                             value="<%=mytickets[i].waste_type%>">
                                                         위탁량 : <input type="text" name="weight"
@@ -294,8 +297,8 @@
                                             <div class="entry-content">
                                                 <p class="m-0">
                     <!--<form action="/handler/change_ticketinfo" method="post">-->
-                                                        
-                                                        폐기물 : <%=rtickets[i].waste_type%> <br>
+                                                        폐기물 코드 : <%=rtickets[i].waste_code%> <br>
+                                                        폐기물 종류 : <%=rtickets[i].waste_type%> <br>
                                                         위탁량 :<%=rtickets[i].weight%>"<br>
                                                         운반자 : <%=rtickets[i].conveyancer%> <br>
                                                         차량 번호 : <%=rtickets[i].carnum%> <br>

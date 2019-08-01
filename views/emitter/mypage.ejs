@@ -170,7 +170,10 @@
                                                 <form action="/emitter/change_ticketinfo" method="post">
                                                     <input type="hidden" name="ticket_id"
                                                         value="<%=mytickets[i].ticket_id%>">
-                                                    폐기물 : <%=mytickets[i].waste_type%> <br>
+                                                    폐기물 코드 : <%=mytickets[i].waste_code%> <br>
+                                                    <input type="hidden" name="waste_code"
+                                                            value="<%=mytickets[i].waste_code%>">    
+                                                    폐기물 종류 : <%=mytickets[i].waste_type%> <br>
                                                     <input type="hidden" name="waste_type"
                                                         value="<%=mytickets[i].waste_type%>">
                                                     위탁량 : <input type="text" name="weight"
