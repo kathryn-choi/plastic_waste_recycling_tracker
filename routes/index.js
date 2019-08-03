@@ -36,7 +36,31 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/signup', function (req, res, next) {
-  res.render('signup', { title: 'Express', company_id: -1 });
+  if (req.session.user_id) {
+    var sqlquery = "SELECT user_type FROM users WHERE user_id=?";
+    connection.query(sqlquery, req.session.user_id, function (err, row) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+        console.log("row : ", row);
+        var user_type = row[0].user_type;
+        res.render('signup', {
+          title: "Home",
+          user_id: req.session.user_id,
+          user_type: user_type,
+          company_id: -1
+        });
+      }
+    });
+  } else {
+    console.log(-1)
+    res.render('signup', {
+      title: "Home",
+      user_id: -1,
+      company_id: -1
+    });
+  }
 });
 
 router.post('/signup', function (req, res, next) {
@@ -181,7 +205,31 @@ router.post('/register_company', function (req, res, next) {
 });
 
 router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Express' });
+  if (req.session.user_id) {
+    var sqlquery = "SELECT user_type FROM users WHERE user_id=?";
+    connection.query(sqlquery, req.session.user_id, function (err, row) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+        console.log("row : ", row);
+        var user_type = row[0].user_type;
+        res.render('login', {
+          title: "Home",
+          user_id: req.session.user_id,
+          user_type: user_type,
+          company_id: -1
+        });
+      }
+    });
+  } else {
+    console.log(-1)
+    res.render('login', {
+      title: "Home",
+      user_id: -1,
+      company_id: -1
+    });
+  }
 });
 
 router.post('/login', function (req, res, next) {

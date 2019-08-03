@@ -111,9 +111,18 @@
                             <nav class="site-navigation d-flex justify-content-end align-items-center">
                                 <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
                                     <li><a href="/">Home</a></li>
-                                    <li class="current-menu-item"><a href="/signup">회원가입</a></li>
-                                    <li><a href="/login">로그인</a></li>
-                                    <li><a href="/logout">로그아웃</a></li>
+                                    <%if (user_id == -1 ){ %>
+                                        <li><a href="/signup">회원가입</a></li>
+                                        <li><a href="/login">로그인</a></li>
+                                        <%} else {%>
+                                        <li><a href="/<%=user_type%>">마이페이지</a></li>
+                                        <%if(user_type != 'admin'){%>
+                                        <li><a href="/compasset">대장 관리</a></li>
+                                        <%}else{%>
+                                        <li><a href="/admin/register_company_list">회사 등록 요청</a></li>
+                                        <%}%>
+                                        <li><a href="/logout">로그아웃</a></li>
+                                        <% }%>
                                 </ul>
                             </nav><!-- .site-navigation -->
 
@@ -145,11 +154,7 @@
                     <div class="col-12 col-lg-5">
                                     <div class="entry-content">
                                           <h2>개인정보 관한 안내</h2>
-              
                                           <p>입력하신 소중한 개인정보는 고객님의 명백한 <br> 동의 없이 공개 또는 제3자에게 제공되지 않습니다. <br><br> </p>
-                                             
-                                          <h6>사용 설명서 (동영상)</h6>
-                                           <a href="https://www.allbaro.or.kr/html/video_manual/03/03_01.htm"> 저희 사이트의 동영상 매뉴얼 입니다. </a>  
                                       </div>
                                   </div>
                     
