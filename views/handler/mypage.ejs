@@ -232,6 +232,8 @@
                                                     <form action="/handler/change_ticketinfo" method="post">
                                                         <input type="hidden" name="ticket_id"
                                                             value="<%=mytickets[i].ticket_id%>">
+                                                        <input type="hidden" name="waste_index"
+                                                            value="<%=mytickets[i].waste_index%>">
                                                         폐기물 코드 : <%=mytickets[i].waste_code%> <br>
                                                         <input type="hidden" name="waste_code"
                                                                 value="<%=mytickets[i].waste_code%>">    

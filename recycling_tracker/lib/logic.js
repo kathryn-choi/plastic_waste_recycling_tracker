@@ -95,7 +95,7 @@ async function ChangeTicketInfo(changeTicketinfo) {
     changeTicketinfo.ticket.conveyancer = changeTicketinfo.conveyancer;
     changeTicketinfo.ticket.pre_convey_count = changeTicketinfo.pre_convey_count;
     changeTicketinfo.ticket.cur_convey_count = changeTicketinfo.cur_convey_count;
-    changeTicketinfo.ticket.waset_index = changeTicketinfo.waset_index;
+    changeTicketinfo.ticket.waste_index = changeTicketinfo.waste_index;
 
     await ticketRegistry.update(changeTicketinfo.ticket);
 

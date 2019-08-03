@@ -73,8 +73,8 @@ function get_user_ticketinfo(user_id, cb) {
         console.log(i, " TICKET  :", tickets[i]);
         var temp = tickets[i].ticket_id.split('.')
         var user_id = temp[0]
-        //waste_index로 조회하기
-        var waste_index = temp[1]
+        var w_index = file.waste_index
+        var waste_index=parseInt(w_index)
         var transfer_date = tickets[i].transfer_date
         var weight = tickets[i].weight
         var sqlquery = 'select user_name from users where user_id = ?'
@@ -111,7 +111,8 @@ function get_user_ticketinfo(user_id, cb) {
                     comp_loc: comp_loc,
                     transfer_date: transfer_date,
                     user_name: user_name,
-                    eform_type: eform_type
+                    eform_type: eform_type,
+                    waste_index: waste_index
                   }
                   my_tickets.push(ticket)
                   count++;
@@ -150,8 +151,8 @@ function get_my_received_ticket(user_id, cb) {
         //for(var i = 0; i< tickets.length; i++){
         var temp = file.ticket_id.split('.')
         var user_id = temp[0]
-        //waste_index 로 조회하기
-        var waste_index = temp[1]
+        var w_index = file.waste_index
+        var waste_index=parseInt(w_index)
         var transfer_date = file.transfer_date
         var weight = file.weight
         var cur_convey_count = file.cur_convey_count
@@ -195,7 +196,8 @@ function get_my_received_ticket(user_id, cb) {
                       user_name: user_name,
                       eform_type: eform_type,
                       pre_convey_count: pre_convey_count,
-                      cur_convey_count: cur_convey_count
+                      cur_convey_count: cur_convey_count,
+                      waste_index: waste_index
                     }
                     console.log("t : ", ticket);
                     my_tickets.push(ticket)
@@ -251,6 +253,7 @@ router.get('/', function (req, res, next) {
 //전자 인계서 작성 페이지 불러오기
 router.get('/form', function (req, res, next) {
   res.render('recycler/electronic_form', {
+    waste_index:'',
     waste_code: '',
     handler: '',
     handle_method: '',
@@ -267,6 +270,7 @@ router.get('/form', function (req, res, next) {
 router.post('/form', function (req, res, next) {
   console.log("FORM!");
   var ticket_id = req.body.ticket_id;
+  var waste_index=req.body.waste_index;
   var previousdes = req.body.previousdes;
   var waste_code = req.body.waste_code;
   var weight = req.body.weight;
@@ -292,7 +296,7 @@ router.post('/form', function (req, res, next) {
     if (result == true) {
 
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-      network.change_ticket_info(ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count).then((response) => {
+      network.change_ticket_info(ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count,waste_index).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network change ticket info failed");
@@ -346,6 +350,7 @@ function get_handler_address(company_name, cb) {
 
 //choose material from search result
 router.post('/search_result', function (req, res, next) {
+  var waste_index=req.body.waste_index
   var waste_code = req.body.waste_code;
   var handler = req.body.handler;
   var handle_method = req.body.handle_method;
@@ -366,6 +371,7 @@ router.post('/search_result', function (req, res, next) {
           handler_addr = handler_addr
         }
         results = {
+          waste_index : waste_index,
           waste_code: waste_code,
           handler: handler,
           handle_method: handle_method,
@@ -394,8 +400,9 @@ router.post('/change_ticketinfo', function (req, res, next) {
   var conveyer_id = req.body.conveyer_id;
   var pre_convey_count = req.body.pre_convey_count;
   var cur_convey_count = req.body.cur_convey_count;
+  var waste_index=req.body.waste_index;
   //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-  network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count).then((response) => {
+  network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count,waste_index).then((response) => {
     //return error if error in response
     if (response.error != null) {
       console.log("network change ticket info failed");
@@ -461,7 +468,8 @@ router.post('/eform', function (req, res, next) {
     conveyancer_car_num: '',
     cur_convey_count: req.body.cur_convey_count,
     pre_convey_count: req.body.pre_convey_count,
-    user_id: req.session.user_id
+    user_id: req.session.user_id,
+    waste_index: ''
   });
 });
 module.exports = router;

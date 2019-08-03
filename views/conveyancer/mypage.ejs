@@ -145,6 +145,7 @@
                                                     인계자 id : <%=mytickets[i].user_name%> <br>
                                                     
                                                     <input type="hidden" name="ticket_id" value="<%=mytickets[i].ticket_id%>">
+                                                    <input type="hidden" name="waste_index" value="<%=mytickets[i].waste_index%>">
                                                     <input type="hidden" name="waste_type" value="<%=mytickets[i].waste_type%>">
                                                     <input type="hidden" name="weight" value="<%=mytickets[i].weight%>">
                                                     <input type="hidden" name="conveyancer" value="<%=mytickets[i].conveyancer%>">
@@ -161,15 +162,15 @@
                                         </div><!-- .entry-content -->
                                     </div><!-- .cause-content-wrap -->
                                 </div><!-- .cause-wrap -->
-                            </div><!-- .swiper-slide -->
-                            <%}%>     
-                            <%}%>
-                        </div>
+                            </div><!-- .swiper-slide --><%}%>  
+                        </div>    
                     </div>
                 </div>
             </div><!-- .col -->
         </div><!-- .our-causes -->
     </div>
+        <%}%>
+    
     <footer class="site-footer">
         <div class="footer-widgets">
             <div class="container">

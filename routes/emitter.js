@@ -114,8 +114,7 @@ function get_user_ticketinfo(user_id, cb) {
         //for(var i = 0; i< tickets.length; i++){
         var temp = file.ticket_id.split('.')
         var user_id = temp[0]
-        //waste index로 조회하기
-        var waste_index = temp[1]
+        var waste_index = file.waste_index;
         var transfer_date = file.transfer_date
         var weight = file.weight
         var cur_convey_count = file.cur_convey_count
@@ -155,7 +154,8 @@ function get_user_ticketinfo(user_id, cb) {
                     comp_loc: comp_loc,
                     transfer_date: transfer_date,
                     user_name: user_name,
-                    eform_type: eform_type
+                    eform_type: eform_type,
+                    waste_index: waste_index
                   }
                   console.log("t : ", ticket);
                   my_tickets.push(ticket)
@@ -208,12 +208,14 @@ router.get('/form', function (req, res, next) {
     handle_address: '',
     conveyancer: '',
     conveyancer_car_num: '',
-    user_id: req.session.user_id
+    user_id: req.session.user_id,
+    waste_index :''
   });
 });
 
 //전자 인계서 저장하기
 router.post('/form', function (req, res, next) {
+  var waste_index=req.body.waste_index;
   var waste_code = req.body.waste_code;
   var weight = req.body.weight;
   var conveyancer = req.body.conveyancer;
@@ -223,10 +225,10 @@ router.post('/form', function (req, res, next) {
   var transfer_date = req.body.transfer_date;
   var emitter_name = req.body.emitter_name;
   var user_id = req.session.user_id
-  var ticket_id = user_id + "." + waste_code + "." + transfer_date
+  var ticket_id = user_id + "." + waste_index + "." + transfer_date
   get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
     if (result == true) {
-      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0", "0").then((response) => {
+      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0", "0", waste_index.toString()).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network create ticket info failed");
@@ -305,6 +307,7 @@ function get_handler_address(handler_id, cb) {
 
 //choose material from search result
 router.post('/search_result', function (req, res, next) {
+  var waste_index=req.body.waste_index;
   var waste_code = req.body.waste_code;
   var handler = req.body.handler;
   var handle_method = req.body.handle_method;
@@ -327,6 +330,7 @@ router.post('/search_result', function (req, res, next) {
         }
 
         results = {
+          waste_index: waste_index,
           waste_code: waste_code,
           handler: handler,
           handle_method: handle_method,
@@ -347,6 +351,8 @@ router.post('/change_ticketinfo', function (req, res, next) {
   console.log("change ticketinfo")
   //console.log(req.body)
   var ticket_id = req.body.ticket_id;
+  var waste=ticket_id.split['.'];
+  var waste_index=waste[1];
   var waste_type = req.body.waste_type;
   var conveyancer = req.body.conveyancer;
   var transfer_date = req.body.transfer_date;
@@ -360,7 +366,7 @@ router.post('/change_ticketinfo', function (req, res, next) {
   get_ticket_info(user_id, conveyancer, waste_handler, function (result, con_id, hanlder_id, company_loc) {
     if (result == true) {
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-      network.change_ticket_info(ticket_id, company_loc, "", transfer_date, weight, user_id, "emitter", hanlder_id, "handler", con_id).then((response) => {
+      network.change_ticket_info(ticket_id, company_loc, "", transfer_date, weight, user_id, "emitter", hanlder_id, "handler", con_id, waste_index).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network change ticket info failed");

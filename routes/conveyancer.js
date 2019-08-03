@@ -70,11 +70,8 @@ router.get('/', function (req, res, next) {
 //complete transfer
 router.post('/complete_ticket', function (req, res, next) {
   //changed previousdes to curdes & changed transfer date to today
-
   var ticket_id = req.body.ticket_id;
   var transfer_date = req.body.transfer_date;
-
-  console.log(ticket_id)
   var weight = req.body.weight;
   var giver_id = req.body.user_name;
   var reciever_id = req.body.waste_handler;
@@ -89,6 +86,9 @@ router.post('/complete_ticket', function (req, res, next) {
   console.log("ccc", cur_convey_count);
   console.log(typeof (cur_convey_count));
 
+  var w=req.body.waste_index;
+  var waste_index=w.toString();
+  console.log("W : ", waste_index, typeof(waste_index));
   var sqlquery = "select * from users where user_id = ?"
   connection.query(sqlquery, giver_id, function (err, rows) {
     //giver_name 으로 giver_id, giver_type 찾기
@@ -101,10 +101,8 @@ router.post('/complete_ticket', function (req, res, next) {
         //receiver_type 찾기
         var reciever_type = rows3[0].user_type;
         var currentdes = req.body.comp_loc
-        //  var previousdes = currentdes;
-        console.log(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id)
         //(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-        network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count).then((response) => {
+        network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count, waste_index).then((response) => {
           //return error if error in response
           if (response.error != null) {
             console.log("network change ticket info failed");
@@ -151,8 +149,9 @@ function get_my_received_ticket(user_id, cb) {
           console.log(i, " TICKET  :", tickets[i]);
           var temp = file.ticket_id.split('.')
           var user_id = temp[0]
-          // waste_index로 조회하기
-          var waste_index = temp[1]
+          var w_index = file.waste_index
+          var waste_index=parseInt(w_index)
+          console.log("W : ",waste_index)
           var transfer_date = file.transfer_date
           var weight = file.weight
           var cur_convey_count = file.cur_convey_count
@@ -164,11 +163,6 @@ function get_my_received_ticket(user_id, cb) {
             var previousdes = file.previousdes;
             console.log(currentdes + " , " + previousdes);
             console.log(selectt.ticket_id)
-            /* 필요 없지 않나??  
-            connection.query(sqlquery, user_id, function (err, rows) {
-              //connection.query(sqlquery, user_id, function (err, rows) {
-                var user_name = rows[0].user_name
-                console.log(user_name)*/
             var sqlquery2 = 'select * from wastes where waste_index = ?'
             connection.query(sqlquery2, waste_index, function (err, rows1) {
               var waste_code = rows1[0].waste_code
@@ -201,6 +195,7 @@ function get_my_received_ticket(user_id, cb) {
                       eform_type: eform_type,
                       cur_convey_count: cur_convey_count,
                       pre_convey_count: pre_convey_count,
+                      waste_index: waste_index
                     }
                     console.log("t : ", ticket);
                     my_tickets.push(ticket)

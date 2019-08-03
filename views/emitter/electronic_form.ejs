@@ -157,8 +157,9 @@
                                     <div class = "search_result"></div>
                                 </div>
                             </div>
-
                             <input type="number" name="waste_code" id="waste_code"> <br>
+                            <label>폐기물 인덱스 : </label> <br>
+                            <input type="number" id="waste_index"> <br>
                             <label>2. 위탁량</label>  <br>
                             <td><input type="number" id="weight">
                             <select id="unit">
@@ -318,9 +319,10 @@
                 if (data.success == true) {
                     console.log(data)
                     var result = data.results;
-                    var html = '<table border="1px" cellpadding="20px"><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr>'
+                    var html = '<table border="1px" cellpadding="20px"><tr><th>폐기물인덱스</th><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr>'
                     for (var i = 0; i < result.length; i++) {
-                        html += '<tr><td>' + result[i].waste_code + '</td>'
+                        html += '<tr><td>' + result[i].waste_index + '</td>'
+                            + '<td>' + result[i].waste_code + '</td>'
                             + '<td>' + result[i].waste_type + '</td>'
                             + '<td>' + result[i].waste_state + '</td>'
                             + '<td>' + result[i].waste_classify + '</td>'
@@ -330,7 +332,7 @@
                             + '<td>' + result[i].waste_conveyancer + '</td>'
                             + '<td>' + result[i].waste_conveyancer_condition + '</td>'
                             + '<td>' + result[i].eform_type + '</td>'
-                            + '<td><button id = "bnum'+i+'" onclick = "search_loc('+result[i].waste_code+',\''+result[i].waste_handler+'\',\''+result[i].waste_handle_method+'\',\''+result[i].waste_conveyancer+'\')">선택</button></td></tr>'
+                            + '<td><button id = "bnum'+i+'" onclick = "search_loc('+result[i].waste_index+',\''+result[i].waste_code+'\',\''+result[i].waste_handler+'\',\''+result[i].waste_handle_method+'\',\''+result[i].waste_conveyancer+'\')">선택</button></td></tr>'
                     }
                     html+='</table>'
                     console.log(html)
@@ -341,11 +343,12 @@
         });
     }
 
-    function search_loc(waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
+    function search_loc(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
         $.ajax({
             url: "/emitter/search_result",
             method: "POST",
             data: {
+                waste_index: waste_index,
                 waste_code: waste_code,
                 handler : waste_handler,
                 handle_method : waste_handle_method,
@@ -356,14 +359,15 @@
                 console.log(data.results)
                 if (data.success == true) {
                     var result = data.results;
-                    search_result(result.waste_code, result.handler,result.handle_method,result.handle_address,result.conveyancer,result.carnum)
+                    search_result(result.waste_index,result.waste_code, result.handler,result.handle_method,result.handle_address,result.conveyancer,result.carnum)
                 }
             }
         });
     }
 
-    function search_result(waste_code,handler,handle_method,handle_address,conveyancer,carnum) {
+    function search_result(waste_index,waste_code,handler,handle_method,handle_address,conveyancer,carnum) {
         var modal = document.getElementById('myModal');
+        $('#waste_index').val(waste_index);
         $('#waste_code').val(waste_code);
         $('#handler').val(handler);
         $('#handle_method').val(handle_method);
@@ -378,6 +382,7 @@
             url:"/emitter/form",
             method: "POST",
             data : {
+                waste_index : document.getElementById("waste_index").value,
                 waste_code : document.getElementById("waste_code").value,
                 weight : document.getElementById("weight").value + document.getElementById("unit").value ,
                 conveyancer : document.getElementById("conveyancer").value,
@@ -394,16 +399,15 @@
         });
     }
 
-
-    function fill_form(waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
+    function fill_form(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
         var modal = document.getElementById('myModal');
+        $('#waste_index').val(waste_index);
         $('#waste_code').val(waste_code);
         $('#handler').val(waste_handler);
         $('#handle_method').val(waste_handle_method);
         $('#conveyancer').val(waste_conveyancer);
         modal.style.display = "none";
     }
-
 
     var dateControl = document.querySelector('input[type="date"]');
     var d = new Date();
