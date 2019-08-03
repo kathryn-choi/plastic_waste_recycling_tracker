@@ -294,9 +294,8 @@ router.post('/form', function (req, res, next) {
 
   get_usertype_by_id(reciever_id, function (result, reciever_type) {
     if (result == true) {
-
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-      network.change_ticket_info(ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count,waste_index).then((response) => {
+      network.change_ticket_info(ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count,waste_index.toString()).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network change ticket info failed");
@@ -402,7 +401,7 @@ router.post('/change_ticketinfo', function (req, res, next) {
   var cur_convey_count = req.body.cur_convey_count;
   var waste_index=req.body.waste_index;
   //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-  network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count,waste_index).then((response) => {
+  network.change_ticket_info(ticket_id, currentdes, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyer_id, pre_convey_count, cur_convey_count,waste_index.toString()).then((response) => {
     //return error if error in response
     if (response.error != null) {
       console.log("network change ticket info failed");
