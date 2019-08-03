@@ -189,4 +189,67 @@ router.post('/delete_alarm', function(req, res, next) {
         }
       });
 });
+
+
+router.get('/register_company_list', function(req, res, next) {
+  console.log("get register company list")
+  var sqlquery =" Select * from company_register"
+      connection.query(sqlquery,function (err, rows) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+          console.log("register_company_list : ",rows);
+          comp_list = rows
+          res.render('admin/register_company_list',{comp_list:comp_list,
+          user_type: 'admin'
+          });
+        }
+      });
+});
+
+router.post('/accept_comp', function(req,res,next){
+  console.log("company_registeration_accept")
+  var sqlquery = "delete from company_register where idcompany_register = ?"
+  if(req.body.pending == "deny"){
+    connection.query(sqlquery,req.body.comp_index,function (err) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+          console.log("Deny company success")
+          res.jsonp({ success: false})
+        }
+      });
+  }
+  else{
+    var sqlquery3 = "insert into companies(company_name, company_addr, company_contact, company_type, company_material_type,company_method,waste_code) values (?,?,?,?,?,?,?)"
+    var sqlquery2 = "select * from company_register where idcompany_register = ?"
+    connection.query(sqlquery2,req.body.comp_index,function (err,rows) {
+      if (err) {
+        console.log("no match");
+        res.redirect('back');
+      } else {
+          console.log("get Company info success")
+          connection.query(sqlquery3,[rows[0].company_name,rows[0].company_addr,rows[0].company_contact, rows[0].company_type, rows[0].company_material_type, rows[0].company_method, rows[0].waste_code],function (err) {
+            if (err) {
+              console.log("no match");
+              res.redirect('back');
+            } else {
+                console.log("company insert success")
+                connection.query(sqlquery,req.body.comp_index,function (err) {
+                  if (err) {
+                    console.log("no match");
+                    res.redirect('back');
+                  } else {
+                      console.log("delete company success")
+                      res.jsonp({ success: true})
+                    }
+                  });
+              }
+            });
+        }
+      });  
+  }
+})
 module.exports = router;

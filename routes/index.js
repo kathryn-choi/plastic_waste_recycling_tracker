@@ -163,6 +163,23 @@ router.post('/signup', function (req, res, next) {
   });
 });
 
+router.get('/register_company', function (req, res, next) {
+  res.render('register_company', { title: 'Express' });
+});
+
+router.post('/register_company', function (req, res, next) {
+  var sql = "INSERT INTO company_register(company_name, company_addr,  company_contact,company_type, company_material_type, company_method,waste_code) VALUES (?,?,?,?,?,?,?)";
+      connection.query(sql, [req.body.company_name, req.body.company_addr, req.body.company_contact, req.body.company_type, req.body.waste_type, req.body.handle_method, req.body.waste_code], function (err) {
+        if (err) {
+          console.log("inserting register_company failed");
+          throw err;
+        } else {
+          console.log("Company register insert Success")
+          res.jsonp({ success: true, redirect_url: "/"});
+        }
+      }) 
+});
+
 router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Express' });
 });

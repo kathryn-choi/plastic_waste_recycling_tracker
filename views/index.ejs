@@ -45,7 +45,11 @@
                                 <li><a href="/login">로그인</a></li>
                                 <%} else {%>
                                 <li><a href="/<%=user_type%>">마이페이지</a></li>
-                                <li><a href="/compasset">대장 관리</a></li>   
+                                <%if(user_type != 'admin'){%>
+                                    <li><a href="/compasset">대장 관리</a></li>   
+                                <%}else{%>
+                                    <li><a href="/admin/register_company_list">회사 등록 요청</a></li>   
+                                <%}%>
                                 <li><a href="/logout">로그아웃</a></li>
                                 <% }%>
                             </ul>
