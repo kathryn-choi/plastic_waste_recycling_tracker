@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var network = require('../recycling_tracker/network.js');
 const util = require('util');
+var ticketM = require('./../public/modules/ticket.js');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb) {
@@ -72,159 +73,70 @@ function get_user_ticketinfo(user_id, cb) {
         cb(true, []);
       }
       for (var i = 0; i < tickets.length; i++) {
-        var temp = tickets[i].ticket_id.split('.')
-        var user_id = temp[0]
-        //waste_index로 조회하기
-        var waste_index = temp[1]
         var transfer_date = tickets[i].transfer_date
         var weight = tickets[i].weight
         var cur_convey_count = tickets[i].cur_convey_count
         var pre_convey_count = tickets[i].pre_convey_count
-        var sqlquery = 'select user_name from users where user_id = ?'
-        var selectt = tickets[i]
-        connection.query(sqlquery, user_id, function (err, rows) {
-          var user_name = rows[0].user_name
-          console.log(user_name)
-          var sqlquery2 = 'select * from wastes where waste_index = ?'
-          connection.query(sqlquery2, waste_index, function (err, rows1) {
-            var waste_code = rows1[0].waste_code
-            var waste_type = rows1[0].waste_type
-            var waste_handler = rows1[0].waste_handler
-            var method = rows1[0].waste_handle_method
-            var eform_type = rows1[0].eform_type
-            var conveyancer = rows1[0].waste_conveyancer
-            var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
-            connection.query(sqlquery3, (selectt.conveyancer).split('#')[1], function (err, rows2) {
-              var carnum = rows2[0].carnum
-              var sqlquery4 = "select companies_id from users where user_id = ?"
-              connection.query(sqlquery4, selectt.reciever.split('#')[1], function (err, rows3) {
-                var comp_id = rows3[0].companies_id
-                var sqlquery4 = "select company_addr from companies where company_id = ?"
-                connection.query(sqlquery4, comp_id, function (err, rows4) {
-                  var comp_loc = rows4[0].company_addr
-                  var ticket = {
-                    ticket_id: selectt.ticket_id,
-                    waste_type: waste_type,
-                    weight: weight,
-                    conveyancer: conveyancer,
-                    carnum: carnum,
-                    waste_handler: waste_handler,
-                    waste_code: waste_code,
-                    method: method,
-                    comp_loc: comp_loc,
-                    transfer_date: transfer_date,
-                    user_name: user_name,
-                    eform_type: eform_type,
-                    cur_convey_count: cur_convey_count,
-                    pre_convey_count: pre_convey_count,
-                  }
-                  my_tickets.push(ticket)
-                  count++;
-                  if (count == tickets.length) {
-                    console.log("my tickets : ", my_tickets);
-                    cb(true, my_tickets);
-                  }
-                })
-              })
-            })
-          })
-        })
-      }
-    }
-    else {
-      cb(false, []);
-    }
-  })
-}
-
-//get my received ticket by userid
-function get_my_received_ticket(user_id, cb) {
-  console.log("getuserticketinfo");
-  request.get({
-    url: 'http://localhost:3000/api/queries/select_ticket_user_received?user_id=resource%3Aorg.recycling.tracker.Handler%23' + user_id
-  }, async function (error, res, body) {
-    if (!error) {
-      var tickets = JSON.parse(body);
-      console.log("tickets : ", tickets);
-      var my_tickets = []
-      var count = 0;
-      if (tickets.length == 0) {
-        console.log("none!")
-        cb(true, []);
-      }
-      await Promise.all(tickets.map(async (file) => {
-        //for(var i = 0; i< tickets.length; i++){
-        var temp = file.ticket_id.split('.')
-        var user_id = temp[0]
-        //waste index로 조회하기
-        var waste_index = temp[1]
-        var transfer_date = file.transfer_date
-        var weight = file.weight
-        var sqlquery = 'select user_name from users where user_id = ?'
-        var selectt = file
-        var cur_convey_count = file.cur_convey_count
-        var pre_convey_count = file.pre_convey_count
-        console.log("count : ", cur_convey_count, pre_convey_count);
-        //only the ones that are finished convey
-        if (cur_convey_count != pre_convey_count) {
-          connection.query(sqlquery, user_id, function (err, rows) {
-            var user_name = rows[0].user_name
-            console.log(user_name)
-            var sqlquery2 = 'select * from wastes where waste_index = ?'
-            connection.query(sqlquery2, waste_index, function (err, rows1) {
-              var waste_code = rows1[0].waste_code
-              var waste_type = rows1[0].waste_type
-              var waste_handler = rows1[0].waste_handler
-              var method = rows1[0].waste_handle_method
-              var eform_type = rows1[0].eform_type
-              var conveyancer = rows1[0].waste_conveyancer
-              var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
-              connection.query(sqlquery3, (selectt.conveyancer).split('#')[1], function (err, rows2) {
-                var carnum = rows2[0].carnum
-                var sqlquery4 = "select companies_id from users where user_id = ?"
-                connection.query(sqlquery4, selectt.reciever.split('#')[1], function (err, rows3) {
-                  var comp_id = rows3[0].companies_id
-                  var sqlquery4 = "select company_addr from companies where company_id = ?"
-                  connection.query(sqlquery4, comp_id, function (err, rows4) {
-                    var comp_loc = rows4[0].company_addr
-                    var ticket = {
-                      ticket_id: selectt.ticket_id,
-                      waste_type: waste_type,
-                      waste_code: waste_code,
-                      weight: weight,
-                      conveyancer: conveyancer,
-                      carnum: carnum,
-                      waste_handler: waste_handler,
-                      method: method,
-                      comp_loc: comp_loc,
-                      transfer_date: transfer_date,
-                      user_name: user_name,
-                      eform_type: eform_type,
-                      pre_convey_count: pre_convey_count,
-                      cur_convey_count: cur_convey_count
-                    }
-                    console.log("t : ", ticket);
-                    my_tickets.push(ticket)
-                    count++;
-                    if (count == tickets.length) {
-                      console.log("my tickets : ", my_tickets);
-                      cb(true, my_tickets);
-                    }
+        var waste_index=tickets[i].waste_index
+        //------------------------------
+       /* find_waste_index(tickets[i].ticket_id, cur_convey_count, function (result, waste_indx) {
+          if (result == true) {
+            var waste_index = parseInt(waste_indx)
+            console.log("waste index : ", waste_index, "type ", typeof(waste_index));*/
+       //-------------------
+            var sqlquery = 'select user_name from users where user_id = ?'
+            var selectt = tickets[i]
+            connection.query(sqlquery, user_id, function (err, rows) {
+              var user_name = rows[0].user_name
+              console.log("username : ", user_name);
+              var sqlquery2 = 'select * from wastes where waste_index = ?'
+              connection.query(sqlquery2, waste_index, function (err, rows1) {
+                var waste_code = rows1[0].waste_code
+                var waste_type = rows1[0].waste_type
+                var waste_handler = rows1[0].waste_handler
+                var method = rows1[0].waste_handle_method
+                var eform_type = rows1[0].eform_type
+                var conveyancer = rows1[0].waste_conveyancer
+                var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
+                connection.query(sqlquery3, (selectt.conveyancer).split('#')[1], function (err, rows2) {
+                  var carnum = rows2[0].carnum
+                  var sqlquery4 = "select companies_id from users where user_id = ?"
+                  connection.query(sqlquery4, selectt.reciever.split('#')[1], function (err, rows3) {
+                    var comp_id = rows3[0].companies_id
+                    var sqlquery4 = "select company_addr from companies where company_id = ?"
+                    connection.query(sqlquery4, comp_id, function (err, rows4) {
+                      var comp_loc = rows4[0].company_addr
+                      var ticket = {
+                        ticket_id: selectt.ticket_id,
+                        waste_type: waste_type,
+                        weight: weight,
+                        conveyancer: conveyancer,
+                        carnum: carnum,
+                        waste_handler: waste_handler,
+                        waste_code: waste_code,
+                        method: method,
+                        comp_loc: comp_loc,
+                        transfer_date: transfer_date,
+                        user_name: user_name,
+                        eform_type: eform_type,
+                        cur_convey_count: cur_convey_count,
+                        pre_convey_count: pre_convey_count,
+                      }
+                      my_tickets.push(ticket)
+                      count++;
+                      if (count == tickets.length) {
+                        console.log("my tickets : ", my_tickets);
+                        cb(true, my_tickets);
+                      }
+                    })
                   })
                 })
               })
             })
-          })
-        } else {
-          count++;
-          if (count == tickets.length) {
-            console.log("my tickets : ", my_tickets);
-            cb(true, my_tickets);
-          }
-        }
-      }))
-    }
-    else {
+         // }
+        //})find_waste_index
+      }//for문
+    } else {//error
       cb(false, []);
     }
   })
@@ -513,4 +425,101 @@ router.post('/complete_ticket', function (req, res, next) {
     }
   });
 });
+
+
+
+//get my received ticket by userid
+function get_my_received_ticket(user_id, cb) {
+  console.log("getuserticketinfo");
+  request.get({
+    url: 'http://localhost:3000/api/queries/select_ticket_user_received?user_id=resource%3Aorg.recycling.tracker.Handler%23' + user_id
+  }, async function (error, res, body) {
+    if (!error) {
+      var tickets = JSON.parse(body);
+      console.log("tickets : ", tickets);
+      var my_tickets = []
+      var count = 0;
+      if (tickets.length == 0) {
+        console.log("none!")
+        cb(true, []);
+      }
+      await Promise.all(tickets.map(async (file) => {
+        //for(var i = 0; i< tickets.length; i++){
+        var temp = file.ticket_id.split('.')
+        var user_id = temp[0]
+        var waste_index = file.waste_index;
+        var transfer_date = file.transfer_date
+        var weight = file.weight
+        var sqlquery = 'select user_name from users where user_id = ?'
+        var selectt = file
+        var cur_convey_count = file.cur_convey_count
+        var pre_convey_count = file.pre_convey_count
+        console.log("count : ", cur_convey_count, pre_convey_count);
+        //only the ones that are finished convey
+        if (cur_convey_count != pre_convey_count) {
+          connection.query(sqlquery, user_id, function (err, rows) {
+            var user_name = rows[0].user_name
+            console.log(user_name)
+            var sqlquery2 = 'select * from wastes where waste_index = ?'
+            connection.query(sqlquery2, waste_index, function (err, rows1) {
+              var waste_code = rows1[0].waste_code
+              var waste_type = rows1[0].waste_type
+              var waste_handler = rows1[0].waste_handler
+              var method = rows1[0].waste_handle_method
+              var eform_type = rows1[0].eform_type
+              var conveyancer = rows1[0].waste_conveyancer
+              var sqlquery3 = "select carnum from users where user_id = ? and user_type = 'conveyancer'"
+              connection.query(sqlquery3, (selectt.conveyancer).split('#')[1], function (err, rows2) {
+                var carnum = rows2[0].carnum
+                var sqlquery4 = "select companies_id from users where user_id = ?"
+                connection.query(sqlquery4, selectt.reciever.split('#')[1], function (err, rows3) {
+                  var comp_id = rows3[0].companies_id
+                  var sqlquery4 = "select company_addr from companies where company_id = ?"
+                  connection.query(sqlquery4, comp_id, function (err, rows4) {
+                    var comp_loc = rows4[0].company_addr
+                    var ticket = {
+                      ticket_id: selectt.ticket_id,
+                      waste_type: waste_type,
+                      waste_code: waste_code,
+                      weight: weight,
+                      conveyancer: conveyancer,
+                      carnum: carnum,
+                      waste_handler: waste_handler,
+                      method: method,
+                      comp_loc: comp_loc,
+                      transfer_date: transfer_date,
+                      user_name: user_name,
+                      eform_type: eform_type,
+                      pre_convey_count: pre_convey_count,
+                      cur_convey_count: cur_convey_count
+                    }
+                    console.log("t : ", ticket);
+                    my_tickets.push(ticket)
+                    count++;
+                    if (count == tickets.length) {
+                      console.log("my tickets : ", my_tickets);
+                      cb(true, my_tickets);
+                    }
+                  })
+                })
+              })
+            })
+          })
+        } else {
+          count++;
+          if (count == tickets.length) {
+            console.log("my tickets : ", my_tickets);
+            cb(true, my_tickets);
+          }
+        }
+      }))
+    }
+    else {
+      cb(false, []);
+    }
+  })
+}
+
+
+
 module.exports = router;

@@ -11,9 +11,9 @@ cd ..
 
 cd recycling_tracker
 
-composer network install --card PeerAdmin@hlfv1 --archiveFile recycling_tracker@0.2.3.bna
+composer network install --card PeerAdmin@hlfv1 --archiveFile recycling_tracker@0.2.4.bna
 
-composer network start --networkName recycling_tracker --networkVersion 0.2.3 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer network start --networkName recycling_tracker --networkVersion 0.2.4 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 
 
 

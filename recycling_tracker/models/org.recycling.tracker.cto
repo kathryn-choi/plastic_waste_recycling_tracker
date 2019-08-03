@@ -55,6 +55,7 @@ asset Ticket identified by ticket_id {
   o String weight 
   o String pre_convey_count
   o String cur_convey_count
+  o String waste_index
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -68,6 +69,7 @@ asset Compasset identified by asset_id {
   o String handle_weight 
   o String save_weight 
   o String comp_id
+  
 }
 
 //create Ticket
@@ -79,6 +81,7 @@ transaction CreateTicket {
   o String weight 
   o String pre_convey_count
   o String cur_convey_count
+  o String waste_index
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -92,7 +95,7 @@ event ticket_created {
   o String weight 
   o String pre_convey_count
   o String cur_convey_count
-
+  o String waste_index
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -111,7 +114,7 @@ event ticket_deleted {
   o String weight 
   o String pre_convey_count
   o String cur_convey_count
-  
+  o String waste_index
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -125,6 +128,8 @@ transaction ChangeTicketInfo {
   o String transfer_date 
   o String pre_convey_count
   o String cur_convey_count
+  o String waste_index
+
   --> User giver
   --> User reciever
   --> User conveyancer
@@ -140,6 +145,8 @@ event ticket_updated {
   o String weight 
   o String pre_convey_count
   o String cur_convey_count
+  o String waste_index
+  
   --> User giver
   --> User reciever
   --> User conveyancer

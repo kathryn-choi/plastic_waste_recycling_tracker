@@ -279,7 +279,7 @@ module.exports = {
 
     },
 
-    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count) {
+    create_ticket: async function (ticket_id,currentdes,previousdes,weight,transfer_date,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count, waste_index) {
         try {
             //connect to network with user_id
             var businessNetworkConnection = new BusinessNetworkConnection();
@@ -296,6 +296,7 @@ module.exports = {
             createTicket.transfer_date = transfer_date;
             createTicket.cur_convey_count = cur_convey_count;
             createTicket.pre_convey_count = pre_convey_count;
+            createTicket.waste_index = waste_index;
             createTicket.weight = weight;
             if(giver_type == 'emitter'){
                 createTicket.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
@@ -332,7 +333,7 @@ module.exports = {
         }
     },
 
-    change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count) {
+    change_ticket_info: async function (ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count, waste_index) {
         try {
             console.log("NETWORK CHANGE TICKET INFO");
             console.log(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id, pre_convey_count, cur_convey_count);
@@ -356,7 +357,7 @@ module.exports = {
             update_info.weight = weight;
             update_info.pre_convey_count=pre_convey_count;
             update_info.cur_convey_count=cur_convey_count;
-
+            update_info.waste_index=waste_index;
             if(giver_type == 'emitter'){
                 update_info.giver = factory.newRelationship(namespace, 'Emitter', giver_id);
             }
@@ -372,7 +373,6 @@ module.exports = {
             }
 
             update_info.conveyancer = factory.newRelationship(namespace, 'Conveyancer', conveyer_id);
-            console.log(update_info.reciever);
             console.log("before trans")
             //submit transaction
             await businessNetworkConnection.submitTransaction(update_info);
@@ -590,6 +590,7 @@ module.exports = {
             return error;
         }
     },
+    
     get_ticket_user_received : async function (_user_id) {
 
         try {

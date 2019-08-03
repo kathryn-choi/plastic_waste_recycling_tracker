@@ -104,3 +104,49 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
         }
     })
   }
+
+  exports.get_ticket_waste_index_by_history = function(ticket_id,cb){
+    console.log("get ticket's waste_index");
+    request.get({
+      url : 'http://localhost:3000/api/queries/get_ticket_history'
+      },async function(error,res,body){
+        if(!error){
+          var comptickets = JSON.parse(body);
+          var my_ticket = []
+          var temp = []
+          var count = 0;
+          await Promise.all(comptickets.map(async (ticket) =>{
+          var event = ticket.eventsEmitted[0]
+          console.log("event : ",event);
+       /*     if(event.ticket_id.split('.')[0] == user_id){
+              temp.push(event);
+            }
+          }))
+          console.log("ticket history : ",temp)
+          if(temp.length == 0 ) {
+              cb(true,my_ticket);
+          }
+          else{
+         /* await Promise.all(temp.map(async (ticket) =>{
+            //(asset_id,gen_weight, handle_weight, save_weight
+            console.log("fds" , ticket);*/
+            console.log("id ", event.ticket_id);
+            if(event.ticket_id==ticket_id){
+            var transaction_type = event.$class.split('.')[3];
+            console.log('type', transaction_type)
+              if(transaction_type == "ticket_updated"){
+               var waste_index = event.waste_index;
+                console.log("waset_index " ,waste_index);
+                cb(true, waste_index);  
+              }
+            }
+            count++;
+            if(count == comptickets.length){
+              cb(false, null);
+            }
+          }))
+      }else{
+          cb(false, null);
+        }
+    })
+  }
