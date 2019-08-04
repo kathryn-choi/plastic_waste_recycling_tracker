@@ -60,30 +60,30 @@ router.get('/read/notice_index/:notice_index', function (req, res, next) {
             var notice_type = rows[0].notice_type;
             var notice_content = rows[0].notice_content;
             var notice_file = rows[0].notice_file;
-           
-            if(req.session.user_id){
-            res.render('notice/context', {
-                notice_index: notice_index,
-                notice_title: notice_title,
-                notice_date: notice_date,
-                notice_type: notice_type,
-                notice_content: notice_content,
-                notice_file: notice_file,
-                user_type: req.session.user_type,
-                user_id: req.session.user_id,
-            });
-        }else{
-            res.render('notice/context', {
-                notice_index: notice_index,
-                notice_title: notice_title,
-                notice_date: notice_date,
-                notice_type: notice_type,
-                notice_content: notice_content,
-                notice_file: notice_file,
-                user_type: -1,
-                user_id: -1,
-            });
-        }
+
+            if (req.session.user_id) {
+                res.render('notice/context', {
+                    notice_index: notice_index,
+                    notice_title: notice_title,
+                    notice_date: notice_date,
+                    notice_type: notice_type,
+                    notice_content: notice_content,
+                    notice_file: notice_file,
+                    user_type: req.session.user_type,
+                    user_id: req.session.user_id,
+                });
+            } else {
+                res.render('notice/context', {
+                    notice_index: notice_index,
+                    notice_title: notice_title,
+                    notice_date: notice_date,
+                    notice_type: notice_type,
+                    notice_content: notice_content,
+                    notice_file: notice_file,
+                    user_type: -1,
+                    user_id: -1,
+                });
+            }
         }
     });
 });
@@ -202,9 +202,9 @@ router.post('/search', function (req, res, next) {
     console.log("search_type", search_type);
     console.log("search_context", search_context);
     console.log("notice_type", notice_type);
-    if(search_type!='' && notice_type!=''){
-        if(notice_type==notice_title){
-        var sqlquery3 = "select * notices where notice_title LIKE ? AND notice_type=?"
+    if (search_type != '' && notice_type != '') {
+        if (notice_type == 'notice_title') {
+            var sqlquery3 = "select * notices where notice_title LIKE ? AND notice_type=?"
             var title = '%' + search_context + '%'
             connection.query(sqlquery3, [title, notice_type], function (err, rows) {
                 if (err) {
@@ -240,7 +240,7 @@ router.post('/search', function (req, res, next) {
                     }
                 }
             });
-        }else{
+        } else {
             var sqlquery3 = "select * notices where notice_content LIKE ? AND notice_type=?"
             var title = '%' + search_context + '%'
             connection.query(sqlquery3, [title, notice_type], function (err, rows) {
@@ -278,7 +278,7 @@ router.post('/search', function (req, res, next) {
                 }
             });
         }
-    }else if (search_type != '') {
+    } else if (search_type != '') {
         if (search_type == 'notice_title') {
             var sqlquery3 = "select * notices where notice_title LIKE ?"
             var title = '%' + search_context + '%'
@@ -324,7 +324,7 @@ router.post('/search', function (req, res, next) {
                     console.log("no match");
                     res.redirect('back');
                 } else {
-                
+
                     var count = 0;
                     for (var i = 0; i < rows.length; i++) {
                         var notice_index = rows[i].notice_index;
@@ -354,24 +354,47 @@ router.post('/search', function (req, res, next) {
                     }
                 }
             });
-        }
-    } else if (notice_type != '') {
-        console.log("notice_type");
-        var sqlquery3 = "select * notices where notice_type = ?"
-        connection.query(sqlquery3, [notice_type], function (err, rows) {
-            if (err) {
-                console.log("no match");
-                res.redirect('back');
-            } else {
-                for()
-                res.render('notice/list', {
-                    notice: search_results
-                })
             }
-        });
-    } else {
-        res.redirect('back');
-    }
-})
+        } else if (notice_type != '') {
+            console.log("notice_type");
+            var sqlquery3 = "select * notices where notice_type = ?"
+            connection.query(sqlquery3, [notice_type], function (err, rows) {
+                if (err) {
+                    console.log("no match");
+                    res.redirect('back');
+                } else {
+                    var count = 0;
+                    for (var i = 0; i < rows.length; i++) {
+                        var notice_index = rows[i].notice_index;
+                        var notice_title = rows[i].notice_title;
+                        var notice_date = rows[i].notice_date;
+                        var notice_type = rows[i].notice_type;
+                        var notice_content = rows[i].notice_content;
+                        var notice_file = rows[i].notice_file;
+                        var notice = {
+                            notice_index: notice_index,
+                            notice_title: notice_title,
+                            notice_date: notice_date,
+                            notice_type: notice_type,
+                            notice_content: notice_content,
+                            notice_file: notice_file,
+                        }
+                        notices.push(notice);
+                        count++;
+                    }
+                    if (count == rows.length) {
+                        console.log('notices : ', notices);
+                        res.render('notice/list', {
+                            notices: notices,
+                            user_type: req.session.user_type,
+                            user_id: req.session.user_id,
+                        });
+                    }
+                }
+            });
+        } else {
+            res.redirect('back');
+        }
+    })
 
 module.exports = router;

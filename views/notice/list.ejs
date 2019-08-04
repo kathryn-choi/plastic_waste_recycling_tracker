@@ -80,10 +80,8 @@
 
     <div class="contact-page-wrap">
         <div class="container">
+                <br> <br> <br> <br>
             <div class="row">
-
-                <div class="col-12 col-lg-7">
-                    <br> <br>
                     <form action="/notice/search" method="post">
                     <label>구분</label>
                     <select id="notice_type" name="notice_type">
@@ -101,17 +99,18 @@
                         <option value="notice_content">내용</option>
                     </select>
                     <label>검색 내용 </label>
-                    <input type="text" id="search_context" name = "search_context"><br>
+                    <input type="text" id="search_context" name = "search_context">
                     <input type="submit" value="검색">
                 </form>
+                <br><br>
                     <%if(notices.length != 0) {%>
                     <table border="1px" cellpadding="15px">
                         <tr>
-                            <th> 구분 </th>
-                            <th> 번호 </th>
-                            <th> 제목 </th>
-                            <th> 파일 </th>
-                            <th> 등록일 </th>
+                            <th width="100"> 구분 </th>
+                            <th width="100"> 번호 </th>
+                            <th width="1000"> 제목 </th>
+                            <th width="100"> 파일 </th>
+                            <th width="500"> 등록일 </th>
                         </tr>
                         <% for(var i=(notices).length-1; i>=0; i--){%>
                         <tr>
@@ -145,7 +144,7 @@
                             <%} else{%>
                             공지사항 없음
                             <%}%>      
-                            </div>    
+    
                     </div>  
                 </div><!-- .container -->
             </div>

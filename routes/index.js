@@ -19,19 +19,46 @@ router.get('/', function (req, res, next) {
       } else {
         console.log("row : ", row);
         var user_type = row[0].user_type;
-        res.render('index', {
-          title: "Home",
-          user_id: req.session.user_id,
-          user_type: user_type
-        });
+        get_recent_notices(function (result, notices) {
+          if (result == true) {
+            console.log(notices);
+            res.render('index', {
+              title: "Home",
+              user_id: req.session.user_id,
+              user_type: user_type,
+              notices: notices
+            });
+          } else {
+            res.render('index', {
+              title: "Home",
+              user_id: req.session.user_id,
+              user_type: user_type,
+              notices: []
+            });
+          }
+        })
       }
     });
   } else {
     console.log(-1)
-    res.render('index', {
-      title: "Home",
-      user_id: -1
-    });
+    get_recent_notices(function (result, notices) {
+      if (result == true) {
+        console.log(notices);
+        res.render('index', {
+          title: "Home",
+          user_id: -1,
+          user_type: -1,
+          notices: notices
+        });
+      } else {
+        res.render('index', {
+          title: "Home",
+          user_id: -1,
+          user_type: -1,
+          notices: []
+        });
+      }
+    })
   }
 });
 
@@ -170,8 +197,8 @@ router.post('/signup', function (req, res, next) {
                       res.jsonp({ success: true, redirect_url: "/login" })
                     }
                   })
-                }
-              })
+              }
+            })
           }
           else {
             network.register_admin(user_id, user_name)
@@ -202,15 +229,15 @@ router.get('/register_company', function (req, res, next) {
 
 router.post('/register_company', function (req, res, next) {
   var sql = "INSERT INTO company_register(company_name, company_addr,  company_contact,company_type, company_material_type, company_method,waste_code,email) VALUES (?,?,?,?,?,?,?,?)";
-      connection.query(sql, [req.body.company_name, req.body.company_addr, req.body.company_contact, req.body.company_type, req.body.waste_type, req.body.handle_method, req.body.waste_code, req.body.email_addr], function (err) {
-        if (err) {
-          console.log("inserting register_company failed");
-          throw err;
-        } else {
-          console.log("Company register insert Success")
-          res.jsonp({ success: true, redirect_url: "/"});
-        }
-      }) 
+  connection.query(sql, [req.body.company_name, req.body.company_addr, req.body.company_contact, req.body.company_type, req.body.waste_type, req.body.handle_method, req.body.waste_code, req.body.email_addr], function (err) {
+    if (err) {
+      console.log("inserting register_company failed");
+      throw err;
+    } else {
+      console.log("Company register insert Success")
+      res.jsonp({ success: true, redirect_url: "/" });
+    }
+  })
 });
 
 router.get('/login', function (req, res, next) {
@@ -260,7 +287,7 @@ router.post('/login', function (req, res, next) {
           console.log(row[0].user_id);
           req.session.user_id = row[0].user_id;
           var user_type = row[0].user_type;
-          req.session.user_type=row[0].user_type;
+          req.session.user_type = row[0].user_type;
           //redirect path according to user_type
           if (user_type == "emitter") {
             res.redirect('/emitter');
@@ -321,5 +348,67 @@ router.post('/search_result', function (req, res, next) {
   var company_id = req.body.company_id;
   res.render('signup', { company_id: company_id });
 });
+
+//recent notices
+function get_recent_notices(cb) {
+  console.log("get notice list")
+  var sqlquery = "SELECT * from notices"
+  var notices = new Array();
+  connection.query(sqlquery, function (err, rows) {
+    if (err) {
+      console.log("no match");
+      res.redirect('back');
+    } else {
+
+      if (rows.length > 6) {
+        var count = 0;
+        for (var i = rows.length - 1; i >= rows.length - 6; i--) {
+          var notice_index = rows[i].notice_index;
+          var notice_title = rows[i].notice_title;
+          var notice_date = rows[i].notice_date;
+          var notice_type = rows[i].notice_type;
+          var notice_content = rows[i].notice_content;
+          var notice_file = rows[i].notice_file;
+          var notice = {
+            notice_index: notice_index,
+            notice_title: notice_title,
+            notice_date: notice_date,
+            notice_type: notice_type,
+            notice_content: notice_content,
+            notice_file: notice_file,
+          }
+          notices.push(notice);
+          count++;
+        }
+        if (count == 5) {
+          cb(true, notices);
+        }
+      } else {
+        var count = 0;
+        for (var i = rows.length - 1; i >= 0; i--) {
+          var notice_index = rows[i].notice_index;
+          var notice_title = rows[i].notice_title;
+          var notice_date = rows[i].notice_date;
+          var notice_type = rows[i].notice_type;
+          var notice_content = rows[i].notice_content;
+          var notice_file = rows[i].notice_file;
+          var notice = {
+            notice_index: notice_index,
+            notice_title: notice_title,
+            notice_date: notice_date,
+            notice_type: notice_type,
+            notice_content: notice_content,
+            notice_file: notice_file,
+          }
+          notices.push(notice);
+          count++;
+        }
+        if (count == rows.length) {
+          cb(true, notices);
+        }
+      }
+    }
+  });
+}
 
 module.exports = router;

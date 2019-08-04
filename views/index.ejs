@@ -362,69 +362,26 @@
                         </div><!-- .section-heading -->
 
                         <div class="cause-wrap d-flex flex-wrap justify-content-between">
-                            <!-- <figure class="m-0">
-                            <img src="/style/images/featured-causes.jpg" alt="">
-                        </figure>-->
+                            <%if(notices.length!=0){%>
+                                <%for (var i=0; i<notices.length; i++){%>
                             <div class="event-content-wrap2">
                                 <header class="entry-header d-flex flex-wrap align-items-center">
-                                    <h3 class="entry-title w-100 m-0"><a
-                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99840">한국환경공단
-                                            노동조합 창립기념일 행사 알림
-                                            [2019.07.08.(월)] </a></h3>
+                                    <h3 class="entry-title w-100 m-0">
+                                        <a href="/notice/read/notice_index/<%=notices[i].notice_index%>">
+                                            <%=notices[i].notice_title%>         
+                                        </a>
+                                    </h3>
                                 </header><!-- .entry-header -->
 
                                 <div class="entry-content">
-                                    <p class="m-0">2019-07-04 </p>
+                                    <p class="m-0"><%=notices[i].notice_date%></p>
                                 </div><!-- .entry-content -->
-
-                                <header class="entry-header d-flex flex-wrap align-items-center">
-                                    <h3 class="entry-title w-100 m-0"><a
-                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99829">전기설비작업에
-                                            따른 부가서비스 제한 안내 </a></h3>
-                                </header><!-- .entry-header -->
-
-                                <div class="entry-content">
-                                    <p class="m-0">2019-07-03</p>
-                                </div><!-- .entry-content -->
-
-                                <header class="entry-header d-flex flex-wrap align-items-center">
-                                    <h3 class="entry-title w-100 m-0"><a
-                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99819">2019년도
-                                            순환골재 홍보 서비스 안내 </a></h3>
-                                </header><!-- .entry-header -->
-
-                                <div class="entry-content">
-                                    <p class="m-0">2019-06-30</p>
-                                </div><!-- .entry-content -->
-
-                                <header class="entry-header d-flex flex-wrap align-items-center">
-                                    <h3 class="entry-title w-100 m-0"><a
-                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99800">2019
-                                            폐기물 관리 및 처리기술 발표회 및 드림파크 자원순환포럼 </a></h3>
-                                </header><!-- .entry-header -->
-
-                                <div class="entry-content">
-                                    <p class="m-0">2019-06-27</p>
-                                </div><!-- .entry-content -->
-
-                                <header class="entry-header d-flex flex-wrap align-items-center">
-                                    <h3 class="entry-title w-100 m-0"><a
-                                            href="https://www.allbaro.or.kr/05_wsc/wsc_notice_view.retrieve.do?board_name=01&seq=99761">['19.6.15(토)/6.16(일)]ARS시스템
-                                            일시 중단에 따른 전자인계서 작성 안내</a></h3>
-                                </header><!-- .entry-header -->
-
-                                <div class="entry-content">
-                                    <p class="m-0">2019-06-17</p>
-                                </div><!-- .entry-content -->
-
+                                <%}%>
+                               <%}%>
                                 <div class="entry-footer mt-5">
-                                    <a
-                                        href="https://www.allbaro.or.kr/05_wsc/wsc_notice_list.listBoard.do?board_name=01">
-                                        더보기</a>
+                                    <a href="/notice"> 더보기</a>
                                 </div><!-- .entry-footer -->
                             </div><!-- .cause-content-wrap -->
-
-
                         </div><!-- .cause-wrap -->
                     </div><!-- .featured-cause -->
                 </div><!-- .col -->
