@@ -13,10 +13,18 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
           var count = 0;
           //for(var i = 0; i< compassets.length; i++)
           await Promise.all(comptickets.map(async (file) =>{
+
+            console.log(file)
             var event = file.eventsEmitted[0]
-            if(event.ticket_id.split('.')[0] == user_id){
+            var giver_id = event.giver.split('#')[1];
+            var reciever_id = event.reciever.split('#')[1];
+            var conveyancer_id = event.conveyancer.split('#')[1];
+            var transaction_type = event.$class.split('.')[3];
+            if(user_id == giver_id && transaction_type != "ticket_deleted"){
               temp.push(event);
             }
+            else if(user_id == conveyancer_id && transaction_type == "ticket_updated") temp.push(event);
+            else if(user_id == reciever_id && transaction_type != "ticket_created") temp.push(event);
           }))
           console.log("ticket history : ",temp)
           if(temp.length == 0 ) {
@@ -30,7 +38,12 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
               transaction_type = "생성"
             }
             else if(transaction_type == "ticket_updated"){
-              transaction_type = "수정"
+              if(reciever_id == user_id){
+                transaction_type = "인계 받음"
+              }
+              else {
+                transaction_type = "인계"
+              }
             }
             else{
                 transaction_type = "삭제"

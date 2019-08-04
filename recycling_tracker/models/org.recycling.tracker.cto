@@ -21,11 +21,11 @@ namespace org.recycling.tracker
 abstract participant User identified by user_id{
   o String user_id
   o String user_name
+  o String company_name
 }
 
 //Emitter identified by user_id
 participant Emitter extends User {
-  o String company_name
 }
 //Conveyancer identified by user_id
 participant Conveyancer extends User {
@@ -34,12 +34,10 @@ participant Conveyancer extends User {
 
 //Handler identified by user_id
 participant Handler extends User {
-  o String company_name
 }
 
 //Recycler identified by user_id
 participant Recycler extends User {
-  o String company_name
 }
 
 //SysAdmin identified by user_id

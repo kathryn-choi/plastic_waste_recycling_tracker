@@ -416,11 +416,11 @@ router.post('/complete_ticket', function (req, res, next) {
       connection.query(sql2, [true, today, ticket_id], function (err) {
         if (err) {
           console.log("inserting alarm failed");
-          res.jsonp({ success: true, redirect_url: "/handler" })
+          res.redirect("/handler")
           throw err;
         } else {
           console.log("alarm inserted successfully");
-          res.jsonp({ success: true, redirect_url: "/handler" })
+          res.redirect("/handler" )
         }
       });
     }

@@ -115,7 +115,7 @@ module.exports = {
             //create partner participant
             const system_admin = factory.newResource(namespace, 'SysAdmin', user_id);
             system_admin.user_name = user_name;
-
+            system_admin.company_name = "환경부";
             //add partner participant
             const participantRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.SysAdmin');
             await participantRegistry.add(system_admin);
@@ -147,7 +147,7 @@ module.exports = {
   * @param {String} user_name conveyancer name
   * @param {String} carnum conveyancer car number
   */
-    register_conveyancer: async function (user_id, user_name,carnum) {
+    register_conveyancer: async function (user_id, user_name,carnum,compname) {
         try {
 
             //connect as admin
@@ -161,6 +161,7 @@ module.exports = {
             const conveyancer = factory.newResource(namespace, 'Conveyancer', user_id);
             conveyancer.user_name = user_name;
             conveyancer.carnumber = carnum;
+            conveyancer.company_name = compname;
 
             //add conveyancer participant
             const participantRegistry = await businessNetworkConnection.getParticipantRegistry(namespace + '.Conveyancer');

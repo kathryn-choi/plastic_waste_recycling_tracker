@@ -152,15 +152,24 @@ router.post('/signup', function (req, res, next) {
             })
           }
           else if (user_type == 'conveyancer') {
-            network.register_conveyancer(user_id, user_name, car_number)
-              .then((response) => {
-                //return error if error in response
-                if (response.error != null) {
-                  console.log("conveyancer register error")
-                } else {
-                  //else return success
-                  console.log("conveyancer register success")
-                  res.jsonp({ success: true, redirect_url: "/login" })
+            var sql = "select company_name from companies where company_id = ?";
+            connection.query(sql, companies_id, function (err, row) {
+              if (err) {
+                console.log("finding company_name error");
+                throw err;
+              } else {
+                company_name = row[0].company_name
+                network.register_conveyancer(user_id, user_name, car_number, company_name)
+                  .then((response) => {
+                    //return error if error in response
+                    if (response.error != null) {
+                      console.log("conveyancer register error")
+                    } else {
+                      //else return success
+                      console.log("conveyancer register success")
+                      res.jsonp({ success: true, redirect_url: "/login" })
+                    }
+                  })
                 }
               })
           }

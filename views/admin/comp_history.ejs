@@ -100,7 +100,9 @@
                     <%}%>
                 </table> 
                 <br> <br> 
-            <%}%>
+            <%}else{%>
+                장부 기록 없음
+            <}>
             </div><!-- .container -->
         </div>
         <div class="page-header">
@@ -132,7 +134,7 @@
                             <!--현재보관량 = 최초 보관량 + 발생량 - 배출량 -->
                             <th>Timestamp</th>
                         </tr>
-                        <% for(var i=(compticket).length-1; i>=0; i--){%>
+                        <% for(var i=0; i<compticket.length; i++){%>
                         <tr>
                             <td><%=compticket[i].ticket_id%></td>
                             <td><%=compticket[i].transaction_type%></td>
