@@ -44,6 +44,7 @@
                                 <%if (user_id ==-1){ %>
                                 <li><a href="/signup">회원가입</a></li>
                                 <li><a href="/login">로그인</a></li>
+                                <li><a href="/notice">공지사항</a></li>
                                 <%} else {%>
                                 <li><a href="/<%=user_type%>">마이페이지</a></li>
                                 <%if(user_type != 'admin'){%>
@@ -51,6 +52,7 @@
                                 <%}else{%>
                                 <li><a href="/admin/register_company_list">회사 등록 요청</a></li>
                                 <%}%>
+                                <li><a href="/notice">공지사항</a></li>
                                         <li><a href="/logout">로그아웃</a></li>
                                 <%}%>
                             </ul>
@@ -82,73 +84,33 @@
         <div class="row">
             <div class="col-12">
                 <div class="donation-form-wrap">
-                    <form class="donation-form", action="/notice/<%=form_action%>", method="post">
-                     
-                        <div class="payment-type d-flex flex-wrap align-items-center">
-                            <h4 class="w-100 mt-5">구분</h4>
-                            <label class="d-flex align-items-center mt-4">
-                         
-                                <input type="radio" name="notice_type" value="notice" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                공지
-                            </label>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="notice_type" value="news" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                소식
-                            </label>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="notice_type" value="education" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                교육
-                            </label>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="notice_type" value="system" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                제도
-                            </label>
-
-                            <label class="d-flex align-items-center mt-4">
-                                <input type="radio" name="notice_type" value="news_letter" />
-                                <span class="payment-type-radio"></span>
-                                <span class="centered-dot"></span>
-
-                                뉴스레터
-                            </label>
-                        </div>
+                    <form class="donation-form">
                     
                         <div class="billing-information">
                             제목 : <%=notice_title%>" <br>
                             구분 : 
                             <%if(notice_type=='education'){%>
                                 교육
-                            <%}else if (notice_type=='news')%{>
+                            <%}else if (notice_type=='news'){%>
                                 소식
-                            <%}else if (notice_type=='news_letter')%{>
+                            <%}else if (notice_type=='news_letter'){%>
                                 뉴스레터
-                            <%}else if (notice_type=='notice')%{>
+                            <%}else if (notice_type=='notice'){%>
                                 공지
                             <%}else{%>
                                 제도
-                            <%}>
+                            <%}%>
                                 <br>
                         </div>
                         <div class="billing-information  d-flex flex-wrap justify-content-between align-items-center">
-                             내용 : <%=notice_context%> <br>
+                             내용 : <br>
+                            <%=notice_content%> <br>
                         </div>
                         <%if (user_type == 'admin'){%>
-                            <a href="/notice/<%=notice_index%>/edit" class="btn gradient-bg mt-5">수정하기</a> 
+                            <a href="/notice/<%=notice_index%>/edit" class="btn gradient-bg mt-5">수정하기</a>
+                            <form action='/notice/delete' method="post"></form>
+                                <input class="btn gradient-bg mt-5" type="submit" value="삭제하기"> 
+                            </form>
                         <%}%>
                     </form>
                 </div>
