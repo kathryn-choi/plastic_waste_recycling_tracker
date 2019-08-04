@@ -24,6 +24,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style/style.css">
+    <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body class="single-page contact-page">
@@ -72,7 +73,8 @@
             <div class="row">    
                     <br> <br>
                     <%if(mycompassets.length != 0) {%>
-                    <table class="w3-table-all" border="1px" cellpadding="15px">
+                    <table id = "asset_list" class="w3-table-all" border="1px" cellpadding="15px">
+                        <thead>
                         <tr>
                             <th style="width:10%">Asset ID</th>
                             <th style="width:10%">Transaction Type </th>
@@ -87,6 +89,7 @@
                             <th style="width:15%">Timestamp</th>
 
                         </tr>
+                        </thead><tbody>
                         <% for(var i=0; i<(mycompassets).length; i++){%>
                         <tr>
                             <td><%=mycompassets[i].asset_id%></td>
@@ -101,6 +104,7 @@
                             <td><%=mycompassets[i].timestamp%></td>
                         </tr>
                         <%}%>
+                </tbody>
                 </table> 
                 <br> <br> 
                 <%} else{%>
@@ -180,8 +184,10 @@
                     </footer><!-- .site-footer -->
     
     <!-- jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type='text/javascript' src='/style/js/jquery.js'></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script type='text/javascript' src='/style/js/jquery.js'></script>
 <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
 <script type='text/javascript' src='/style/js/swiper.min.js'></script>
 <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
@@ -189,6 +195,15 @@
 <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
 <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
 <script type='text/javascript' src='/style/js/custom.js'></script>
+
+<script type="text/javascript">
+    jQuery(function($){ 
+        $("#asset_list").DataTable({ 
+                searching: false,
+                info: false
+        });
+    }); 
+</script>
 
 </body>
 </html>

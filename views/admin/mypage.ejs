@@ -24,6 +24,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style/style.css">
+    <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body class="single-page causes-page">
@@ -326,6 +327,8 @@
     
         <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     // Get the modal
@@ -368,7 +371,7 @@
                 if (data.success == true) {
                     console.log(data)
                     var result = data.results;
-                    var html = '<table border="1px" cellpadding="20px"><tr><th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr>'
+                    var html = '<table id = "comp_list" border="1px" cellpadding="20px"><thead><tr><th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr></thead><tbody>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].company_id + '</td>'
                             + '<td>' + result[i].company_name + '</td>'
@@ -381,10 +384,15 @@
                             + '<button type="submit">선택</button></form></td></tr>'
                         //+ '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button> </form></td></tr>'
                     }
-                    html += '</table>'
+                    html += '</tbody></table>'
                     console.log(html)
                     var comp_list = $('.search_result')
                     comp_list.append(html)
+
+                    $('#comp_list').DataTable({ 
+                        searching: false,
+                        info: false
+                    });
                 }
             }
         });
