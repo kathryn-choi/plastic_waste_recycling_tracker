@@ -20,6 +20,8 @@ var emitter = require('./routes/emitter');
 var handler = require('./routes/handler');
 var recycler = require('./routes/recycler');
 var compasset = require('./routes/compasset');
+var notice = require('./routes/notice');
+
 //var network = require('./recycling_tracker/network.js');
 
 var app = express();
@@ -49,6 +51,7 @@ app.use('/emitter', emitter);
 app.use('/handler', handler);
 app.use('/recycler', recycler);
 app.use('/compasset', compasset);
+app.use('/notice', notice);
 
 connection = mysql.createConnection({
   host     : 'localhost',

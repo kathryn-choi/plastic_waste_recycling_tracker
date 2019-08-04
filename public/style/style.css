@@ -1470,9 +1470,10 @@ ul.tabs-nav .tab-nav.active {
 # Donation Form
 --------------------------------*/
 .donation-form-wrap {
-    padding: 96px 64px;
+    padding: 30px 64px;
     margin-bottom: 96px;
     background: #edf3f5;
+    margin-top: 100px;
 }
 
 .donation-form-wrap h2 {
@@ -1561,13 +1562,25 @@ ul.tabs-nav .tab-nav.active {
 }
 
 .billing-information input {
-    width: calc(50% - 14px);
+  /*  width: calc(50% - 14px);*/
+    width: 100%;
     padding: 12px 30px;
     margin-top: 28px;
     border: 1px solid #e0e0e0;
     font-size: 14px;
     line-height: 1;
 }
+
+.billing-information textarea {
+    /*  width: calc(50% - 14px);*/
+      width: 100%;
+      padding: 12px 30px;
+      margin-top: 28px;
+      border: 1px solid #e0e0e0;
+      font-size: 14px;
+      line-height: 1;
+  }
+  
 
 .billing-information input::placeholder {
     color: #929191;

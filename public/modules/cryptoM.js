@@ -6,6 +6,7 @@ exports.cryptoHash = function(pw){
     hash_num.update(pw);
     return hash_num.digest('hex');
 };
+
 exports.encrypt = function(text){
     var cipher = crypto.createCipher('aes-256-cbc',key);
     var entext = cipher.update(text,'utf8','hex');

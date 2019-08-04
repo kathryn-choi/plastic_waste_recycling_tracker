@@ -260,6 +260,7 @@ router.post('/login', function (req, res, next) {
           console.log(row[0].user_id);
           req.session.user_id = row[0].user_id;
           var user_type = row[0].user_type;
+          req.session.user_type=row[0].user_type;
           //redirect path according to user_type
           if (user_type == "emitter") {
             res.redirect('/emitter');
