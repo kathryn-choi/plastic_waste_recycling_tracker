@@ -96,7 +96,7 @@
                         <div class="entry-content">
                             <h2>회사 등록에 관한 안내</h2>
 
-                            <p>회사 등록을 요청하시면 환경부의 심사 후 통과가 되면 알려 드립니다. <br><br> </p>
+                            <p>회사 등록을 요청하시면 환경부의 심사 후 등록하신 메일로 알려 드립니다. <br><br> </p>
                                 
                         </div>
                     </div>
@@ -123,6 +123,8 @@
                         <td><input type="text" id="handle_method"></td> <br>
                         <label>폐기물 코드(배출자, 재활용자일 경우 필수 입력)</label> <br>
                         <td><input type="text" id="waste_code"></td> <br>
+                        <label>심사 결과 통보 받을 메일*</label> <br>
+                        <td><input type="text" id="email_addr"></td> <br>
                         <br> <br>
                         <input type="submit" class="btn gradient-bg" value="회사 등록" onclick="sign_up()">
                         </div>
@@ -213,7 +215,8 @@
                 company_type: document.getElementById("company_type").value,
                 waste_type: document.getElementById("waste_type").value,
                 handle_method: document.getElementById("handle_method").value,
-                waste_code: document.getElementById("waste_code").value
+                waste_code: document.getElementById("waste_code").value,
+                email_addr: document.getElementById("email_addr").value
             },
             success: function (data) {
                 if (data.success == true) {

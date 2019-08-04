@@ -2,7 +2,17 @@ var express = require('express');
 var router = express.Router();
 var compassetM = require('./../public/modules/compasset.js');
 var ticketM = require('./../public/modules/ticket.js');
+var nodemailer = require('nodemailer')
+var smtpTransport = require('nodemailer-smtp-transport');
 
+var transporter = nodemailer.createTransport(smtpTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  auth: {
+    user: '',
+    pass: ''
+  }
+}))
 //get admin's info from user_id
 function get_user_info(user_id, cb){
   var myinfo = new Array();
@@ -218,6 +228,21 @@ router.post('/accept_comp', function(req,res,next){
         res.redirect('back');
       } else {
           console.log("Deny company success")
+          var mailOption = {
+            from : '',
+            to : '',
+            subject : 'wastechain 기업 등록 거부',
+            text : '심사에 통과 하지 못하셨습니다. \n 기업 등록이 거부 되었습니다. \n 자세한 사항은 환경부로 문의 주세요.'
+          };
+        
+          transporter.sendMail(mailOption, function(err, info) {
+              if ( err ) {
+                  console.error('Send Mail error : ', err);
+              }
+              else {
+                  console.log('Message sent : ', info);
+              }
+          });
           res.jsonp({ success: false})
         }
       });
@@ -243,6 +268,21 @@ router.post('/accept_comp', function(req,res,next){
                     res.redirect('back');
                   } else {
                       console.log("delete company success")
+                      var mailOption = {
+                        from : '',
+                        to : rows[0].email,
+                        subject : 'wastechain 기업 등록 완료',
+                        text : '심사에 통과 하셨습니다. \n 기업 등록이 완료 되었습니다. \n 해당 기업으로 wastechain 회원 가입을 진행해 주세요.'
+                      };
+                    
+                      transporter.sendMail(mailOption, function(err, info) {
+                          if ( err ) {
+                              console.error('Send Mail error : ', err);
+                          }
+                          else {
+                              console.log('Message sent : ', info);
+                          }
+                      });
                       res.jsonp({ success: true})
                     }
                   });
