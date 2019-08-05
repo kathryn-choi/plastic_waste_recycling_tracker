@@ -21,6 +21,7 @@ var handler = require('./routes/handler');
 var recycler = require('./routes/recycler');
 var compasset = require('./routes/compasset');
 var notice = require('./routes/notice');
+var waste_code = require('./routes/waste_code');
 
 //var network = require('./recycling_tracker/network.js');
 
@@ -52,6 +53,7 @@ app.use('/handler', handler);
 app.use('/recycler', recycler);
 app.use('/compasset', compasset);
 app.use('/notice', notice);
+app.use('/waste_code', waste_code);
 
 connection = mysql.createConnection({
   host     : 'localhost',

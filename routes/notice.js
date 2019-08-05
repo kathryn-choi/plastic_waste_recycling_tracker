@@ -33,11 +33,19 @@ router.get('/', function (req, res, next) {
             }
             if (count == rows.length) {
                 console.log('notices : ', notices);
+                if(req.session.user_id){
                 res.render('notice/list', {
                     notices: notices,
                     user_type: req.session.user_type,
                     user_id: req.session.user_id,
                 });
+            }else{
+                res.render('notice/list', {
+                    notices: notices,
+                    user_type: -1,
+                    user_id: -1,
+                });
+            }
             }
         }
     });

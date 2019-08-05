@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>폐기물코드 양식</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/style/css/bootstrap.min.css">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/style/css/font-awesome.min.css">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/style/css/elegant-fonts.css">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/style/css/themify-icons.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/css/swiper.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+</head>
+
+<body class="single-page contact-page">
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 100;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            text-align: justify;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        select {
+            width: 80px;
+            /* 원하는 너비설정 */
+            padding: .4em .4em;
+            /* 여백으로 높이 설정 */
+            font-family: inherit;
+            /* 폰트 상속 */
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+            /* 네이티브 화살표 대체 */
+            border: 1px solid #999;
+            border-radius: 0px;
+            /* iOS 둥근모서리 제거 */
+            -webkit-appearance: none;
+            /* 네이티브 외형 감추기 */
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                    alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/">Home</a></li>
+                                <li><a href="/emitter">마이페이지</a></li>
+                                <li><a href="/compasset">대장 관리</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>폐기물코드 작성하기</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="contact-page-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="entry-content">
+                        <h2>폐기물코드 내용 입력</h2>
+                        <p>작성하고 관리자로부터 승인을 받아야 폐기물코드가 최종 등록됩니다 </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                    <br> <br>
+                    <label>*1.폐기물 종류 : </label>
+                    <!--search button pop up 해서 폐기물종류 조회하기-->
+                    <!-- Trigger/Open The Modal -->
+                    <button id="myBtn" onclick="material_search()">조회하기</button> <br>
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <div>
+                                <span class="close">&times;</span>
+                                폐기물:
+                                <input type="text" name="material_type">
+                                <button type="submit" onclick="get_search_result()">조회</button>
+                            </div>
+                            <div class="search_result"></div>
+                        </div>
+                    </div>
+                    <input type="text" name="waste_code" id="waste_code"> <br>
+
+                    <label>성상</label> <br>
+                    <td>
+                        <input type="text" name="waste_state" id="waste_state"> <br>
+                        <br>
+                        <label>폐기물구분 </label> <br>
+                        <input type="text" id="waste_classify" name="waste_classify"> <br>
+                        <label>2.처리자</label> <br>
+                        <!--search button pop up 해서 폐기물종류 조회하기-->
+                        <!-- Trigger/Open The Modal -->
+                        <button id="myBtn2" onclick="handler_search()">조회하기</button> <br>
+                        <!-- The Modal -->
+                        <div id="myModal2" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <div>
+                                    <span class="close">&times;</span>
+                                    회사 이름:
+                                    <input type="text" name="handler_comp_name">
+                                    <button type="submit" onclick="get_handler_result()">조회</button>
+                                </div>
+                                <div class="search_handler_result"></div>
+                            </div>
+                        </div>
+
+                        <input type="text" id="waste_handler" name="waste_handler"><br>
+                        <label>업체상태 </label> <br>
+                        <select id="waste_handler_condition" name="waste_handler_condition">
+                            <option value="정상">정상</option>
+                            <option value="비정상">비정상</option>
+                        </select> <br>
+                        <label>처리방법</label> <br>
+                        <input type="text" id="waste_handle_method" name="waste_handle_method">
+                        <br>
+                        <label>3.운반자</label> <br>
+                        <!--search button pop up 해서 폐기물종류 조회하기-->
+                        <!-- Trigger/Open The Modal -->
+                        <button id="myBtn3" onclick="conveyancer_search()">조회하기</button> <br>
+                        <!-- The Modal -->
+                        <div id="myModal3" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <div>
+                                    <span class="close">&times;</span>
+                                    회사 이름:
+                                    <input type="text" name="conveyancer_comp_name">
+                                    <button type="submit" onclick="get_conveyancer_result()">조회</button>
+                                </div>
+                                <div class="search_conveyancer_result"></div>
+                            </div>
+                        </div>
+
+                        <input type="text" id="waste_conveyancer" name="waste_conveyancer">
+                        <br>
+                        <label>업체상태</label> <br>
+                        <select id="waste_conveyancer_condition" name="waste_conveyancer_condition">
+                            <option value="정상">정상</option>
+                            <option value="비정상">비정상</option>
+                        </select>
+                        <br>
+                        <label>4.작성방법</label> <br>
+                    <td>
+                        <select id="eform_type" name="eform_type">
+                            <option value="전자">전자</option>
+                            <option value="수기">수기</option>
+                        </select> <br>
+                        <br> <br>
+                        <input type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
+                </div>
+            </div>
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
+
+                            <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                팀원 : 윤혜원, 최재은 <br>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <h2>유관 기관 사이트</h2>
+
+                        <ul>
+                            <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                            <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                            <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                            <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                            <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                            <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                            <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                        </ul>
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-latest-news">
+                            <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm">
+                                <h2>서비스 이용약관</h2>
+                            </a>
+                            <br> <br>
+                            <a href="http://www.keco.or.kr/kr/util/privacy1_1.do">
+                                <h2>개인정보처리방침</h2>
+                            </a>
+                        </div><!-- .foot-latest-news -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>연락처 안내</h2>
+
+                            <ul>
+                                <li>운영 시간 : 9:00 ~ 18:00 <br>
+                                    단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                    운영되지 않습니다</li>
+                                <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span>
+                                </li>
+                            </ul>
+                        </div><!-- .foot-contact -->
+
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+        <div class="footer-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="m-0">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                            template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div><!-- .col-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-bar -->
+    </footer><!-- .site-footer -->
+
+    <script type='text/javascript' src='/style/js/jquery.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='/style/js/custom.js'></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        // Get the modal
+
+        function material_search() {
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        function get_search_result() {
+            $.ajax({
+                url: "/waste_code/search",
+                method: "POST",
+                data: {
+                    material_type: document.getElementsByName("material_type")[0].value,
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        console.log(data)
+                        var result = data.results;
+                        var html = '<table id = "waste_list" border="1px" cellpadding="20px"><thead><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>구분</th><th>선택</th></tr></thead><tbody>'
+                        for (var i = 0; i < result.length; i++) {
+                            html +=
+                                '<tr><td>' + result[i].waste_code + '</td>'
+                                + '<td>' + result[i].waste_type + '</td>'
+                                + '<td>' + result[i].waste_state + '</td>'
+                                + '<td>' + result[i].waste_classify + '</td>'
+                                + '<td><button id = "bnum' + i + '" onclick = "search_loc(' + result[i].waste_code + ',\'' + result[i].waste_type + '\',\'' + result[i].waste_state + '\',\'' + result[i].waste_classify + '\')">선택</button></td></tr>'
+                        }
+                        html += '</tbody></table>'
+                        console.log(html)
+                        var comp_list = $('.search_result')
+                        comp_list.append(html)
+                        $("#waste_list").DataTable({
+                            searching: false,
+                            info: false
+                        });
+                    }
+                }
+            });
+        }
+
+        function search_loc(waste_code, waste_type, waste_state, waste_classify) {
+            $.ajax({
+                url: "/waste_code/search_result",
+                method: "POST",
+                data: {
+                    waste_code: waste_code,
+                    waste_state: waste_state,
+                    waste_type: waste_type,
+                    waste_classify: waste_classify,
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.results)
+                    if (data.success == true) {
+                        var result = data.results;
+                        search_result(result.waste_code, result.waste_type, result.waste_state, result.waste_classify)
+                    }
+                }
+            });
+        }
+
+        function search_result(waste_code, waste_type, waste_state, waste_classify) {
+            var modal = document.getElementById('myModal');
+            $('#waste_type').val(waste_type);
+            $('#waste_code').val(waste_code);
+            $('#waste_state').val(waste_state);
+            $('#waste_classify').val(waste_classify);
+            modal.style.display = "none";
+        }
+
+        function save() {
+            $.ajax({
+                url: "/waste_code/add",
+                method: "POST",
+                data: {
+                    waste_code: document.getElementById("waste_code").value,
+                    waste_state: document.getElementById("waste_state").value,
+                    waste_type: document.getElementById("waste_type").value,
+                    waste_classify: document.getElementById("waste_classify").value,
+                    waste_handler: document.getElementById("waste_handler").value,
+                    waste_handler_condition: document.getElementById("waste_handler_condition").value,
+                    waste_handle_method: document.getElementById("waste_handle_method").value,
+                    waste_conveyancer: document.getElementById("waste_conveyancer").value,
+                    waste_conveyancer_condition: document.getElementById("waste_conveyancer_condition").value,
+                    eform_type: document.getElementById("eform_type").value,
+                },
+                success: function (data) {
+                    window.location.href = data.redirect_url;
+                }
+            });
+        }
+
+        function fill_form(waste_code, waste_state, waste_type, waste_classify) {
+            var modal = document.getElementById('myModal');
+            $('#waste_code').val(waste_code);
+            $('#waste_state').val(waste_state);
+            $('#waste_type').val(waste_type);
+            $('#waste_classify').val(waste_classify);
+            modal.style.display = "none";
+        }
+
+
+        function handler_search() {
+            var modal = document.getElementById('myModal2');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn2");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        function get_handler_result() {
+            $.ajax({
+                url: "/waste_code/search_handler",
+                method: "POST",
+                data: {
+                    handler_comp_name: document.getElementsByName("handler_comp_name")[0].value,
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        console.log(data)
+                        var result = data.results;
+                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th></tr></thead><tbody>'
+                        for (var i = 0; i < result.length; i++) {
+                            html +=
+                                '<tr><td>' + result[i].company_id + '</td>'
+                                + '<td>' + result[i].company_name + '</td>'
+                                + '<td>' + result[i].company_method + '</td>'
+                                + '<td>' + result[i].handler_id.toString() + '</td>'
+                                + '<td>' + result[i].handler_name + '</td>'
+                                + '<td>' + result[i].handler_contact + '</td>'
+                                + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(' + result[i].handler_id + ',\'' + result[i].company_method + '\')">선택</button></td></tr>'
+                        }
+                        html += '</tbody></table>'
+                        console.log(html)
+                        var comp_list = $('.search_handler_result')
+                        comp_list.append(html)
+                        $("#handler_list").DataTable({
+                            searching: false,
+                            info: false
+                        });
+                    }
+                }
+            });
+        }
+
+        function search_hloc(waste_handler, waste_handle_method) {
+            $.ajax({
+                url: "/waste_code/search_handler_result",
+                method: "POST",
+                data: {
+                    waste_handler: waste_handler,
+                    waste_handle_method: waste_handle_method,
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.results)
+                    if (data.success == true) {
+                        var result = data.results;
+                        console.log("searchhloc");
+                        console.log(result);
+                        search_handler_result(result.waste_handler, result.waste_handle_method)
+                    }
+                }
+            });
+        }
+
+        function search_handler_result(waste_handler, waste_handle_method) {
+            var modal = document.getElementById('myModal2');
+            $('#waste_handler').val(waste_handler);
+            $('#waste_handle_method').val(waste_handle_method);
+            modal.style.display = "none";
+        }
+
+        function fill_form2(waste_handler, waste_handle_method) {
+            var modal = document.getElementById('myModal2');
+            $('#waste_handler').val(waste_handler);
+            $('#waste_handle_method').val(waste_handle_method);
+            modal.style.display = "none";
+        }
+
+        function conveyancer_search() {
+            var modal = document.getElementById('myModal3');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn3");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        function get_conveyancer_result() {
+            $.ajax({
+                url: "/waste_code/search_conveyancer",
+                method: "POST",
+                data: {
+                    conveyancer_comp_name: document.getElementsByName("conveyancer_comp_name")[0].value,
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        console.log(data)
+                        var result = data.results;
+                        var html = '<table id = "conveyancer_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th></tr></thead><tbody>'
+                        for (var i = 0; i < result.length; i++) {
+                            html +=
+                                '<tr><td>' + result[i].company_id + '</td>'
+                                + '<td>' + result[i].company_name + '</td>'
+                                + '<td>' + result[i].company_method + '</td>'
+                                + '<td>' + result[i].handler_id.toString() + '</td>'
+                                + '<td>' + result[i].handler_name + '</td>'
+                                + '<td>' + result[i].handler_contact + '</td>'
+                                + '<td><button id = "bnum3' + i + '" onclick = "search_conveyancer_result(' + result[i].handler_id + '\')">선택</button></td></tr>'
+                        }
+                        html += '</tbody></table>'
+                        console.log(html)
+                        var comp_list = $('.search_conveyancer_result')
+                        comp_list.append(html)
+                        $("conveyancer_list").DataTable({
+                            searching: false,
+                            info: false
+                        });
+                    }
+                }
+            });
+        }
+
+        function search_conveyancer_result(waste_conveyancer) {
+            var modal = document.getElementById('myModal3');
+            $('#waste_conveyancer').val(waste_conveyancer);
+           
+            modal.style.display = "none";
+        }
+
+        function fill_for3(waste_conveyancer) {
+            var modal = document.getElementById('myModal3');
+            $('#waste_conveyancer').val(waste_conveyancer);
+            
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

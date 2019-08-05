@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>공지사항</title>
+    <title>폐기물코드</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,7 +46,7 @@
                                 <li><a href="/login">로그인</a></li>
                                 <%} else {%>
                                 <li><a href="/<%=user_type%>">마이페이지</a></li>
-                                <%if(user_type != 'admin'){%>
+                                <%if(user_type != admin){%>
                                 <li><a href="/compasset">대장 관리</a></li>
                                 <%}else{%>
                                 <li><a href="/admin/register_company_list">회사 등록 요청</a></li>
@@ -72,7 +72,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>공지사항</h1>
+                    <h1>폐기물코드 리스트</h1>
                 </div><!-- .col -->
             </div><!-- .row -->
         </div><!-- .container -->
@@ -82,70 +82,51 @@
         <div class="container">
                 <br> <br> <br> <br>
             <div class="row">
-                    <form action="/notice/search" method="post">
-                    <label>구분</label>
-                    <select id="notice_type" name="notice_type">
-                        <option value="">선택</option>
-                        <option value="education">교육</option>
-                        <option value="news">소식</option>
-                        <option value="notice">공지</option>
-                        <option value="system">제도</option>
-                        <option value="news_letter">뉴스레터</option>
-                    </select>
-                    <label>전체 </label>
-                    <select id="search_type" name="search_type">
-                        <option value="">전체</option>
-                        <option value="notice_title">제목</option>
-                        <option value="notice_content">내용</option>
-                    </select>
-                    <label>검색 내용 </label>
-                    <input type="text" id="search_context" name = "search_context">
-                    <input type="submit" value="검색">
-                </form>
-                <%if (user_type=='admin') {%>
-                    &nbsp; &nbsp; &nbsp; &nbsp; <a href="/notice/form">등록하기</a>
-                <%}%>
+                    
                 <br><br>
-                    <%if(notices.length != 0) {%>
+                    <%if(wastes.length != 0) {%>
                     <table border="1px" cellpadding="15px">
                         <tr>
-                            <th width="100"> 구분 </th>
-                            <th width="100"> 번호 </th>
-                            <th width="1000"> 제목 </th>
-                            <th width="100"> 파일 </th>
-                            <th width="500"> 등록일 </th>
+                            <th>폐기물코드</th>
+                            <th>폐기물종류</th>
+                            <th>성상</th>
+                            <th>폐기물구분</th>
+                            <th>처리자</th>
+                            <th>업체상태</th>
+                            <th>처리방법</th>
+                            <th>운반자</th>
+                            <th>업체상태</th>
+                            <th>인계서 종류</th>
+                            <th>승인하기</th>
+                            
                         </tr>
-                        <% for(var i=(notices).length-1; i>=0; i--){%>
+                        <% for(var i=(wastes).length-1; i>=0; i--){%>
                         <tr>
+                            <td><%=wastes[i].waste_code%></td>
+                            <td><%=wastes[i].waste_type%> </td>
+                            <td><%=wastes[i].waste_state%> </td>
+                            <td><%=wastes[i].waste_classify%> </td>
+                            <td><%=wastes[i].waste_handler%> </td>
+                            <td><%=wastes[i].waste_handler_condition%> </td>
+                            <td><%=wastes[i].waste_handle_method%> </td>
+                            <td><%=wastes[i].waste_conveyancer%> </td>
+                            <td><%=wastes[i].waste_conveyancer_condition%> </td>
+                            <td><%=wastes[i].eform_type </td>
+                            <td><%=wastes[i].eform_type </td>
                             <td>
-                                <%if(notices[i].notice_type=='education'){%>
-                                교육
-                                <%}else if (notices[i].notice_type=='news'){%>
-                                소식
-                                <%}else if (notices[i].notice_type=='news_letter'){%>
-                                뉴스레터
-                                <%}else if (notices[i].notice_type=='notice'){%>
-                                공지
-                                <%}else{%>
-                                제도
-                                <%}%>
+                                <form action="/waste_code/deny">
+                                    <input type="submit" value="거절">
+                                </form> 
+                                <form action="/waste_code/accept">
+                                    <input type="submit" value="승인">
+                                </form> 
                             </td>
-                            <td><%=notices[i].notice_index%></td>
-                            <td>
-                                <a href="/notice/read/notice_index/<%=notices[i].notice_index%>">
-                                <%=notices[i].notice_title%></a></td>
-                            <td>
-                                <%if(notices[i].notice_file!=''){%>
-                                    <a href="<%=notices[i].notice_file%>">다운</a>
-                                <%}%>
-                                </td>
-                                <td><%=notices[i].notice_date%></td>
-                            </tr>
-                            <%}%>
+                        </tr>
+                        <%}%>
                         </table>  
                         <br> <br> 
                             <%} else{%>
-                            공지사항 없음
+                            폐기물코드 승인리스트 없음
                             <%}%>      
     
                     </div>  
@@ -210,9 +191,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p class="m-0"><!-- Link back to Colorlib cant be removed. Template is licensed under CC BY 3.0. -->
     Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+    <!-- Link back to Colorlib cant be removed. Template is licensed under CC BY 3.0. --></p>
                     </div><!-- .col-12 -->
                 </div><!-- .row -->
             </div><!-- .container -->
@@ -224,14 +205,14 @@
 <script>
     var date = new Date();
 </script>
-<script type='text/javascript' src='/style/js/jquery.js'></script>
-<script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
-<script type='text/javascript' src='/style/js/swiper.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
-<script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
-<script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
-<script type='text/javascript' src='/style/js/custom.js'></script>
+<script type=text/javascript src=/style/js/jquery.js></script>
+<script type=text/javascript src=/style/js/jquery.collapsible.min.js></script>
+<script type=text/javascript src=/style/js/swiper.min.js></script>
+<script type=text/javascript src=/style/js/jquery.countdown.min.js></script>
+<script type=text/javascript src=/style/js/circle-progress.min.js></script>
+<script type=text/javascript src=/style/js/jquery.countTo.min.js></script>
+<script type=text/javascript src=/style/js/jquery.barfiller.js></script>
+<script type=text/javascript src=/style/js/custom.js></script>
 
 </body>
 </html>
