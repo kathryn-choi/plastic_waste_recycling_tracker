@@ -71,6 +71,7 @@ router.post('/add', function (req, res, next) {
     var waste_type = req.body.waste_type;
     var waste_classify = req.body.waste_classify;
     var waste_handler = req.body.waste_handler;
+    var waste_handle_method = req.body.waste_handle_method
     var waste_handler_condition = req.body.waste_handler_condition;
     var waste_conveyancer = req.body.waste_conveyancer;
     var waste_conveyancer_condition = req.body.waste_conveyancer_condition;
@@ -80,10 +81,10 @@ router.post('/add', function (req, res, next) {
     connection.query(sql, [waste_code, waste_state, waste_type, waste_classify, waste_handler, waste_handler_condition, waste_handle_method, waste_conveyancer, waste_conveyancer_condition, eform_type], function (err) {
         if (err) {
             console.log("no match");
-            res.redirect('back');
+            res.jsonp({ success: true, redirect_url: "/waste_code" });
         } else {
-            console.log("insert succeed");
-            res.redirect('back');
+            console.log("insert succeed"); 
+            res.jsonp({ success: true, redirect_url: "/waste_code" });
         }
     });
 });
@@ -159,26 +160,29 @@ router.post('/search_result', function (req, res, next) {
 })
 
 function find_user_info_by_company_id(company_id, company_name, company_method, cb){
+    console.log(company_id)
     var sqlquery2 = "SELECT * FROM users WHERE companies_id = ?";
     connection.query(sqlquery2, company_id, function (err, row) {
         if (err) {
             console.log("no match");
-            res.redirect('back');
             cb(false, null);
         } else {
             console.log(row);
-            var user_id = row[0].user_id;
-            var user_contact = row[0].user_contact;
-            var user_name = row[0].user_name;
-            var result = {
-                handler_id: user_id,
-                handler_contact: user_contact,
-                handler_name: user_name,
-                company_id: company_id,
-                company_name: company_name,
-                company_method: company_method,
+            if(row.length != 0){
+                var user_id = row[0].user_id;
+                var user_contact = row[0].user_contact;
+                var user_name = row[0].user_name;
+                var result = {
+                    handler_id: user_id,
+                    handler_contact: user_contact,
+                    handler_name: user_name,
+                    company_id: company_id,
+                    company_name: company_name,
+                    company_method: company_method,
+                }
+                cb(true, result)
             }
-            cb(true, result)
+            else cb(false,null)
         }
     })
 }
@@ -189,7 +193,7 @@ router.post('/search_handler', function (req, res, next) {
     console.log("search!");
     var handler_comp_name = "%" + req.body.handler_comp_name + "%";
     var results = new Array();
-    var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ?";
+    var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ? and company_type = 'handler'";
     connection.query(sqlquery, handler_comp_name, function (err, rows) {
         if (err) {
             console.log("no match");
@@ -238,14 +242,15 @@ router.post('/search_handler_result', function (req, res, next) {
 //search handler user info by company name
 router.post('/search_conveyancer', function (req, res, next) {
     console.log("search!");
-    var handler_comp_name = "%" + req.body.handler_comp_name + "%";
+    var conveyancer_comp_name = "%" + req.body.conveyancer_comp_name + "%";
     var results = new Array();
-    var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ?";
-    connection.query(sqlquery, handler_comp_name, function (err, rows) {
+    var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ? and company_type = 'conveyancer'";
+    connection.query(sqlquery, conveyancer_comp_name, function (err, rows) {
         if (err) {
             console.log("no match");
             res.redirect('back');
         } else {
+            console.log(conveyancer_comp_name)
             var count = 0;
             console.log(rows);
             for (var i = 0; i < rows.length; i++) {

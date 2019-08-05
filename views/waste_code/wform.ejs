@@ -165,6 +165,8 @@
                             <div class="search_result"></div>
                         </div>
                     </div>
+                    <input type="text" name="waste_type" id="waste_type"> <br>
+                    <label>폐기물 코드</label> <br>
                     <input type="text" name="waste_code" id="waste_code"> <br>
 
                     <label>성상</label> <br>
@@ -173,7 +175,7 @@
                         <br>
                         <label>폐기물구분 </label> <br>
                         <input type="text" id="waste_classify" name="waste_classify"> <br>
-                        <label>2.처리자</label> <br>
+                        <label>2.처리자</label>
                         <!--search button pop up 해서 폐기물종류 조회하기-->
                         <!-- Trigger/Open The Modal -->
                         <button id="myBtn2" onclick="handler_search()">조회하기</button> <br>
@@ -200,7 +202,7 @@
                         <label>처리방법</label> <br>
                         <input type="text" id="waste_handle_method" name="waste_handle_method">
                         <br>
-                        <label>3.운반자</label> <br>
+                        <label>3.운반자</label> 
                         <!--search button pop up 해서 폐기물종류 조회하기-->
                         <!-- Trigger/Open The Modal -->
                         <button id="myBtn3" onclick="conveyancer_search()">조회하기</button> <br>
@@ -364,6 +366,7 @@
         }
 
         function get_search_result() {
+            $('.search_result').html('')
             $.ajax({
                 url: "/waste_code/search",
                 method: "POST",
@@ -382,37 +385,17 @@
                                 + '<td>' + result[i].waste_type + '</td>'
                                 + '<td>' + result[i].waste_state + '</td>'
                                 + '<td>' + result[i].waste_classify + '</td>'
-                                + '<td><button id = "bnum' + i + '" onclick = "search_loc(' + result[i].waste_code + ',\'' + result[i].waste_type + '\',\'' + result[i].waste_state + '\',\'' + result[i].waste_classify + '\')">선택</button></td></tr>'
+                                + '<td><button id = "bnum' + i + '" onclick = "search_result(\'' + result[i].waste_code + '\',\'' + result[i].waste_type + '\',\'' + result[i].waste_state + '\',\'' + result[i].waste_classify + '\')">선택</button></td></tr>'
                         }
                         html += '</tbody></table>'
                         console.log(html)
                         var comp_list = $('.search_result')
                         comp_list.append(html)
                         $("#waste_list").DataTable({
+                            destroy : true,
                             searching: false,
                             info: false
                         });
-                    }
-                }
-            });
-        }
-
-        function search_loc(waste_code, waste_type, waste_state, waste_classify) {
-            $.ajax({
-                url: "/waste_code/search_result",
-                method: "POST",
-                data: {
-                    waste_code: waste_code,
-                    waste_state: waste_state,
-                    waste_type: waste_type,
-                    waste_classify: waste_classify,
-                },
-                dataType: "json",
-                success: function (data) {
-                    console.log(data.results)
-                    if (data.success == true) {
-                        var result = data.results;
-                        search_result(result.waste_code, result.waste_type, result.waste_state, result.waste_classify)
                     }
                 }
             });
@@ -507,13 +490,14 @@
                                 + '<td>' + result[i].handler_id.toString() + '</td>'
                                 + '<td>' + result[i].handler_name + '</td>'
                                 + '<td>' + result[i].handler_contact + '</td>'
-                                + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(' + result[i].handler_id + ',\'' + result[i].company_method + '\')">선택</button></td></tr>'
+                                + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(\'' + result[i].handler_id + '\',\'' + result[i].company_method + '\')">선택</button></td></tr>'
                         }
                         html += '</tbody></table>'
                         console.log(html)
                         var comp_list = $('.search_handler_result')
                         comp_list.append(html)
                         $("#handler_list").DataTable({
+                            destroy : true,
                             searching: false,
                             info: false
                         });
@@ -605,13 +589,14 @@
                                 + '<td>' + result[i].handler_id.toString() + '</td>'
                                 + '<td>' + result[i].handler_name + '</td>'
                                 + '<td>' + result[i].handler_contact + '</td>'
-                                + '<td><button id = "bnum3' + i + '" onclick = "search_conveyancer_result(' + result[i].handler_id + '\')">선택</button></td></tr>'
+                                + '<td><button id = "bnum3' + i + '" onclick = "search_conveyancer_result(\'' + result[i].handler_id + '\')">선택</button></td></tr>'
                         }
                         html += '</tbody></table>'
                         console.log(html)
                         var comp_list = $('.search_conveyancer_result')
                         comp_list.append(html)
-                        $("conveyancer_list").DataTable({
+                        $("#conveyancer_list").DataTable({
+                            destroy : true,
                             searching: false,
                             info: false
                         });
