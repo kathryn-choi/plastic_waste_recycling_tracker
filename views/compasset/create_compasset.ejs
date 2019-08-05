@@ -290,6 +290,7 @@
         }
     }
     function get_search_result() {
+        $('.search_result').html('')
         $.ajax({
             url: "/compasset/search",
             method: "POST",
@@ -301,7 +302,7 @@
                 if (data.success == true) {
                     console.log(data)
                     var result = data.result;
-                    var html = '<table border="1px" cellpadding="20px"><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr>'
+                    var html = '<table id = "waste_list" border="1px" cellpadding="20px"><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].waste_code + '</td>'
                             + '<td>' + result[i].waste_type + '</td>'
@@ -319,6 +320,12 @@
                     console.log(html)
                     var comp_list = $('.search_result')
                     comp_list.append(html)
+
+                    $('#waste_list').DataTable({ 
+                        destroy: true,
+                        searching: false,
+                        info: false
+                    });
                 }
             }
         });

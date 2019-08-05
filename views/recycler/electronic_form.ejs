@@ -314,6 +314,7 @@
     }
 
     function get_search_result() {
+        $('.search_result').html('')
         $.ajax({
             url: "/recycler/search",
             method: "POST",
@@ -345,6 +346,7 @@
                     var comp_list = $('.search_result')
                     comp_list.append(html)
                     $("#waste_list").DataTable({ 
+                            destroy : true,
                             searching: false,
                             info: false
                     });
