@@ -75,20 +75,27 @@
             text-decoration: none;
             cursor: pointer;
         }
-                select 
-                { 
-                    width: 80px; /* 원하는 너비설정 */ 
-                    padding: .4em .4em; /* 여백으로 높이 설정 */ 
-                    font-family: inherit; /* 폰트 상속 */ 
-                    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
-                    border: 1px solid #999; 
-                    border-radius: 0px; /* iOS 둥근모서리 제거 */ 
-                    -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
-                    -moz-appearance: none; 
-                    appearance: none; 
-                }
-        
-            </style>
+        select 
+        { 
+            width: 80px; /* 원하는 너비설정 */ 
+            padding: .4em .4em; /* 여백으로 높이 설정 */ 
+            font-family: inherit; /* 폰트 상속 */ 
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
+            border: 1px solid #999; 
+            border-radius: 0px; /* iOS 둥근모서리 제거 */ 
+            -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+            -moz-appearance: none; 
+            appearance: none; 
+        }
+        input:-moz-read-only { /* For Firefox */
+        background-color: #DCDCDC;
+        }
+
+        input:read-only {
+        background-color: #DCDCDC;
+        }
+    
+        </style>
         <header class="site-header">
             <div class="nav-bar">
                 <div class="container">
@@ -159,10 +166,10 @@
                                     <div class = "search_result"></div>
                                 </div>
                             </div>
-                            <input type="text" name="waste_code" id="waste_code"> <br>
+                            <input type="text" name="waste_code" id="waste_code" readonly> <br>
                             <label>폐기물 인덱스 : </label> <br>
-                            <input type="number" id="waste_index"> <br>
-                            <label>2. 위탁량</label>  <br>
+                            <input type="number" id="waste_index" readonly> <br>
+                            <label>*2. 위탁량</label>  <br>
                             <td><input type="number" id="weight">
                             <select id="unit">
                                 <option value="kg">kg</option>
@@ -170,26 +177,26 @@
                                 <option value="g">g</option>
                             </select> <br>
                             <label>운반자 id</label>  <br>
-                            <input type="text" id="conveyancer"> <br>
+                            <input type="text" id="conveyancer" readonly> <br>
                             <label>*3.차량번호</label>  <br>
-                            <input type="text" id="conveyancer_car_num">
+                            <input type="text" id="conveyancer_car_num" readonly>
                             <!--조회하기-->
                             <br>
                             <label>처리자 id</label>  <br>
-                            <input type="text" id="handler">
+                            <input type="text" id="handler" readonly>
                             <br>
                             <label>처리방법</label>  <br>
-                            <input type="text" id="handle_method">
+                            <input type="text" id="handle_method" readonly>
                             <br>
                             <label>처리장소</label>  <br>
-                            <input type="text" id="handle_address">
+                            <input type="text" id="handle_address" readonly>
                             <br>
                             <label>*4.인계일자</label>  <br>
                             <!--달력-->
                             <input type="date" id="transfer_date">
                             <br>
                             <label>*5.인계자 id</label>  <br>
-                            <input type="text" id="emitter_name" value="<%=user_id%>">
+                            <input type="text" id="emitter_name" value="<%=user_id%>" readonly>
                             <br> <br>
                             <input  type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
                   </div>
@@ -386,25 +393,37 @@
     }
     
     function save(){
-        $.ajax({
-            url:"/emitter/form",
-            method: "POST",
-            data : {
-                waste_index : document.getElementById("waste_index").value,
-                waste_code : document.getElementById("waste_code").value,
-                weight : document.getElementById("weight").value + document.getElementById("unit").value ,
-                conveyancer : document.getElementById("conveyancer").value,
-                conveyancer_car_num : document.getElementById("conveyancer_car_num").value,
-                handler : document.getElementById("handler").value,
-                handle_method : document.getElementById("handle_method").value,
-                handle_address : document.getElementById("handle_address").value,
-                transfer_date : document.getElementById("transfer_date").value,
-                emitter_name : document.getElementById("emitter_name").value
-            },
-            success : function (data) {
-                window.location.href = data.redirect_url;
-            }
-        });
+        var notifications = []
+        if(document.getElementById("waste_index").value == "") notifications.push("폐기물 종류")
+        if(document.getElementById("weight").value == "") notifications.push("위탁량")
+        if(document.getElementById("transfer_date").value == "") notifications.push("인계 일자")
+
+        if(notifications.length == 0){
+            $.ajax({
+                url:"/emitter/form",
+                method: "POST",
+                data : {
+                    waste_index : document.getElementById("waste_index").value,
+                    waste_code : document.getElementById("waste_code").value,
+                    weight : document.getElementById("weight").value + document.getElementById("unit").value ,
+                    conveyancer : document.getElementById("conveyancer").value,
+                    conveyancer_car_num : document.getElementById("conveyancer_car_num").value,
+                    handler : document.getElementById("handler").value,
+                    handle_method : document.getElementById("handle_method").value,
+                    handle_address : document.getElementById("handle_address").value,
+                    transfer_date : document.getElementById("transfer_date").value,
+                    emitter_name : document.getElementById("emitter_name").value
+                },
+                success : function (data) {
+                    window.location.href = data.redirect_url;
+                }
+            });
+        }
+        else{
+            var content = (notifications).join(", ")
+            content += "를 입력 하지 않았습니다. 입력 후 인계서 작성을 완료해 주세요."
+            alert(content)
+        }
     }
 
     function fill_form(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {

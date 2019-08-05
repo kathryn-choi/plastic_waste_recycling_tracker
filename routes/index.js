@@ -357,7 +357,7 @@ function get_recent_notices(cb) {
   connection.query(sqlquery, function (err, rows) {
     if (err) {
       console.log("no match");
-      res.redirect('back');
+      cb(false, notices)
     } else {
 
       if (rows.length > 6) {

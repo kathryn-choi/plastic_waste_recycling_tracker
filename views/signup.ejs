@@ -176,7 +176,7 @@
                         <select id="user_type">
                             <option value="">직업 선택</option>
                             <option value="emitter">배출자</option>
-                            <option value="conveyancer">운송자</option>
+                            <option value="conveyancer">운반자</option>
                             <option value="handler">처리자</option>
                             <option value="recycler">재활용자</option>
                             <option value="admin">환경부</option>
@@ -202,13 +202,13 @@
                             </div>
                         </div>
 
-                        <td><input type="number" id="companies_id" value=0></td> <br>
+                        <td><input type="number" id="companies_id"></td> <br>
                         <%}else{%>
                         <br>
                         <td><input type="number" id="companies_id" value="<%=company_id%>"></td> <br>
                         <%}%>
-                        <label>Phone</label> <br>
-                        <td><input type="number" id="phone"></td> <br>
+                        <label>전화 번호</label> <br>
+                        <td><input type="text" id="phone"></td> <br>
 
                         <label>차량 번호(운반자일 경우 필수 입력)</label> <br>
                         <td><input type="number" id="carnum"></td> 
@@ -369,26 +369,50 @@
     }
 
     function sign_up() {
-        $.ajax({
-            url: "/signup",
-            method: "POST",
-            data: {
-                user_id: document.getElementById("id").value,
-                user_pw: document.getElementById("pw").value,
-                user_type: document.getElementById("user_type").value,
-                user_name: document.getElementById("name").value,
-                user_contact: document.getElementById("phone").value,
-                companies_id: document.getElementById("companies_id").value,
-                car_number: document.getElementById("carnum").value
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    if(!alert("회원 가입이 완료 되었습니다")){
-                        window.location.href = data.redirect_url;
+        var user_id =  document.getElementById("id").value
+        var user_pw = document.getElementById("pw").value
+        var user_type = document.getElementById("user_type").value
+        var user_name = document.getElementById("name").value
+        var user_contact = document.getElementById("phone").value
+        var companies_id = document.getElementById("companies_id").value
+        var car_number = document.getElementById("carnum").value
+        var notification = []
+
+        if(user_id == '') notification.push("아이디")
+        if(user_pw == '') notification.push("비밀 번호")
+        if(user_name == '') notification.push("이름")
+        if(user_type == '') notification.push("직업")
+        if(companies_id == '') notification.push("회사 id")
+        if(user_contact == '') notification.push("전화 번호")
+        if(user_type == "conveyancer" && car_number == '') notification.push("차량 번호")
+
+        if(notification.length == 0){
+            $.ajax({
+                url: "/signup",
+                method: "POST",
+                data: {
+                    user_id: user_id,
+                    user_pw: user_pw,
+                    user_type: user_type,
+                    user_name: user_name,
+                    user_contact: user_contact,
+                    companies_id: companies_id,
+                    car_number: car_number
+                },
+                success: function (data) {
+                    if (data.success == true) {
+                        if(!alert("회원 가입이 완료 되었습니다")){
+                            window.location.href = data.redirect_url;
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        else{
+            var content = (notification).join(", ")
+            content += "를 입력 하지 않았습니다. 입력 후 회원 가입을 진행 해 주세요."
+            alert(content)
+        }
     }
 
 </script>

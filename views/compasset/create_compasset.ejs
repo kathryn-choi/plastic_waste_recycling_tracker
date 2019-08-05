@@ -89,6 +89,13 @@
                     -moz-appearance: none; 
                     appearance: none; 
         }
+        input:-moz-read-only { /* For Firefox */
+        background-color: #DCDCDC;
+        }
+
+        input:read-only {
+        background-color: #DCDCDC;
+        }
     </style>
 
     <body class="single-page contact-page">
@@ -159,14 +166,14 @@
                             </div>
                         </div>
                         <br>
-                        <input type="number" id="waste_code">
+                        <input type="number" id="waste_code" readonly>
                         <br>
                         <label>*2. 날짜</label> <br>
                         <!--달력-->
                         <input id="date" type="date" name="save_date">
                         <br>
 
-                        <label>3.최초 보관량</label> <br>
+                        <label>*3.최초 보관량</label> <br>
                         <td><input type="number" name="first_save_weight"></td>
                         <select name="unit">
                             <option value="kg">kg</option>
@@ -324,62 +331,73 @@
     }
 
     function save() {
-        console.log("save!");
-        var unit = document.getElementsByName("unit")[0].value;
-        console.log("unit : ", unit);
-        console.log(document.getElementsByName("save_date")[0].value);
-        if (unit == "kg") {
-            console.log("unit : kg");
-            $.ajax({
-                url: "/compasset/create_compasset",
-                method: "POST",
-                data: {
-                    waste_code: document.getElementById("waste_code").value,
-                    save_date: document.getElementsByName("save_date")[0].value,
-                    first_save_weight: document.getElementsByName("first_save_weight")[0].value,
-                },
-                success: function (data) {
-                    if (data.success == true) {
-                        window.location.href = data.redirect_url;
+        var notifications = []
+        if(document.getElementById("waste_code").value == "") notifications.push("폐기물 종류")
+        if(document.getElementsByName("save_date")[0].value == "") notifications.push("날짜")
+        if(document.getElementsByName("first_save_weight")[0].value == "") notifications.push("최초 보관량")
+
+        if(notifications.length == 0){
+            console.log("save!");
+            var unit = document.getElementsByName("unit")[0].value;
+            console.log("unit : ", unit);
+            console.log(document.getElementsByName("save_date")[0].value);
+            if (unit == "kg") {
+                console.log("unit : kg");
+                $.ajax({
+                    url: "/compasset/create_compasset",
+                    method: "POST",
+                    data: {
+                        waste_code: document.getElementById("waste_code").value,
+                        save_date: document.getElementsByName("save_date")[0].value,
+                        first_save_weight: document.getElementsByName("first_save_weight")[0].value,
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location.href = data.redirect_url;
+                        }
                     }
-                }
-            });
-        } else if (unit == "ton") {
-            console.log("unit : ton");
-            //1 ton == 907.185 kg
-            var weight = document.getElementsByName("first_save_weight")[0].value * 907.185;
-            $.ajax({
-                url: "/compasset/create_compasset",
-                method: "POST",
-                data: {
-                    waste_code: document.getElementsByName("waste_code")[0].value,
-                    save_date: document.getElementsByName("save_date")[0].value,
-                    first_save_weight: weight,
-                },
-                success: function (data) {
-                    if (data.success == true) {
-                        window.location.href = data.redirect_url;
+                });
+            } else if (unit == "ton") {
+                console.log("unit : ton");
+                //1 ton == 907.185 kg
+                var weight = document.getElementsByName("first_save_weight")[0].value * 907.185;
+                $.ajax({
+                    url: "/compasset/create_compasset",
+                    method: "POST",
+                    data: {
+                        waste_code: document.getElementsByName("waste_code")[0].value,
+                        save_date: document.getElementsByName("save_date")[0].value,
+                        first_save_weight: weight,
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location.href = data.redirect_url;
+                        }
                     }
-                }
-            });
-        } else {
-            //1g == 0.001 kg
-            console.log("unit : g");
-            var weight = document.getElementsByName("first_save_weight")[0].value * 0.001;
-            $.ajax({
-                url: "/compasset/create_compasset",
-                method: "POST",
-                data: {
-                    waste_code: document.getElementsByName("waste_code")[0].value,
-                    save_date: document.getElementsByName("save_date")[0].value,
-                    first_save_weight: weight,
-                },
-                success: function (data) {
-                    if (data.success == true) {
-                        window.location.href = data.redirect_url;
+                });
+            } else {
+                //1g == 0.001 kg
+                console.log("unit : g");
+                var weight = document.getElementsByName("first_save_weight")[0].value * 0.001;
+                $.ajax({
+                    url: "/compasset/create_compasset",
+                    method: "POST",
+                    data: {
+                        waste_code: document.getElementsByName("waste_code")[0].value,
+                        save_date: document.getElementsByName("save_date")[0].value,
+                        first_save_weight: weight,
+                    },
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location.href = data.redirect_url;
+                        }
                     }
-                }
-            });
+                });
+            }
+        }else{
+            var content = (notifications).join(", ")
+            content += "를 입력 하지 않았습니다. 입력 후 등록을 완료해 주세요."
+            alert(content)
         }
     }
 

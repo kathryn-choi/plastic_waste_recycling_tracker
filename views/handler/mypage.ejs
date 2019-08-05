@@ -101,7 +101,6 @@
                             <nav class="site-navigation d-flex justify-content-end align-items-center">
                                 <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
                                     <li class="current-menu-item"><a href="/">Home</a></li>
-                                    <li><a href="/handler/form">전자 인계서 작성하기</a></li>
                                     <li><a href="/compasset">대장 관리</a></li>
                                     <li><a href="/logout">로그아웃</a></li>
                                 </ul>
@@ -187,7 +186,7 @@
                         </div><!-- .section-heading -->
     
                         <div class="entry-content">
-                            <p>현재 작성된 인계서 갯수</p>
+                            <p>현재 인계 받은 인계서 갯수</p>
                         </div><!-- .entry-content -->
     
                         <div class="fund-raised w-100 mt-5">
@@ -199,10 +198,6 @@
                                 <span class="fill" data-percentage="<%=total%>"></span>
                             </div><!-- .fund-raised-bar -->
                         </div><!-- .fund-raised -->
-    
-                        <div class="entry-footer mt-5">
-                            <a href="/handler/form" class="btn gradient-bg">새로 작성하기</a>
-                        </div><!-- .entry-footer -->
                     </div><!-- .col -->
     
                     <div class="col-12 col-lg-5 order-1 order-lg-2">
@@ -297,7 +292,7 @@
                     <!--<form action="/handler/change_ticketinfo" method="post">-->
                                                         폐기물 코드 : <%=rtickets[i].waste_code%> <br>
                                                         폐기물 종류: <%=rtickets[i].waste_type%> <br>
-                                                        위탁량 :<%=rtickets[i].weight%>" <br>
+                                                        위탁량 :<%=rtickets[i].weight%> <br>
                                                         운반자 : <%=rtickets[i].conveyancer%> <br>
                                                         차량 번호 : <%=rtickets[i].carnum%> <br>
                                                         처리자 : <%=rtickets[i].waste_handler%> <br>
