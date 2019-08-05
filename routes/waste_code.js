@@ -131,7 +131,7 @@ router.post('/search', function (req, res, next) {
     connection.query(sqlquery, material_type, function (err, rows) {
         if (err) {
             console.log("no match");
-            res.redirect('back');
+            res.jsonp({ success: true, results: results });
         } else {
             console.log("found waste_info");
             results = rows;

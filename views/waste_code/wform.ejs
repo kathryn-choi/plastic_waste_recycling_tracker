@@ -470,6 +470,7 @@
         }
 
         function get_handler_result() {
+            $('.search_handler_result').html('')
             $.ajax({
                 url: "/waste_code/search_handler",
                 method: "POST",
@@ -481,7 +482,7 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th></tr></thead><tbody>'
+                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].company_id + '</td>'
@@ -569,6 +570,7 @@
         }
 
         function get_conveyancer_result() {
+            $('.search_conveyancer_result').html('')
             $.ajax({
                 url: "/waste_code/search_conveyancer",
                 method: "POST",
@@ -580,12 +582,11 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "conveyancer_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th></tr></thead><tbody>'
+                        var html = '<table id = "conveyancer_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].company_id + '</td>'
                                 + '<td>' + result[i].company_name + '</td>'
-                                + '<td>' + result[i].company_method + '</td>'
                                 + '<td>' + result[i].handler_id.toString() + '</td>'
                                 + '<td>' + result[i].handler_name + '</td>'
                                 + '<td>' + result[i].handler_contact + '</td>'

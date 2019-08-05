@@ -24,6 +24,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style/style.css">
+    <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
 </head>
 
@@ -46,7 +47,7 @@
                                 <li><a href="/login">로그인</a></li>
                                 <%} else {%>
                                 <li><a href="/<%=user_type%>">마이페이지</a></li>
-                                <%if(user_type != admin){%>
+                                <%if(user_type != 'admin'){%>
                                 <li><a href="/compasset">대장 관리</a></li>
                                 <%}else{%>
                                 <li><a href="/admin/register_company_list">회사 등록 요청</a></li>
@@ -85,7 +86,8 @@
                     
                 <br><br>
                     <%if(wastes.length != 0) {%>
-                    <table border="1px" cellpadding="15px">
+                    <table id = "waste_list" border="1px" cellpadding="15px">
+                        <thead>
                         <tr>
                             <th>폐기물코드</th>
                             <th>폐기물종류</th>
@@ -100,6 +102,7 @@
                             <th>승인하기</th>
                             
                         </tr>
+                        </thead><tbody>
                         <% for(var i=(wastes).length-1; i>=0; i--){%>
                         <tr>
                             <td><%=wastes[i].waste_code%></td>
@@ -111,18 +114,21 @@
                             <td><%=wastes[i].waste_handle_method%> </td>
                             <td><%=wastes[i].waste_conveyancer%> </td>
                             <td><%=wastes[i].waste_conveyancer_condition%> </td>
-                            <td><%=wastes[i].eform_type </td>
-                            <td><%=wastes[i].eform_type </td>
+                            <td><%=wastes[i].eform_type%> </td>
                             <td>
-                                <form action="/waste_code/deny">
-                                    <input type="submit" value="거절">
-                                </form> 
-                                <form action="/waste_code/accept">
+                                <form action="/waste_code/accept" method="post">
+                                    <input type="hidden" name="waste_index" value="<%=wastes[i].waste_index%>" >
                                     <input type="submit" value="승인">
+                                </form> 
+                                <br>
+                                <form action="/waste_code/deny" method="post">
+                                    <input type="hidden" name="waste_index" value="<%=wastes[i].waste_index%>" >
+                                    <input type="submit" value="거절">
                                 </form> 
                             </td>
                         </tr>
                         <%}%>
+                        </tbody>
                         </table>  
                         <br> <br> 
                             <%} else{%>
@@ -202,8 +208,19 @@
 
 
 </script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
     var date = new Date();
+    jQuery(function($){ 
+        $("#waste_list").DataTable({ 
+                destroy : true,
+                info: false
+        }); 
+        
+    }); 
 </script>
 <script type=text/javascript src=/style/js/jquery.js></script>
 <script type=text/javascript src=/style/js/jquery.collapsible.min.js></script>
