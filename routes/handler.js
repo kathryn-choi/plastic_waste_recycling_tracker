@@ -236,8 +236,8 @@ router.post('/search', function (req, res, next) {
   var material_type = "%" + req.body.material_type + "%";
   var results = new Array();
   console.log(material_type);
-  var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ?";
-  connection.query(sqlquery, material_type, function (err, rows) {
+  var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ? AND waste_pending=?";
+  connection.query(sqlquery,[material_type,true], function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');

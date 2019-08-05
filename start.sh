@@ -23,7 +23,7 @@ composer network ping --card admin@recycling_tracker
 
 cd ..
 
-composer-rest-server -c admin@recycling_tracker -n never -u true -w true
+#composer-rest-server -c admin@recycling_tracker -n never -u true -w true
 
 
 #composer archive create -t dir -n .
