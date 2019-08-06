@@ -224,6 +224,7 @@
                     <br> <br>
                     <%if(alarms.length != 0) {%>
                     <%for (var i=0; i<alarms.length; i++){%>
+                    <div class="table-responsive">    
                     <table id = "alarm_list" class="w3-table-all" border="1px" cellpadding="15px">
                         <thead>
                         <tr>
@@ -242,6 +243,7 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
                     <%}%>
                 <%}else{%>
                     알람 없음
@@ -389,7 +391,7 @@
                 if (data.success == true) {
                     console.log(data)
                     var result = data.results;
-                    var html = '<table id = "comp_list" border="1px"><thead><tr><th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr></thead><tbody>'
+                    var html = '<div class="table-responsive"><table id = "comp_list" border="1px"><thead><tr><th>Company ID</th><th>Company Name</th><th>Company Address</th><th>Company Contact</th><th>Company Type</th><th>Company Material Type</th><th>submit</th></tr></thead><tbody>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].company_id + '</td>'
                             + '<td>' + result[i].company_name + '</td>'
@@ -402,7 +404,7 @@
                             + '<button type="submit">선택</button></form></td></tr>'
                         //+ '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button> </form></td></tr>'
                     }
-                    html += '</tbody></table>'
+                    html += '</tbody></table></div>'
                     console.log(html)
                     prev = html
                     var comp_list = $('.search_result')

@@ -71,6 +71,7 @@
             <div class="row">
                 <br> <br>
                 <%if(compasset.length != 0) {%>
+                <div class="table-responsive">    
                 <table id = "asset_list" class="w3-table-all" border="1px" cellpadding="15px">
                     <thead>
                     <tr>
@@ -102,7 +103,8 @@
                     </tr>
                     <%}%>
                 </tbody>
-                </table> 
+                </table>
+            </div> 
                 <br> <br> 
             <%}else{%>
                 장부 기록 없음
@@ -123,6 +125,7 @@
                 <div class="row">
                     <br> <br>
                     <%if(compticket.length != 0) {%>
+                    <div class="table-responsive"></div>
                     <table id = "ticket_list" border="1px" cellpadding="15px">
                         <thead>
                         <tr>
@@ -157,7 +160,8 @@
                         </tr>
                         <%}%>
                     </tbody>
-                    </table>  
+                    </table> 
+                </div> 
                     <br> <br> 
                         <%} else{%>
                         티켓 기록 없음

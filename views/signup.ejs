@@ -341,7 +341,7 @@
             success: function (data) {
                 if (data.success == true) {
                     var result = data.results;
-                    var html = '<br><table id="comp_list" border="1px"><thead><tr> <th> 기업ID </th><th> 기업 이름 </th><th>주소</th><th>연락처</th><th>기업 종류</th><th>재료 종류</th><th>선택하기</th></tr></thead><tbody>'
+                    var html = '<br><div class="table-responsive"><table id="comp_list" class="table table-bordered"><thead><tr> <th> 기업ID </th><th> 기업 이름 </th><th>주소</th><th>연락처</th><th>기업 종류</th><th>재료 종류</th><th>선택하기</th></tr></thead><tbody>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].company_id + '</td>'
                             + '<td>' + result[i].company_name + '</td>'
@@ -351,7 +351,7 @@
                             + '<td>' + result[i].company_material_type + '</td>'
                             + '<td><button id = "bnum"'+i+'" onclick = "search_result('+result[i].company_id+')">선택</button></td></tr>'
                     }
-                    html+='</tbody></table>'
+                    html+='</tbody></table></div>'
                     var comp_list = $('.search_result')
                     comp_list.append(html)
                     $('#comp_list').DataTable({ 

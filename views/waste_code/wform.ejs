@@ -400,7 +400,7 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "waste_list" border="1px" cellpadding="20px"><thead><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>구분</th><th>선택</th></tr></thead><tbody>'
+                        var html = '<div class="table-responsive"><table id = "waste_list" border="1px" cellpadding="20px"><thead><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>구분</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].waste_code + '</td>'
@@ -409,7 +409,7 @@
                                 + '<td>' + result[i].waste_classify + '</td>'
                                 + '<td><button id = "bnum' + i + '" onclick = "search_result(\'' + result[i].waste_code + '\',\'' + result[i].waste_type + '\',\'' + result[i].waste_state + '\',\'' + result[i].waste_classify + '\')">선택</button></td></tr>'
                         }
-                        html += '</tbody></table>'
+                        html += '</tbody></table></div>'
                         console.log(html)
                         var comp_list = $('.search_result')
                         comp_list.append(html)
@@ -504,7 +504,7 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
+                        var html = '<div class="table-responsive"><table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].company_id + '</td>'
@@ -515,7 +515,7 @@
                                 + '<td>' + result[i].handler_contact + '</td>'
                                 + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(\'' + result[i].handler_id + '\',\'' + result[i].company_method + '\')">선택</button></td></tr>'
                         }
-                        html += '</tbody></table>'
+                        html += '</tbody></table></div>'
                         console.log(html)
                         var comp_list = $('.search_handler_result')
                         comp_list.append(html)
@@ -542,7 +542,7 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
+                        var html = '<div class="table-responsive"><table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].company_id + '</td>'
@@ -553,7 +553,7 @@
                                 + '<td>' + result[i].handler_contact + '</td>'
                                 + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(\'' + result[i].handler_id + '\',\'' + result[i].company_method + '\')">선택</button></td></tr>'
                         }
-                        html += '</tbody></table>'
+                        html += '</tbody></table></div>'
                         console.log(html)
                         var comp_list = $('.search_handler_result')
                         comp_list.append(html)
@@ -615,7 +615,7 @@
                     if (data.success == true) {
                         console.log(data)
                         var result = data.results;
-                        var html = '<table id = "conveyancer_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
+                        var html = '<div class="table-responsive"><table id = "conveyancer_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
                         for (var i = 0; i < result.length; i++) {
                             html +=
                                 '<tr><td>' + result[i].company_id + '</td>'
@@ -625,7 +625,7 @@
                                 + '<td>' + result[i].handler_contact + '</td>'
                                 + '<td><button id = "bnum3' + i + '" onclick = "search_conveyancer_result(\'' + result[i].handler_id + '\')">선택</button></td></tr>'
                         }
-                        html += '</tbody></table>'
+                        html += '</tbody></table></div>'
                         console.log(html)
                         var comp_list = $('.search_conveyancer_result')
                         comp_list.append(html)
