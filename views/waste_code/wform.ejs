@@ -108,8 +108,9 @@
 
                         <nav class="site-navigation d-flex justify-content-end align-items-center">
                             <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                <li class="current-menu-item"><a href="/">Home</a></li>
-                                <li><a href="/emitter">마이페이지</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/<%=user_type%>">마이페이지</a></li>
+                                <li class="current-menu-item"><a href="/waste_code">폐기물코드 작성하기</a></li>
                                 <li><a href="/compasset">대장 관리</a></li>
                                 <li><a href="/logout">로그아웃</a></li>
                             </ul>
@@ -170,29 +171,50 @@
                     <input type="text" name="waste_code" id="waste_code"> <br>
 
                     <label>성상</label> <br>
-                    <td>
+                    
                         <input type="text" name="waste_state" id="waste_state"> <br>
                         <br>
                         <label>폐기물구분 </label> <br>
                         <input type="text" id="waste_classify" name="waste_classify"> <br>
-                        <label>2.처리자</label>
-                        <!--search button pop up 해서 폐기물종류 조회하기-->
-                        <!-- Trigger/Open The Modal -->
-                        <button id="myBtn2" onclick="handler_search()">조회하기</button> <br>
-                        <!-- The Modal -->
-                        <div id="myModal2" class="modal">
-                            <!-- Modal content -->
-                            <div class="modal-content">
-                                <div>
-                                    <span class="close">&times;</span>
-                                    회사 이름:
-                                    <input type="text" name="handler_comp_name">
-                                    <button type="submit" onclick="get_handler_result()">조회</button>
+                        <% if(user_type == 'emitter'){ %>
+                            <label>2.처리자</label>
+                            <!--search button pop up 해서 폐기물종류 조회하기-->
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn2" onclick="handler_search()">조회하기</button> <br>
+                            <!-- The Modal -->
+                            <div id="myModal2" class="modal">
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <div>
+                                        <span class="close">&times;</span>
+                                        회사 이름:
+                                        <input type="text" name="handler_comp_name">
+                                        <button type="submit" onclick="get_handler_result()">조회</button>
+                                    </div>
+                                    <div class="search_handler_result"></div>
                                 </div>
-                                <div class="search_handler_result"></div>
                             </div>
-                        </div>
 
+                        <%}else {%>
+                            <label>2.처리자/재활용자</label>
+                            <!--search button pop up 해서 폐기물종류 조회하기-->
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn2" onclick="handler_search()">조회하기</button> <br>
+                            <!-- The Modal -->
+                            <div id="myModal2" class="modal">
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <div>
+                                        <span class="close">&times;</span>
+                                        회사 이름:
+                                        <input type="text" name="handler_comp_name">
+                                        <button type="submit" onclick="get_recycler_result()">조회</button>
+                                    </div>
+                                    <div class="search_handler_result"></div>
+                                </div>
+                            </div>
+
+                        <%}%>
                         <input type="text" id="waste_handler" name="waste_handler"><br>
                         <label>업체상태 </label> <br>
                         <select id="waste_handler_condition" name="waste_handler_condition">
@@ -229,7 +251,7 @@
                         </select>
                         <br>
                         <label>4.작성방법</label> <br>
-                    <td>
+                    
                         <select id="eform_type" name="eform_type">
                             <option value="전자">전자</option>
                             <option value="수기">수기</option>
@@ -507,35 +529,46 @@
             });
         }
 
-        function search_hloc(waste_handler, waste_handle_method) {
+        function get_recycler_result() {
+            $('.search_handler_result').html('')
             $.ajax({
-                url: "/waste_code/search_handler_result",
+                url: "/waste_code/search_recycler",
                 method: "POST",
                 data: {
-                    waste_handler: waste_handler,
-                    waste_handle_method: waste_handle_method,
+                    handler_comp_name: document.getElementsByName("handler_comp_name")[0].value,
                 },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data.results)
                     if (data.success == true) {
+                        console.log(data)
                         var result = data.results;
-                        console.log("searchhloc");
-                        console.log(result);
-                        search_handler_result(result.waste_handler, result.waste_handle_method)
+                        var html = '<table id = "handler_list" border="1px" cellpadding="20px"><thead><tr><th>회사ID</th><th>회사이름</th><th>회사 처리방법</th><th>사용자ID</th><th>사용자 이름</th><th>사용자 연락처</th><th>선택</th></tr></thead><tbody>'
+                        for (var i = 0; i < result.length; i++) {
+                            html +=
+                                '<tr><td>' + result[i].company_id + '</td>'
+                                + '<td>' + result[i].company_name + '</td>'
+                                + '<td>' + result[i].company_method + '</td>'
+                                + '<td>' + result[i].handler_id.toString() + '</td>'
+                                + '<td>' + result[i].handler_name + '</td>'
+                                + '<td>' + result[i].handler_contact + '</td>'
+                                + '<td><button id = "bnum2' + i + '" onclick = "search_handler_result(\'' + result[i].handler_id + '\',\'' + result[i].company_method + '\')">선택</button></td></tr>'
+                        }
+                        html += '</tbody></table>'
+                        console.log(html)
+                        var comp_list = $('.search_handler_result')
+                        comp_list.append(html)
+                        $("#handler_list").DataTable({
+                            destroy : true,
+                            searching: false,
+                            info: false
+                        });
                     }
                 }
             });
         }
 
-        function search_handler_result(waste_handler, waste_handle_method) {
-            var modal = document.getElementById('myModal2');
-            $('#waste_handler').val(waste_handler);
-            $('#waste_handle_method').val(waste_handle_method);
-            modal.style.display = "none";
-        }
 
-        function fill_form2(waste_handler, waste_handle_method) {
+        function search_handler_result(waste_handler, waste_handle_method) {
             var modal = document.getElementById('myModal2');
             $('#waste_handler').val(waste_handler);
             $('#waste_handle_method').val(waste_handle_method);
@@ -610,13 +643,6 @@
             var modal = document.getElementById('myModal3');
             $('#waste_conveyancer').val(waste_conveyancer);
            
-            modal.style.display = "none";
-        }
-
-        function fill_for3(waste_conveyancer) {
-            var modal = document.getElementById('myModal3');
-            $('#waste_conveyancer').val(waste_conveyancer);
-            
             modal.style.display = "none";
         }
     </script>

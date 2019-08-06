@@ -5,6 +5,7 @@ var request = require('request');
 //waste_code form
 router.get('/', function (req, res, next) {
     console.log("waste_code form")
+    console.log(req.session.user_type)
     res.render('waste_code/wform', {
         user_id: req.session.user_id,
         user_type: req.session.user_type,
@@ -167,7 +168,6 @@ function find_user_info_by_company_id(company_id, company_name, company_method, 
             console.log("no match");
             cb(false, null);
         } else {
-            console.log(row);
             if(row.length != 0){
                 var user_id = row[0].user_id;
                 var user_contact = row[0].user_contact;
@@ -226,18 +226,43 @@ router.post('/search_handler', function (req, res, next) {
     });
 });
 
-//choose handler from search result
-router.post('/search_handler_result', function (req, res, next) {
-    var waste_handler = req.body.waste_handler;
-    var waste_handle_method = req.body.waste_handle_method;
-
-    var results = {
-       waste_handler: waste_handler,
-       waste_handle_method : waste_handle_method
-    }
-    console.log(results)
-    res.jsonp({ success: true, results: results });
-})
+//search handler user info by company name
+router.post('/search_recycler', function (req, res, next) {
+    console.log("search!");
+    var handler_comp_name = "%" + req.body.handler_comp_name + "%";
+    var results = new Array();
+    var sqlquery = "SELECT * FROM companies WHERE company_name LIKE ? and (company_type = 'handler' or company_type = 'recycler')";
+    connection.query(sqlquery, handler_comp_name, function (err, rows) {
+        if (err) {
+            console.log("no match");
+            res.redirect('back');
+        } else {
+            var count = 0;
+            console.log(rows);
+            for (var i = 0; i < rows.length; i++) {
+                var company_id = rows[i].company_id;
+                var company_name = rows[i].company_name;
+                var company_method=rows[i].company_method;
+                find_user_info_by_company_id(company_id, company_name, company_method, function(r,result ){
+                    if(r==true){
+                        count++;
+                        results.push(result);
+                        if (count == rows.length) {
+                            console.log("SUCCESS")
+                            console.log(results);
+                            res.jsonp({ success: true, results: results });
+                        }
+                    }else{
+                        count++;
+                        if (count == rows.length) {
+                            res.jsonp({ success: true, results: results });
+                        }
+                    }
+                })
+            }
+        }
+    });
+});
 
 //search handler user info by company name
 router.post('/search_conveyancer', function (req, res, next) {
