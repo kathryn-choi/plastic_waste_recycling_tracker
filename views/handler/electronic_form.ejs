@@ -150,6 +150,7 @@
                         <br> <br>
                         <input type="hidden" name="ticket_id" id="ticket_id" value="<%=ticket_id%>">
                         <input type="hidden" name="previousdes" id="previousdes" value="<%=previousdes%>">
+                        <input type="hidden" name="comp_loc" id="comp_loc" value="<%=comp_loc%>">
                         <input type="hidden" name="cur_convey_count" id="cur_convey_count" value="<%=cur_convey_count%>">
                         <input type="hidden" name="pre_convey_count" id="pre_convey_count" value="<%=pre_convey_count%>">
                        
@@ -170,7 +171,7 @@
                                     <div class = "search_result"></div>
                                 </div>
                             </div>
-                            <input type="number" name="waste_code" id="waste_code" readonly> <br>
+                            <input type="text" name="waste_code" id="waste_code" readonly> <br>
                             <label>폐기물 인덱스 : </label> <br>
                             <input type="number" id="waste_index" readonly> <br>
                             <label>*2. 위탁량</label>  <br>
@@ -364,6 +365,7 @@
     }
 
     function search_loc(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
+        console.log(waste_code)
         $.ajax({
             url: "/handler/search_result",
             method: "POST",
@@ -386,6 +388,7 @@
     }
 
     function search_result(waste_index,waste_code,handler,handle_method,handle_address,conveyancer,carnum) {
+        console.log(waste_code)
         var modal = document.getElementById('myModal');
         $('#waste_index').val(waste_index);
         $('#waste_code').val(waste_code);
@@ -410,6 +413,7 @@
                 data : {
                     ticket_id : document.getElementById("ticket_id").value,
                     previousdes: document.getElementById("previousdes").value,
+                    comp_loc: document.getElementById("comp_loc").value,
                     waste_code : document.getElementById("waste_code").value,
                     weight : document.getElementById("weight").value + document.getElementById("unit").value ,
                     conveyancer : document.getElementById("conveyancer").value,

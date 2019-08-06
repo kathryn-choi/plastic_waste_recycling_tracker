@@ -24,7 +24,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style/style.css">
-
+    <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body>
@@ -259,6 +259,8 @@
 
 <!-- jQuery library -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     // Get the modal
@@ -302,7 +304,7 @@
                 if (data.success == true) {
                     console.log(data)
                     var result = data.result;
-                    var html = '<div class="table-responsive"><table id = "waste_list" border="1px" cellpadding="20px"><thead><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr></thead><tbody>'
+                    var html = '<div class="table-responsive"><table id = "waste_l" border="1px" cellpadding="20px"><thead><tr><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr></thead><tbody>'
                     for (var i = 0; i < result.length; i++) {
                         html += '<tr><td>' + result[i].waste_code + '</td>'
                             + '<td>' + result[i].waste_type + '</td>'
@@ -314,15 +316,15 @@
                             + '<td>' + result[i].waste_conveyancer + '</td>'
                             + '<td>' + result[i].waste_conveyancer_condition + '</td>'
                             + '<td>' + result[i].eform_type + '</td>'
-                            + '<td><button id = "bnum'+i+'" onclick = "search_result('+result[i].waste_code+')">선택</button></td></tr>'
+                            + '<td><button id = "bnum'+i+'" onclick = "search_result(\''+result[i].waste_code+'\')">선택</button></td></tr>'
                     }
                     html+='</tbody></table></div>'
                     console.log(html)
                     var comp_list = $('.search_result')
                     comp_list.append(html)
 
-                    $('#waste_list').DataTable({ 
-                        destroy: true,
+                    $('#waste_l').DataTable({ 
+                        destroy : true,
                         searching: false,
                         info: false
                     });

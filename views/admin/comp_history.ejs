@@ -108,7 +108,7 @@
                 <br> <br> 
             <%}else{%>
                 장부 기록 없음
-            <}>
+            <%}%>
             </div><!-- .container -->
         </div>
         <div class="page-header">
@@ -125,13 +125,13 @@
                 <div class="row">
                     <br> <br>
                     <%if(compticket.length != 0) {%>
-                    <div class="table-responsive"></div>
+                    <div class="table-responsive">
                     <table id = "ticket_list" border="1px" cellpadding="15px">
                         <thead>
                         <tr>
                             <th> 티켓ID </th>
                             <th> Transaction Type </th>
-                            <th> 폐기물 코드 </th>
+                            <th> 폐기물 인덱스 </th>
                             <th> 현재 위치 </th>
                             <th> 이전 위치 </th>
                             <th> 인계 날짜 </th>
@@ -242,19 +242,8 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-        <script type='text/javascript' src='/style/js/jquery.js'></script>
-        <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
-        <script type='text/javascript' src='/style/js/swiper.min.js'></script>
-        <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
-        <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
-        <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
-        <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
-        <script type='text/javascript' src='/style/js/custom.js'></script>
         
-        </body>
-        </html>
-
-        <script type="text/javascript">
+        <script>
             jQuery(function($){ 
                 $("#asset_list").DataTable({ 
                         destroy : true,
@@ -266,4 +255,16 @@
                 }); 
             }); 
         </script>
+        <script type='text/javascript' src='/style/js/jquery.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+        <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+        <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+        <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+        <script type='text/javascript' src='/style/js/custom.js'></script>
+        </body>
+        </html>
+
+        
             
