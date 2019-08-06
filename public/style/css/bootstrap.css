@@ -6846,6 +6846,10 @@ a.bg-dark:focus, a.bg-dark:hover {
   width: 100% !important;
 }
 
+.w-120 {
+  width: 200% !important;
+}
+
 .h-25 {
   height: 25% !important;
 }

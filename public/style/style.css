@@ -993,6 +993,10 @@ ul.tabs-nav .tab-nav.active {
     width: calc(100% - 280px);
 }
 
+.featured-cause .cause-content-wrap2 {
+    width: calc(100% - 220px);
+}
+
 .cause-content-wrap .entry-title a {
     font-size: 18px;
     font-weight: 600;

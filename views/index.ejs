@@ -371,9 +371,10 @@
                           
                             <div class="event-content-wrap2">
                                 <header class="entry-header d-flex flex-wrap align-items-center">
+                                        <%if(notices.length!=0){%>
+                                            <%for (var i=0; i<notices.length; i++){%>
                                     <h3 class="entry-title w-100 m-0">
-                                            <%if(notices.length!=0){%>
-                                                <%for (var i=0; i<notices.length; i++){%>
+                                        
                                         <a href="/notice/read/notice_index/<%=notices[i].notice_index%>">
                                             <%=notices[i].notice_title%>
                                         </a>
