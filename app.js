@@ -58,7 +58,7 @@ app.use('/waste_code', waste_code);
 connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'password123',
+  password : 'pw',
   port     : 3306,
   database : 'recycling',
 });
