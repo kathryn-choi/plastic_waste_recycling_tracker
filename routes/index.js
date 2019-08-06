@@ -359,8 +359,8 @@ function get_recent_notices(cb) {
       console.log("no match");
       cb(false, notices)
     } else {
-
       if (rows.length > 6) {
+        console.log("morethan6")
         var count = 0;
         for (var i = rows.length - 1; i >= rows.length - 6; i--) {
           var notice_index = rows[i].notice_index;
@@ -379,11 +379,13 @@ function get_recent_notices(cb) {
           }
           notices.push(notice);
           count++;
+          if (count == 5) {
+            cb(true, notices);
+          }
         }
-        if (count == 5) {
-          cb(true, notices);
-        }
+        
       } else {
+        console.log("lessthan6")
         var count = 0;
         for (var i = rows.length - 1; i >= 0; i--) {
           var notice_index = rows[i].notice_index;
