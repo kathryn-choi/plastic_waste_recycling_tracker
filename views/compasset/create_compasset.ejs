@@ -360,7 +360,9 @@
                     },
                     success: function (data) {
                         if (data.success == true) {
-                            window.location.href = data.redirect_url;
+                            
+                                window.location.href = data.redirect_url;
+                            
                         }
                     }
                 });
@@ -413,7 +415,16 @@
     var n = d.toISOString();
     var current_date=n.slice(0,10);
     dateControl.value = current_date;
+
 </script>
+
+<script type="text/javascript">
+    if () {
+        // 확인 버튼 클릭 시 동작
+        alert("대장의 최초 보관량 먼저 입력 해주세요");
+    } 
+</script>
+
 <script type='text/javascript' src='/style/js/jquery.js'></script>
 <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
 <script type='text/javascript' src='/style/js/swiper.min.js'></script>

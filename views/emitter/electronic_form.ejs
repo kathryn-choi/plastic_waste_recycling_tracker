@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>전자 인계서</title>
     <!-- Required meta tags -->
@@ -23,12 +24,13 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/style/style.css">
-    <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 </head>
+
 <body class="single-page contact-page">
-        <style>
-                /* The Modal (background) */
-       .modal {
+    <style>
+        /* The Modal (background) */
+        .modal {
             display: none;
             /* Hidden by default */
             position: fixed;
@@ -75,375 +77,406 @@
             text-decoration: none;
             cursor: pointer;
         }
-        select 
-        { 
-            width: 80px; /* 원하는 너비설정 */ 
-            padding: .4em .4em; /* 여백으로 높이 설정 */ 
-            font-family: inherit; /* 폰트 상속 */ 
-            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */ 
-            border: 1px solid #999; 
-            border-radius: 0px; /* iOS 둥근모서리 제거 */ 
-            -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
-            -moz-appearance: none; 
-            appearance: none; 
+
+        select {
+            width: 80px;
+            /* 원하는 너비설정 */
+            padding: .4em .4em;
+            /* 여백으로 높이 설정 */
+            font-family: inherit;
+            /* 폰트 상속 */
+            background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;
+            /* 네이티브 화살표 대체 */
+            border: 1px solid #999;
+            border-radius: 0px;
+            /* iOS 둥근모서리 제거 */
+            -webkit-appearance: none;
+            /* 네이티브 외형 감추기 */
+            -moz-appearance: none;
+            appearance: none;
         }
-        input:-moz-read-only { /* For Firefox */
-        background-color: #DCDCDC;
+
+        input:-moz-read-only {
+            /* For Firefox */
+            background-color: #DCDCDC;
         }
 
         input:read-only {
-        background-color: #DCDCDC;
+            background-color: #DCDCDC;
         }
-    
-        </style>
-        <header class="site-header">
-            <div class="nav-bar">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
-                            <div class="site-branding d-flex align-items-center">
-                                <a class="d-block" href="/" rel="home"><img class="d-block"
-                                        src="/style/images/logo.png" alt="logo"></a>
-                            </div><!-- .site-branding -->
-
-                            <nav class="site-navigation d-flex justify-content-end align-items-center">
-                                <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="/">Home</a></li>
-                                    <li><a href="/emitter">마이페이지</a></li>
-                                    <li><a href="/compasset">대장 관리</a></li>
-                                    <li><a href="/logout">로그아웃</a></li>
-                                </ul>
-                            </nav><!-- .site-navigation -->
-
-                            <div class="hamburger-menu d-lg-none">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div><!-- .hamburger-menu -->
-                        </div><!-- .col -->
-                    </div><!-- .row -->
-                </div><!-- .container -->
-            </div><!-- .nav-bar -->
-        </header><!-- .site-header -->
-
-        <div class="page-header">
+    </style>
+    <header class="site-header">
+        <div class="nav-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
-                        <h1>전자 인계서 작성하기</h1>
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                            <a class="d-block" href="/" rel="home"><img class="d-block" src="/style/images/logo.png"
+                                    alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/">Home</a></li>
+                                <li><a href="/emitter">마이페이지</a></li>
+                                <li><a href="/compasset">대장 관리</a></li>
+                                <li><a href="/logout">로그아웃</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
                     </div><!-- .col -->
                 </div><!-- .row -->
             </div><!-- .container -->
-        </div><!-- .page-header -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
 
-        <div class="contact-page-wrap">
-            <div class="container">
-                 <div class="row">
-                    <div class="col-12 col-lg-5">
-                      <div class="entry-content">
-                            <h2>인계서 작성(배출자)</h2>
-                            <p>인계서 내용 입력<br>
-                                처리자인수후 2일이내 확정등록(위탁량 입력)을 하지 않을 경우 폐관법및 건폐법 제 66조에 따라 행정처분을 받을 수 있습니다  <br><br> </p>
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>전자 인계서 작성하기</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
+
+    <div class="contact-page-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="entry-content">
+                        <h2>인계서 작성(배출자)</h2>
+                        <p>인계서 내용 입력<br>
+                            처리자인수후 2일이내 확정등록(위탁량 입력)을 하지 않을 경우 폐관법및 건폐법 제 66조에 따라 행정처분을 받을 수 있습니다 <br><br> </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                    <br> <br>
+                    <label>*1.폐기물 종류 : </label>
+                    <!--search button pop up 해서 폐기물종류 조회하기-->
+                    <!-- Trigger/Open The Modal -->
+                    <button id="myBtn" onclick="material_search()">조회하기</button> <br>
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <div>
+                                <span class="close">&times;</span>
+                                폐기물:
+                                <input type="text" name="material_type">
+                                <button type="submit" onclick="get_search_result()">조회</button>
+                            </div>
+                            <div class="search_result"></div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-7">
+                    <input type="text" name="waste_code" id="waste_code" readonly> <br>
+                    <label>폐기물 인덱스 : </label> <br>
+                    <input type="number" id="waste_index" readonly> <br>
+                    <label>*2. 위탁량</label> <br>
+                    <td><input type="number" id="weight">
+                        <select id="unit">
+                            <option value="kg">kg</option>
+                            <option value="ton">ton</option>
+                            <option value="g">g</option>
+                        </select> <br>
+                        <label>운반자 id</label> <br>
+                        <input type="text" id="conveyancer" readonly> <br>
+                        <label>*3.차량번호</label> <br>
+                        <input type="text" id="conveyancer_car_num" readonly>
+                        <!--조회하기-->
+                        <br>
+                        <label>처리자</label> <br>
+                        <input type="text" id="handler" readonly>
+                        <br>
+                        <label>처리방법</label> <br>
+                        <input type="text" id="handle_method" readonly>
+                        <br>
+                        <label>처리장소</label> <br>
+                        <input type="text" id="handle_address" readonly>
+                        <br>
+                        <label>*4.인계일자</label> <br>
+                        <!--달력-->
+                        <input type="date" id="transfer_date">
+                        <br>
+                        <label>*5.인계자 id</label> <br>
+                        <input type="text" id="emitter_name" value="<%=user_id%>" readonly>
                         <br> <br>
-                            <label>*1.폐기물 종류 : </label>
-                                <!--search button pop up 해서 폐기물종류 조회하기-->
-                                <!-- Trigger/Open The Modal -->
-                            <button id="myBtn" onclick="material_search()">조회하기</button> <br>
-                            <!-- The Modal -->
-                            <div id="myModal" class="modal">
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <div>
-                                    <span class="close">&times;</span>
-                                       폐기물:
-                                        <input type="text" name="material_type">
-                                        <button type="submit" onclick="get_search_result()">조회</button>
-                                    </div>
-                                    <div class = "search_result"></div>
-                                </div>
-                            </div>
-                            <input type="text" name="waste_code" id="waste_code" readonly> <br>
-                            <label>폐기물 인덱스 : </label> <br>
-                            <input type="number" id="waste_index" readonly> <br>
-                            <label>*2. 위탁량</label>  <br>
-                            <td><input type="number" id="weight">
-                            <select id="unit">
-                                <option value="kg">kg</option>
-                                <option value="ton">ton</option>
-                                <option value="g">g</option>
-                            </select> <br>
-                            <label>운반자 id</label>  <br>
-                            <input type="text" id="conveyancer" readonly> <br>
-                            <label>*3.차량번호</label>  <br>
-                            <input type="text" id="conveyancer_car_num" readonly>
-                            <!--조회하기-->
-                            <br>
-                            <label>처리자</label>  <br>
-                            <input type="text" id="handler" readonly>
-                            <br>
-                            <label>처리방법</label>  <br>
-                            <input type="text" id="handle_method" readonly>
-                            <br>
-                            <label>처리장소</label>  <br>
-                            <input type="text" id="handle_address" readonly>
-                            <br>
-                            <label>*4.인계일자</label>  <br>
-                            <!--달력-->
-                            <input type="date" id="transfer_date">
-                            <br>
-                            <label>*5.인계자 id</label>  <br>
-                            <input type="text" id="emitter_name" value="<%=user_id%>" readonly>
-                            <br> <br>
-                            <input  type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
-                  </div>
-                        </div>
-                    </div><!-- .row -->
-                </div><!-- .container -->
-    
+                        <input type="submit" class="btn gradient-bg" onclick="save()" value="저장하기">
+                </div>
             </div>
+        </div><!-- .row -->
+    </div><!-- .container -->
 
-            <footer class="site-footer">
-                    <div class="footer-widgets">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="foot-about">
-                                        <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
-                
-                                        <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
-                                            블록체인을 활용한 폐기물 처리 관리시스템<br>
-                                            팀원 : 윤혜원, 최재은 <br>
-                                        </p>
-                                    </div>
-                                </div>
-        
-                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-                                    <h2>유관 기관 사이트</h2>
-                
-                                    <ul>
-                                        <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
-                                        <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
-                                        <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
-                                        <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
-                                        <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
-                                        <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
-                                        <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
-                                    </ul>
-                                </div><!-- .col -->
-                
-                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-                                    <div class="foot-latest-news">
-                                        <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm"><h2>서비스 이용약관</h2></a>
-                                        <br> <br>
-                                        <a href="http://www.keco.or.kr/kr/util/privacy1_1.do"><h2>개인정보처리방침</h2></a>
-                                    </div><!-- .foot-latest-news -->
-                                </div><!-- .col -->
-                
-                                <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
-                                    <div class="foot-contact">
-                                        <h2>연락처 안내</h2>
-                
-                                        <ul>
-                                            <li>운영 시간 : 9:00 ~ 18:00  <br>
-                                                단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
-                                                운영되지 않습니다</li>
-                                            <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
-                                            <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
-                                            <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span></li>
-                                        </ul>
-                                    </div><!-- .foot-contact -->
-                
-                                </div><!-- .col -->
-                            </div><!-- .row -->
-                        </div><!-- .container -->
-                    </div><!-- .footer-widgets -->
-                
-                    <div class="footer-bar">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                                </div><!-- .col-12 -->
-                            </div><!-- .row -->
-                        </div><!-- .container -->
-                    </div><!-- .footer-bar -->
-                </footer><!-- .site-footer -->
+    </div>
 
-                <script type='text/javascript' src='/style/js/jquery.js'></script>
-                <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
-                <script type='text/javascript' src='/style/js/swiper.min.js'></script>
-                <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
-                <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
-                <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
-                <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
-                <script type='text/javascript' src='/style/js/custom.js'></script>
-                <!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <footer class="site-footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="foot-about">
+                            <h2><a class="foot-logo" href="#"><img src="/style/images/foot-logo.png" alt=""></a></h2>
 
-<script>
-    // Get the modal
+                            <p>2019 에코톤 제품및 서비스 부문 출품작 <br>
+                                블록체인을 활용한 폐기물 처리 관리시스템<br>
+                                팀원 : 윤혜원, 최재은 <br>
+                            </p>
+                        </div>
+                    </div>
 
-    function material_search(){
-        var modal = document.getElementById('myModal');
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <h2>유관 기관 사이트</h2>
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
+                        <ul>
+                            <li><a href="http://www.me.go.kr/home/web/main.do">환경부</a></li>
+                            <li><a href="http://www.keco.or.kr/kr/main/index.do">환국환경공단</a></li>
+                            <li><a href="http://www.molit.go.kr/portal.do">국토교통부</a></li>
+                            <li><a href="http://www.krihs.re.kr/">국토연구원</a></li>
+                            <li><a href="https://www.koras.org/index.jsp">한국건설자원협회</a></li>
+                            <li><a href="http://www.cwa.or.kr/">한국건설폐기물수집운반협회</a></li>
+                            <li><a href="https://www.kict.re.kr/">한국건설기술연구원</a></li>
+                        </ul>
+                    </div><!-- .col -->
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-latest-news">
+                            <a href="https://www.allbaro.or.kr/09_wsr/wsr_service.vm">
+                                <h2>서비스 이용약관</h2>
+                            </a>
+                            <br> <br>
+                            <a href="http://www.keco.or.kr/kr/util/privacy1_1.do">
+                                <h2>개인정보처리방침</h2>
+                            </a>
+                        </div><!-- .foot-latest-news -->
+                    </div><!-- .col -->
 
-        // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
+                    <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                        <div class="foot-contact">
+                            <h2>연락처 안내</h2>
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
+                            <ul>
+                                <li>운영 시간 : 9:00 ~ 18:00 <br>
+                                    단, 12:00 ~ 13:00 및 공휴일, 토요일은 <br>
+                                    운영되지 않습니다</li>
+                                <li><i class="fa fa-phone"></i><span>1644-0007</span></li>
+                                <li><i class="fa fa-envelope"></i><span> 0505-822-7805</span></li>
+                                <li><i class="fa fa-map-marker"></i><span>(22689) 인천시 서구 환경로 42(경서동 종합환경연구단지) </span>
+                                </li>
+                            </ul>
+                        </div><!-- .foot-contact -->
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-widgets -->
+
+        <div class="footer-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="m-0">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                            template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div><!-- .col-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-bar -->
+    </footer><!-- .site-footer -->
+
+    <script type='text/javascript' src='/style/js/jquery.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='/style/js/swiper.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='/style/js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='/style/js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='/style/js/custom.js'></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        // Get the modal
+
+        function material_search() {
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
                 modal.style.display = "none";
             }
-        }
-    }
 
-    function get_search_result() {
-        $('.search_result').html('')
-        $.ajax({
-            url: "/emitter/search",
-            method: "POST",
-            data: {
-                material_type: document.getElementsByName("material_type")[0].value,
-            },
-            dataType: "json",
-            success: function (data) {
-                if (data.success == true) {
-                    console.log(data)
-                    var result = data.results;
-                    var html = '<div class="table-responsive"><table id = "waste_list" border="1px"><thead><tr><th>폐기물인덱스</th><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr></thead><tbody>'
-                    for (var i = 0; i < result.length; i++) {
-                        html += '<tr><td>' + result[i].waste_index + '</td>'
-                            + '<td>' + result[i].waste_code + '</td>'
-                            + '<td>' + result[i].waste_type + '</td>'
-                            + '<td>' + result[i].waste_state + '</td>'
-                            + '<td>' + result[i].waste_classify + '</td>'
-                            + '<td>' + result[i].waste_handler + '</td>'
-                            + '<td>' + result[i].waste_handler_condition + '</td>'
-                            + '<td>' + result[i].waste_handle_method + '</td>'
-                            + '<td>' + result[i].waste_conveyancer + '</td>'
-                            + '<td>' + result[i].waste_conveyancer_condition + '</td>'
-                            + '<td>' + result[i].eform_type + '</td>'
-                            + '<td><button id = "bnum'+i+'" onclick = "search_loc('+result[i].waste_index+',\''+result[i].waste_code+'\',\''+result[i].waste_handler+'\',\''+result[i].waste_handle_method+'\',\''+result[i].waste_conveyancer+'\')">선택</button></td></tr>'
-                    }
-                    html+='</tbody></table></div>'
-                    console.log(html)
-                    var comp_list = $('.search_result')
-                    comp_list.append(html)
-                    $("#waste_list").DataTable({ 
-                            destroy : true,
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        function get_search_result() {
+            $('.search_result').html('')
+            $.ajax({
+                url: "/emitter/search",
+                method: "POST",
+                data: {
+                    material_type: document.getElementsByName("material_type")[0].value,
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        console.log(data)
+                        var result = data.results;
+                        var html = '<div class="table-responsive"><table id = "waste_list" border="1px"><thead><tr><th>폐기물인덱스</th><th>폐기물코드</th><th>폐기물종류</th><th>성상</th><th>폐기물구분</th><th>처리자</th><th>업체상태</th><th>처리방법</th><th>운반자</th><th>업체상태</th><th>인계서 종류</th><th>선택하기</th></tr></thead><tbody>'
+                        for (var i = 0; i < result.length; i++) {
+                            console.log( i, result[i].waste_index);
+                            html += '<tr><td>' + result[i].waste_index + '</td>'
+                                + '<td>' + result[i].waste_code + '</td>'
+                                + '<td>' + result[i].waste_type + '</td>'
+                                + '<td>' + result[i].waste_state + '</td>'
+                                + '<td>' + result[i].waste_classify + '</td>'
+                                + '<td>' + result[i].waste_handler + '</td>'
+                                + '<td>' + result[i].waste_handler_condition + '</td>'
+                                + '<td>' + result[i].waste_handle_method + '</td>'
+                                + '<td>' + result[i].waste_conveyancer + '</td>'
+                                + '<td>' + result[i].waste_conveyancer_condition + '</td>'
+                                + '<td>' + result[i].eform_type + '</td>'
+                                + '<td><button id = "bnum' + i + '" onclick = "search_loc(' + result[i].waste_index + ',\'' + result[i].waste_code + '\',\'' + result[i].waste_handler + '\',\'' + result[i].waste_handle_method + '\',\'' + result[i].waste_conveyancer + '\')">선택</button></td></tr>'
+                        }
+                        html += '</tbody></table></div>'
+                        console.log(html)
+                        var comp_list = $('.search_result')
+                        comp_list.append(html)
+                        $("#waste_list").DataTable({
+                            destroy: true,
                             searching: false,
                             info: false
-                    });
-                }
-            }
-        });
-    }
-
-    function search_loc(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
-        $.ajax({
-            url: "/emitter/search_result",
-            method: "POST",
-            data: {
-                waste_index: waste_index,
-                waste_code: waste_code,
-                handler : waste_handler,
-                handle_method : waste_handle_method,
-                conveyancer : waste_conveyancer
-            },
-            dataType: "json",
-            success: function (data) {
-                console.log(data.results)
-                if (data.success == true) {
-                    var result = data.results;
-                    search_result(result.waste_index,result.waste_code, result.handler,result.handle_method,result.handle_address,result.conveyancer,result.carnum)
-                }
-            }
-        });
-    }
-
-    function search_result(waste_index,waste_code,handler,handle_method,handle_address,conveyancer,carnum) {
-        var modal = document.getElementById('myModal');
-        $('#waste_index').val(waste_index);
-        $('#waste_code').val(waste_code);
-        $('#handler').val(handler);
-        $('#handle_method').val(handle_method);
-        $('#handle_address').val(handle_address);
-        $('#conveyancer').val(conveyancer);
-        $('#conveyancer_car_num').val(carnum);
-        modal.style.display = "none";
-    }
-    
-    function save(){
-        var notifications = []
-        if(document.getElementById("waste_index").value == "") notifications.push("폐기물 종류")
-        if(document.getElementById("weight").value == "") notifications.push("위탁량")
-        if(document.getElementById("transfer_date").value == "") notifications.push("인계 일자")
-
-        if(notifications.length == 0){
-            $.ajax({
-                url:"/emitter/form",
-                method: "POST",
-                data : {
-                    waste_index : document.getElementById("waste_index").value,
-                    waste_code : document.getElementById("waste_code").value,
-                    weight : document.getElementById("weight").value + document.getElementById("unit").value ,
-                    conveyancer : document.getElementById("conveyancer").value,
-                    conveyancer_car_num : document.getElementById("conveyancer_car_num").value,
-                    handler : document.getElementById("handler").value,
-                    handle_method : document.getElementById("handle_method").value,
-                    handle_address : document.getElementById("handle_address").value,
-                    transfer_date : document.getElementById("transfer_date").value,
-                    emitter_name : document.getElementById("emitter_name").value
-                },
-                success : function (data) {
-                    window.location.href = data.redirect_url;
+                        });
+                    }
                 }
             });
         }
-        else{
-            var content = (notifications).join(", ")
-            content += "를 입력 하지 않았습니다. 입력 후 인계서 작성을 완료해 주세요."
-            alert(content)
+
+        function search_loc(waste_index, waste_code, waste_handler, waste_handle_method, waste_conveyancer) {
+            $.ajax({
+                url: "/emitter/search_result",
+                method: "POST",
+                data: {
+                    waste_index: waste_index,
+                    waste_code: waste_code,
+                    handler: waste_handler,
+                    handle_method: waste_handle_method,
+                    conveyancer: waste_conveyancer
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.results)
+                    if (data.success == true) {
+                        var result = data.results;
+                        console.log("-1.", result.waste_index);
+                        search_result(result.waste_index, result.waste_code, result.handler, result.handle_method, result.handle_address, result.conveyancer, result.carnum)
+                    }
+                }
+            });
         }
-    }
 
-    function fill_form(waste_index,waste_code,waste_handler,waste_handle_method,waste_conveyancer) {
-        var modal = document.getElementById('myModal');
-        $('#waste_index').val(waste_index);
-        $('#waste_code').val(waste_code);
-        $('#handler').val(waste_handler);
-        $('#handle_method').val(waste_handle_method);
-        $('#conveyancer').val(waste_conveyancer);
-        modal.style.display = "none";
-    }
+        function search_result(waste_index, waste_code, handler, handle_method, handle_address, conveyancer, carnum) {
+            console.log("w:", waste_index);
+            var modal = document.getElementById('myModal');
+            $('#waste_index').val(waste_index);
+            $('#waste_code').val(waste_code);
+            $('#handler').val(handler);
+            $('#handle_method').val(handle_method);
+            $('#handle_address').val(handle_address);
+            $('#conveyancer').val(conveyancer);
+            $('#conveyancer_car_num').val(carnum);
+            modal.style.display = "none";
+        }
 
-    var dateControl = document.querySelector('input[type="date"]');
-    var d = new Date();
-    var n = d.toISOString();
-    var current_date=n.slice(0,10);
-    dateControl.value = current_date;
+        function save() {
+            var notifications = []
+            if (document.getElementById("waste_index").value == "") notifications.push("폐기물 종류")
+            if (document.getElementById("weight").value == "") notifications.push("위탁량")
+            if (document.getElementById("transfer_date").value == "") notifications.push("인계 일자")
 
-</script>
-            </body>
+            if (notifications.length == 0) {
+                $.ajax({
+                    url: "/emitter/form",
+                    method: "POST",
+                    data: {
+                        waste_index: document.getElementById("waste_index").value,
+                        waste_code: document.getElementById("waste_code").value,
+                        weight: document.getElementById("weight").value + document.getElementById("unit").value,
+                        conveyancer: document.getElementById("conveyancer").value,
+                        conveyancer_car_num: document.getElementById("conveyancer_car_num").value,
+                        handler: document.getElementById("handler").value,
+                        handle_method: document.getElementById("handle_method").value,
+                        handle_address: document.getElementById("handle_address").value,
+                        transfer_date: document.getElementById("transfer_date").value,
+                        emitter_name: document.getElementById("emitter_name").value
+                    },
+                    success: function (data) {
+                        if (data.return_value == -1) { // insert false
+                            window.location.href = data.redirect_url;
+                        } else if (data.return_value == 0) { // no compasset
+                            if(!alert('먼저 최초보관량부터 작성해주세요')){
+                                window.location.href= data.redirect_url
+                            }
+                            //window.location.href = data.redirect_url;
+                        } else { // insert succeed
+                            window.location.href = data.redirect_url;
+                        }
+                    }
+                });
+            }
+            else {
+                var content = (notifications).join(", ")
+                content += "를 입력 하지 않았습니다. 입력 후 인계서 작성을 완료해 주세요."
+                alert(content)
+            }
+        }
+
+        function fill_form(waste_index, waste_code, waste_handler, waste_handle_method, waste_conveyancer) {
+            var modal = document.getElementById('myModal');
+            $('#waste_index').val(waste_index);
+            $('#waste_code').val(waste_code);
+            $('#handler').val(waste_handler);
+            $('#handle_method').val(waste_handle_method);
+            $('#conveyancer').val(waste_conveyancer);
+           
+            modal.style.display = "none";
+        }
+
+        var dateControl = document.querySelector('input[type="date"]');
+        var d = new Date();
+        var n = d.toISOString();
+        var current_date = n.slice(0, 10);
+        dateControl.value = current_date;
+
+    </script>
+</body>
+
 </html>

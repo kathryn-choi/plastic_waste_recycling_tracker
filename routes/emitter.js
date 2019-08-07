@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var network = require('../recycling_tracker/network.js');
 const util = require('util');
+var compassetM = require('./../public/modules/compasset.js');
 
 //get user's company_info by company_id
 function get_user_company_info(company_id, cb) {
@@ -209,53 +210,69 @@ router.get('/form', function (req, res, next) {
     conveyancer: '',
     conveyancer_car_num: '',
     user_id: req.session.user_id,
-    waste_index :''
+    waste_index: '',
   });
 });
 
 //전자 인계서 저장하기
 router.post('/form', function (req, res, next) {
-  var waste_index=req.body.waste_index;
-  var waste_code = req.body.waste_code;
-  var weight = req.body.weight;
-  var conveyancer = req.body.conveyancer;
-  var conveyancer_car_num = req.body.conveyancer_car_num;
-  var handler = req.body.handler;
-  var handle_address = req.body.handle_address;
-  var transfer_date = req.body.transfer_date;
-  var emitter_name = req.body.emitter_name;
-  var user_id = req.session.user_id
-  var ticket_id = user_id + "." + waste_index + "." + transfer_date
-  get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
-    if (result == true) {
-      network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0", "0", waste_index.toString()).then((response) => {
-        //return error if error in response
-        if (response.error != null) {
-          console.log("network create ticket info failed");
-          res.jsonp({ redirect_url: "/emitter" })
-        } else {
-          console.log("network create ticket info succeed");
-          //insert into alarms db
-          var sql2 = "INSERT INTO alarms(ticket_id, is_complete, last_date) VALUES (?,?,?)";
-          var today = new Date();
-          connection.query(sql2, [ticket_id, false,today], function (err) {
-            if (err) {
-              console.log("inserting alarm failed");
-              res.jsonp({ redirect_url: "/emitter" })
-              throw err;
-            } else {
-              console.log("alarm inserted successfully");
-              res.jsonp({ redirect_url: "/emitter" })
+  var sqlquery = "SELECT  companies_id FROM users WHERE user_id = ?";
+  connection.query(sqlquery, req.session.user_id, function (err, rows) {
+    if (err) {
+      console.log("no match");
+    } else {
+      var company_id = rows[0].companies_id;
+      compassetM.get_company_compasset_by_company_id(company_id, function (result, compasset) {
+        if (result == true && compasset.length > 0) {
+          var waste_index = req.body.waste_index;
+          var waste_code = req.body.waste_code;
+          var weight = req.body.weight;
+          var conveyancer = req.body.conveyancer;
+          var conveyancer_car_num = req.body.conveyancer_car_num;
+          var handler = req.body.handler;
+          var handle_address = req.body.handle_address;
+          var transfer_date = req.body.transfer_date;
+          var emitter_name = req.body.emitter_name;
+          var user_id = req.session.user_id
+          var ticket_id = user_id + "." + waste_index + "." + transfer_date
+          get_ticket_info(user_id, conveyancer, handler, function (result, con_id, hanlder_id, company_loc) {
+            if (result == true) {
+              network.create_ticket(ticket_id, company_loc, "", weight, transfer_date, user_id, "emitter", hanlder_id, "handler", con_id, "0", "0", waste_index.toString()).then((response) => {
+                //return error if error in response
+                if (response.error != null) {
+                  console.log("network create ticket info failed");
+                  res.jsonp({ redirect_url: "/emitter" ,return_value:-1 })
+                } else {
+                  console.log("network create ticket info succeed");
+                  //insert into alarms db
+                  var sql2 = "INSERT INTO alarms(ticket_id, is_complete, last_date) VALUES (?,?,?)";
+                  var today = new Date();
+                  connection.query(sql2, [ticket_id, false, today], function (err) {
+                    if (err) {
+                      console.log("inserting alarm failed");
+                      res.jsonp({ redirect_url: "/emitter" ,return_value:-1})
+                      throw err;
+                    } else {
+                      console.log("alarm inserted successfully");
+                      res.jsonp({ redirect_url: "/emitter",return_value: 1})
+                    }
+                  });
+                }
+              })
             }
-          });
+            else {
+              console.log("인계서 작성 오류")
+              res.jsonp({redirect_url: "/emitter" ,return_value: -1})
+            }
+          })
+        } else {//대장에 최초보관량 저장하기 전
+          console.log("대장에 최초보관량을 먼저 저장해주세요");
+          res.jsonp({ redirect_url: "/compasset/create_compasset", return_value: 0})
+          
         }
       })
     }
-    else {
-      console.log("인계서 작성 오류")
-      res.jsonp({ redirect_url: "/emitter" })
-    }
-  })
+  });
 });
 
 //search material info by name
@@ -265,7 +282,7 @@ router.post('/search', function (req, res, next) {
   var results = new Array();
   console.log(material_type);
   var sqlquery = "SELECT * FROM wastes WHERE waste_type LIKE ? AND waste_pending=?";
-  connection.query(sqlquery, [material_type,true], function (err, rows) {
+  connection.query(sqlquery, [material_type, true], function (err, rows) {
     if (err) {
       console.log("no match");
       res.redirect('back');
@@ -307,12 +324,13 @@ function get_handler_address(handler_id, cb) {
 
 //choose material from search result
 router.post('/search_result', function (req, res, next) {
-  var waste_index=req.body.waste_index;
+  var waste_index = req.body.waste_index;
   var waste_code = req.body.waste_code;
   var handler = req.body.handler;
   var handle_method = req.body.handle_method;
   var conveyancer = req.body.conveyancer;
   console.log(conveyancer);
+  console.log('waste_idnex' ,waste_index)
   var sqlquery = "SELECT carnum FROM users WHERE user_id = ?";
   connection.query(sqlquery, conveyancer, function (err, row) {
     if (err) {
@@ -351,8 +369,8 @@ router.post('/change_ticketinfo', function (req, res, next) {
   console.log("change ticketinfo")
   //console.log(req.body)
   var ticket_id = req.body.ticket_id;
-  var waste=ticket_id.split['.'];
-  var waste_index=waste[1];
+  var waste = ticket_id.split['.'];
+  var waste_index = waste[1];
   var waste_type = req.body.waste_type;
   var conveyancer = req.body.conveyancer;
   var transfer_date = req.body.transfer_date;
