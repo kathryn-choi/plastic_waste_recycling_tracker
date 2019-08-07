@@ -49,7 +49,7 @@ exports.get_ticket_history_by_company_id = function(user_id,cb){
                 transaction_type = "삭제"
             }
             var ticket_id = ticket.ticket_id;
-            var waste_code = ticket.ticket_id.split(".")[1]
+            var waste_code = ticket.waste_code
             var currentdes=ticket.currentdes;
             var previousdes=ticket.previousdes;
             var transfer_date=ticket.transfer_date;

@@ -204,7 +204,8 @@ router.post('/form', function (req, res, next) {
   get_usertype_by_id(reciever_id, function (result, reciever_type) {
     if (result == true) {
       //change_ticket_info(ticket_id,currentdes,previousdes,transfer_date,weight,giver_id, giver_type,reciever_id,reciever_type,conveyer_id)
-      network.change_ticket_info(ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count, waste_index).then((response) => {
+      console.log("handler update:",ticket_id, handle_address, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count, waste_index)
+      network.change_ticket_info(ticket_id, req.body.comp_loc, previousdes, transfer_date, weight, giver_id, giver_type, reciever_id, reciever_type, conveyancer, pre_convey_count, cur_convey_count, waste_index).then((response) => {
         //return error if error in response
         if (response.error != null) {
           console.log("network change ticket info failed");
@@ -317,6 +318,7 @@ router.post('/eform', function (req, res, next) {
   res.render('handler/electronic_form', {
     ticket_id: req.body.ticket_id,
     previousdes: req.body.previousdes,
+    comp_loc : req.body.comp_loc,
     waste_index: '',
     waste_code: '',
     handler: '',
@@ -459,8 +461,8 @@ function get_my_received_ticket(user_id, cb) {
         console.log("count : ", cur_convey_count, pre_convey_count);
         //only the ones that are finished convey
         if (cur_convey_count != pre_convey_count) {
-          connection.query(sqlquery, user_id, function (err, rows) {
-            var user_name = rows[0].user_name
+         // connection.query(sqlquery, user_id, function (err, rows) {
+            var user_name = user_id
             console.log(user_name)
             var sqlquery2 = 'select * from wastes where waste_index = ?'
             connection.query(sqlquery2, waste_index, function (err, rows1) {
@@ -489,6 +491,7 @@ function get_my_received_ticket(user_id, cb) {
                       waste_handler: waste_handler,
                       method: method,
                       comp_loc: comp_loc,
+                      previousdes:file.previousdes,
                       transfer_date: transfer_date,
                       user_name: user_name,
                       eform_type: eform_type,
@@ -507,7 +510,7 @@ function get_my_received_ticket(user_id, cb) {
                 })
               })
             })
-          })
+         // })
         } else {
           count++;
           if (count == tickets.length) {

@@ -150,7 +150,7 @@ function get_my_received_ticket(user_id, cb) {
       await Promise.all(tickets.map(async (file) => {
         //for(var i = 0; i< tickets.length; i++){
         var temp = file.ticket_id.split('.')
-        var user_id = temp[0]
+        var user_id = file.giver.split("#")[1]
         var w_index = file.waste_index
         var waste_index=parseInt(w_index)
         var transfer_date = file.transfer_date

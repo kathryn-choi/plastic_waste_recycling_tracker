@@ -142,9 +142,9 @@
                                                     폐기물 코드 : <%=mytickets[i].waste_code%> <br>
                                                     폐기물 종류 : <%=mytickets[i].waste_type%> <br>
                                                     위탁량 : <%=mytickets[i].weight%> <br>
-                                                    운반자 : <%=mytickets[i].conveyancer%> <br>
+                                                    운반자 id : <%=mytickets[i].conveyancer%> <br>
                                                     차량 번호 : <%=mytickets[i].carnum%> <br>
-                                                    처리자 : <%=mytickets[i].waste_handler%> <br>
+                                                    처리자 id : <%=mytickets[i].waste_handler%> <br>
                                                     처리방법 : <%=mytickets[i].method%> <br>
                                                     처리장소 : <%=mytickets[i].comp_loc%> <br>
                                                     인계 일자 : <input type="date" name="transfer_date" > <br>
@@ -171,10 +171,8 @@
                             </div><!-- .swiper-slide --><%}%>  
                         </div>    
                     </div>
-                </div>
-                <%}else{%>
-                    <h6>받은 티켓이 없습니다.</h6>                
-                    <}>
+                    <%}%> 
+                </div> 
             </div><!-- .col -->
     </div><!-- .our-causes -->
     

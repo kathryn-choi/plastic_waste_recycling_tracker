@@ -161,7 +161,6 @@ router.post('/search_result', function (req, res, next) {
 })
 
 function find_user_info_by_company_id(company_id, company_name, company_method, cb){
-    console.log(company_id)
     var sqlquery2 = "SELECT * FROM users WHERE companies_id = ?";
     connection.query(sqlquery2, company_id, function (err, row) {
         if (err) {
