@@ -13,9 +13,9 @@ Front-End : HTML/CSS, JS <br>
 Back-End : NodeJS <br> 
 Database : MySQL 5.6 <br>
 
-## 2019 에코톤(ECOTHON) 제품/서비스 부문 TOP6
-팀명: WASTECHAIN
+## 2019 에코톤 제품/서비스 부문 TOP6
+팀명: WASTECHAIN <br>
 팀원: 윤혜원 @yhye97, 최재은 @kathryn-choi
 
-## 데모 영상 (DEMO)
+## DEMO
 https://www.youtube.com/watch?v=N8d38tdthlI
